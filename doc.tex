@@ -1,0 +1,292 @@
+\pdfoutput=1
+\pdfpageattr{/Group << /S /Transparency /I true /CS /DeviceRGB>>}
+\documentclass[11pt, a4paper, pdftex]{article}
+
+\usepackage[british,spanish,es-minimal,es-sloppy]{babel}
+\usepackage{verbatim}
+
+\usepackage[hscale=0.65, vscale=0.70, vmarginratio=1:1,verbose]{geometry}
+
+\usepackage[utf8]{inputenc}
+% \usepackage[latin1]{inputenc}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+
+\usepackage[scaled=.80]{beramono}
+%\usepackage{inconsolata}
+%\usepackage{palatino}
+
+\usepackage[safe,tone,extra]{tipa}
+\usepackage{mflogo}
+
+\usepackage{graphicx}
+	\DeclareGraphicsRule{*}{mps}{*}{}
+
+\usepackage{xcolor}
+\usepackage{colortbl}
+
+\usepackage{tikz} % no tiene opciones
+	\usetikzlibrary{calc}
+	\usetikzlibrary{arrows}
+	\usetikzlibrary{backgrounds}
+	\usetikzlibrary{decorations.pathmorphing}
+	\usetikzlibrary{shapes.geometric}
+	\tikzset{>=latex'}
+
+\usepackage{pgfplots}
+\usetikzlibrary{pgfplots.dateplot}
+
+%\usepackage{gnuplot-lua-tikz} %para incluir gráficos de gnuplot usando el driver de TikZ
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{dsfont}
+\usepackage{nicefrac}
+\usepackage{mathrsfs}
+\usepackage[Euler]{upgreek}
+\usepackage[nointegrals]{wasysym}
+\usepackage[version=3,arrows=pgf]{mhchem}
+\usepackage[colorlinks,verbose]{hyperref}
+	\hypersetup{bookmarksnumbered, bookmarksopen, bookmarksopenlevel=2}
+	\hypersetup{pdfstartview=FitH}
+	%\hypersetup{pdfpagelayout=TwoColumnRight}
+
+\usepackage{booktabs}
+
+\usepackage{listings}
+	%\lstset{showspaces=true,showtabs=true,tab=\rightarrowfill} % DEBUGGING IT!
+	\lstloadlanguages{Java,[LaTeX]TeX}
+
+	\lstset{language=Java} %\lstset{language={[LaTeX]TeX}}
+	\lstset{backgroundcolor=\color{blue!5}}
+	\lstset{ % set number
+		numbers=left,
+		stepnumber=1,
+		numberstyle=\tiny\color{black!50},
+		numbersep=5pt
+	}
+	\lstset{
+		%basewidth={0.65em,0.45em}, % ugly! see documentation for details!
+		columns={[c]fullflexible}, % kind of acceptable ;)
+		tabsize=5,
+		showstringspaces=false,
+		%basicstyle=\footnotesize\ttfamily,
+		basicstyle=\ttfamily,
+		keywordstyle=\bfseries\color{blue!50!black},
+		%identifierstyle=\color{blue!75},
+		stringstyle=\color{green!50!black},
+		commentstyle=\slshape\color{black!50},
+		%mathescape=true;
+		%morecomment=[is]{/*}{*/}
+	}
+	%\renewcommand{\lstlistingname}{Fitting}
+	%\lstset{basicstyle=\footnotesize\ttfamily}
+	%\lstset{numbers=left, numberstyle=\tiny, numbersep=6pt}
+	%\lstset{backgroundcolor=\color{blue!10}}
+	%\lstset{captionpos=b}
+	%\lstset{xleftmargin=16pt}
+
+\usepackage{float}
+
+\newtheorem{definition}{Definición}[section]
+\newtheorem{theorem}{Teorema}[section]
+\newtheorem{examp}{Ejemplo}[section]
+\newenvironment{example}{\begin{examp} \upshape}{$\blacklozenge$ \end{examp}}
+
+\newtheorem{obs}{Observación}[section]
+\newenvironment{observation}{\begin{obs} \upshape}{$\blacktriangle$ \end{obs}}
+
+\newtheorem{algor}{Algoritmo}[section]
+\newenvironment{algorithm}{\begin{algor} \upshape}{$\blacksquare$ \end{algor}}
+
+\newtheorem{law}{Ley}[section]
+
+\newenvironment{ok}{\renewcommand{\labelitemi}{$\surd$}\begin{itemize}}{\end{itemize}}
+\newenvironment{not:ok}{\renewcommand{\labelitemi}{$\times$}\begin{itemize}}{\end{itemize}}
+
+\newcommand{\eg}{e.g.~}
+\newcommand{\ie}{i.e.~}
+
+\newcommand{\Emph}[1]{\textsc{#1}}
+%\newcommand{\Vec}[1]{\mathbf{#1}}
+\newcommand{\oldstyle}[1]{\ensuremath{\mathnormal{#1}}}
+
+\newcommand{\differential}[1]{\:d#1}
+\newcommand{\Power}{\mathscr{P}}
+
+% Unit vectors
+\newcommand{\iunitvec}{\hat{\imath}}
+\newcommand{\junitvec}{\hat{\jmath}}
+\newcommand{\kunitvec}{\hat{k}}
+\newcommand{\unitvec}[1]{\hat{#1}}
+\newcommand{\Unitvec}[1]{\widehat{#1}}
+
+\renewcommand{\labelenumi}{(\roman{enumi})}
+
+\newcounter{BloodyArabic}
+\newcommand{\RomanNumber}[1]{\setcounter{BloodyArabic}{#1}\textsc{\roman{BloodyArabic}}}
+\newcommand{\rungnuplot}[1]{\immediate\write18{cd ../plots; gnuplot #1.gp && mpost -tex=latex #1.mp}}
+\newcommand{\mtopgf}[1]{\immediate\write18{m4 #1.m4 | dpic -g > #1.tex}}
+
+\def\Lucifer{Hernán Rondelli}
+\def\Xime{Ximena Ebertz}
+\def\Lu{Lucía Soria}
+\def\Mati{Matías Curcio}
+
+\title{
+	\huge MyO -- Trabajo Práctico\\
+}
+\author{
+	\Xime \and \Mati \and \Lucifer \and \Lu
+}
+\date{\small $\text{2}^{\text{do}}$ Semestre 2024
+}
+
+\flushbottom
+\begin{document}
+
+\renewcommand{\contentsname}{Contenidos}
+\renewcommand{\listfigurename}{Listado de Figuras}
+\renewcommand{\listtablename}{Listado de Tablas}
+\renewcommand{\tablename}{Tabla}
+
+\pdfbookmark{Título}{title}\maketitle
+
+\section*{Introducción}
+
+\section*{Solución}
+
+$d$: tamaño del disco en MB. \\ 
+
+$f_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+
+$n$: cantidad de archivos. \\
+
+$f_{i-1} <= f_{i}$, con $i = 2, \ldots, n$. \\
+
+$c_{ij}$: cantidad de archivos $f_{i}$ que entran en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $c_{ij}$ es una constante entera, tal que $c_{ij} \in {0, 1}$\\
+
+\begin{verbatim}
+        f_1    f_2   ...    f_n
+-------------------------------
+x_1:   c_11   c_21   ...   c_n1
+x_2:   c_12   c_22   ...   c_n2
+...
+x_m:   c_1m   c_2m   ...   c_nm
+\end{verbatim}
+
+\begin{verbatim}
+
+Minimize:
+	x_1 + x_2 + ... + x_m
+
+Subject to:
+	c_11 x_1 + c_12 x_2 + ... + c_1m x_m >= 1
+	c_21 x_1 + c_22 x_2 + ... + c_2m x_m >= 1
+	...
+	c_n1 x_1 + c_n2 x_2 + ... + c_nm x_m >= 1
+\end{verbatim}
+
+\section*{Conclusiones}
+
+%\newpage
+\begin{thebibliography}{99}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% \bibitem{acosta}
+	%author:
+	%% Acosta, F.\
+	%date:
+	%% (2012)
+	%title:
+	%% `La Escuela Secundaria Argentina en perspectiva histórica y comparada: Modelos institucionales y desgranamiento durante el siglo \textsc{xx}',
+	%Journal:
+	%% \emph{Cadernos de História da Educação},
+	%pages:
+	%% vol.~11, no.~1, pp.~131--144.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\bibitem{durkhein}
+	%author:
+	Durkheim, E.\
+	%date:
+	(1996) %1922
+	%title:
+	\emph{Educación y sociología},
+	%place and publisher:
+	Barcelona: Ediciones Península,
+	%pages:
+	pp.~43--64.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\bibitem{dussel}
+	%author:
+	Dussel, I.\ y Caruso, M.\
+	%date:
+	(1999)
+	%title:
+	\emph{La intervención del aula: Una genealogía de las formas de enseñar},
+	%place and publisher:
+	Buenos Aires: Santillana,
+	%pages:
+	pp.~89--136.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% \bibitem{heller}
+	%author:
+	%% Heller, Á.\ y Ferenc, F.\
+	%date:
+	%% (1994)
+	%title:
+	%% \emph{El péndulo de la modernidad: Una lectura de la era moderna después de la caída del comunismo},
+	%place and publisher:
+	%% Barcelona: Ediciones Península,
+	%pages:
+	%% pp.~128--155.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\bibitem{naro}
+	%author:
+	Narodowski, M.\
+	%date:
+	(1999)
+	%title:
+	\emph{Después de clase: Desencantos y desafíos de la escuela actual},
+	%place and publisher:
+	Buenos Aires: Novedades Educativas.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% \bibitem{terigi}
+	%author:
+	%% Terigi, F.\
+	%date:
+	%% (2008)
+	%title:
+	%% `Los cambios en el formato de la escuela secundaria argentina: por qué son necesarios, por qué son  tan difíciles',
+	%Journal:
+	%% \emph{Propuesta Educativa},
+	%pages:
+	%\colorbox{red}{vol.~11}, no.~29, pp.~63--71.
+	%% no.~29, pp.~63--71.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\bibitem{varela}
+	%author:
+	Varela, J.\
+	%date:
+	(2009)
+	%title:
+	\emph{Educación (Sociología de la): Algunos modelos críticos},
+	%place and publisher:
+	Madrid: Editorial Plaza y Valdéz.
+	%pages:
+	%pp.~10--47.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\bibitem{viñao}
+	%author:
+	Viñao, A.\
+	%date:
+	(2002)
+	%title:
+	\emph{Sistemas educativos, culturas escolares y reformas: Continuidades y cambios},
+	%place and publisher:
+	Madrid: Ediciones Morata,
+	%pages:
+	pp.~15--29, 44--69.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{thebibliography}
+
+\end{document}
