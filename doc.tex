@@ -150,6 +150,10 @@
 \renewcommand{\listtablename}{Listado de Tablas}
 \renewcommand{\tablename}{Tabla}
 
+\newcommand{\minimize}{\texttt{Minimize}\quad\,\,}
+\newcommand{\maximize}{\texttt{Maximize}\quad\,\,}
+\newcommand{\subjto}{\texttt{Subject to}\quad}
+
 \pdfbookmark{Título}{title}\maketitle
 
 \section*{Introducción}
@@ -162,30 +166,22 @@ $f_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
 $n$: cantidad de archivos. \\
 
-$f_{i-1} <= f_{i}$, con $i = 2, \ldots, n$. \\
+$F_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $F_{ij} \in {0, 1}$, $0$ en el caso de que no esté\\
 
-$c_{ij}$: cantidad de archivos $f_{i}$ que entran en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $c_{ij}$ es una constante entera, tal que $c_{ij} \in {0, 1}$\\
+$D_{j}$ binaria: $1$ indica que es está usando el disco $j$.
 
-\begin{verbatim}
-        f_1    f_2   ...    f_n
--------------------------------
-x_1:   c_11   c_21   ...   c_n1
-x_2:   c_12   c_22   ...   c_n2
-...
-x_m:   c_1m   c_2m   ...   c_nm
-\end{verbatim}
-
-\begin{verbatim}
-
-Minimize:
-	x_1 + x_2 + ... + x_m
-
-Subject to:
-	c_11 x_1 + c_12 x_2 + ... + c_1m x_m >= 1
-	c_21 x_1 + c_22 x_2 + ... + c_2m x_m >= 1
-	...
-	c_n1 x_1 + c_n2 x_2 + ... + c_nm x_m >= 1
-\end{verbatim}
+\begin{alignat*}{2}
+	\minimize
+	& \sum_{j = 1}^{m} D_{j}\\
+	%\maximize
+	%& \sum_{i = 1}^{n}\sum_{j = 1}^{m} F_{ij}\\
+	\subjto
+	& \sum_{j = 1}^{m} F_{ij} = 1, \ \forall i \in \{1, \ldots, n\} \quad\text{(el archivo $i$ está en un solo disco)}\\
+	& \sum_{i = 1}^{n} f_{i} F_{ij} \le d\cdot D_{j}, \ \forall j \in \{1, \ldots, m\} \quad\text{(archivos que entran en el disco $j$)}\\
+	& F_{ij} \le D_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
+	& F_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
+	& D_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
+\end{alignat*}
 
 \section*{Conclusiones}
 
