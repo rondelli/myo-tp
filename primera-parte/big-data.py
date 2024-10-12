@@ -34,8 +34,8 @@ s.t
 
     3. generales
 
-    x_{i, j}, y_{j} >= 0
-    d_{j}, a_{i} pert {0, 1}
+    x_{i, j}, y_{j} pert {0, 1}
+    d_{j}, a_{i} >= 0
 
 '''
 
