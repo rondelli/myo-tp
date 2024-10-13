@@ -5,7 +5,7 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     d = capacidad_discos * 1000000
     f_i = tamaños_archivos
 
-    # ?
+    # esto no es una constraint del modelo en sí
     if d < 0 or any(f < 0 for f in f_i):
         return
 
@@ -31,34 +31,30 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
         model.addCons(sum(x_ij[i, j] * f_i[i] for i in range(cant_archivos)) <= d * y_j[j])
 
     model.optimize()
-
     sol = model.getBestSol()
 
-    # print (por ahora)
+    print()
     if sol is not None:
-        for j in range(cant_archivos):
-            if model.getVal(y_j[j]) > 0.5:  # se eligio el disco j
-                
-                archivos_en_disco = []
-                espacio_ocupado = 0
-                for i in range(cant_archivos):
-                    if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
-                        archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
-                        espacio_ocupado = espacio_ocupado + f_i[i]
+        cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
+        print(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
 
-                print(f"Disco {j+1}: {espacio_ocupado} MB")
+        for j in range(cant_discos):
+            archivos_en_disco = []
+            espacio_ocupado = 0
+            
+            for i in range(cant_archivos):
+                if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
+                    archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
+                    espacio_ocupado = espacio_ocupado + f_i[i]
 
-                for archivo in archivos_en_disco:
-                    print(archivo)
+            print(f"Disco {j+1}: {espacio_ocupado} MB")
+
+            for archivo in archivos_en_disco:
+                print(archivo)
+
+            print() # jas que feo
     else:
         print("No se encontró una solución factible.")
-
-capacidad_discos = 1
-nombres_archivos = ["archivo1", "archivo2", "archivo3", "archivo4", "archivo5"]
-tamaños_archivos = [200000, 3000, 5000, 122, 132]
-
-distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos)
-
 
 
 '''
