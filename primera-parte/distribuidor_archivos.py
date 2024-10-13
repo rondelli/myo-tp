@@ -1,7 +1,7 @@
 from pyscipopt import Model
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
-    return "holaa"
+    print(capacidad_discos, nombres_archivos, tamaños_archivos)
 
 
 model = Model("big_data")
