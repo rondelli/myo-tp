@@ -2,7 +2,7 @@ from pyscipopt import Model
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     model = Model("big_data")
-    d = capacidad_discos
+    d = capacidad_discos * 1000000
     f_i = tamaños_archivos
 
     # ?
@@ -34,13 +34,36 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
 
     sol = model.getBestSol()
 
+    # print (por ahora)
+    if sol is not None:
+        for j in range(cant_archivos):
+            if model.getVal(y_j[j]) > 0.5:  # se eligio el disco j
+                
+                archivos_en_disco = []
+                espacio_ocupado = 0
+                for i in range(cant_archivos):
+                    if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
+                        archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
+                        espacio_ocupado = espacio_ocupado + f_i[i]
 
+                print(f"Disco {j+1}: {espacio_ocupado} MB")
+
+                for archivo in archivos_en_disco:
+                    print(archivo)
+    else:
+        print("No se encontró una solución factible.")
+
+capacidad_discos = 1
+nombres_archivos = ["archivo1", "archivo2", "archivo3", "archivo4", "archivo5"]
+tamaños_archivos = [200000, 3000, 5000, 122, 132]
+
+distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos)
 
 
 
 '''
 d = capacidad de los discos CONSTANTE
-f_{i} = capacidad del archivo i CONSTANTE (input) - n archivos
+f_{i} = tamaño del archivo i CONSTANTE (input) - n archivos
 x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
 y_{j} = 1 si se elige el disco j, 0 si no
 
