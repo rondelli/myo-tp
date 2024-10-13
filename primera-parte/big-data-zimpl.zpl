@@ -1,18 +1,25 @@
-param d := read "a1.in" as "1n" use 1 skip 1; #d disk capacity
+# Disk size
+param d := read "a_1.in" as "1n" use 1 comment "#";
 
-param n := read "a1.in" as "1n" use 1 skip 4; #n number of files
+# Files f_{i} \forall i \in \{1, \ldots, n\}
+set F := { read "a_1.in" as "<1s>" skip 2 comment "#" };
 
-set files := { read "a1.in" as "<1s>" skip 7 };
-param size[files] := read "a1.in" as "<1s> 2n" skip 7;
+param n := card(F); # Number of files
+param m := n; # Number of disks
+
+# Disks
+set D := { 1 .. m };
+
+# File sizes of f_{i} \forall i \in \{1, \ldots, n\}
+param s[F] := read "a_1.in" as "<1s> 2n" skip 2 comment "#";
+
+var x[<i, j> in F * D] binary; #1 si el archivo i esta en el disco j
+var y[D] binary; #1 si se esta usando el disco j
+
+minimize number_of_disks: sum<j> in D: y[j];
 
 set I := {1..n};  
 set J := {1..n};  
-
-var F[I][J] binary; #1 si el archivo i esta en el disco j
-
-var D[J] binary; #1 si se esta usando el disco j
-
-minimize discos: sum <j> in J : D[j];
 
 subto c1: 
 	forall <i> in I: 
