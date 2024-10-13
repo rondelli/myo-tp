@@ -1,16 +1,28 @@
 from pyscipopt import Model
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
-    print(capacidad_discos, nombres_archivos, tamaños_archivos)
+    model = Model("big_data")
+
+    y_j = [0] * len(nombres_archivos)
+    obj = []
+
+    for i in range(len(y_j)):
+        var = model.addVar(f"y_{i}", vtype="INTEGER")
+        obj.append(var)
+
+    model.setObjective(sum(obj), sense="minimize")
+    print(obj)
 
 
-model = Model("big_data")
+
+
+
 
 
 
 '''
-d_{j} = capacidad del disco j CONSTANTE (input) - k discos
-a_{i} = capacidad del archivo i CONSTANTE (input) - n archivos
+d = capacidad de los discos
+f_{i} = capacidad del archivo i CONSTANTE (input) - n archivos
 x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
 y_{j} = 1 si se elige el disco j, 0 si no
 
@@ -40,23 +52,3 @@ s.t
 
 '''
 
-# esto NO ES LO QUE QUEREMOS MODELAR, está para recordar sintaxis jeje ;)
-x = model.addVar("x", vtype="INTEGER")
-y = model.addVar("y", vtype="INTEGER")
-
-model.setObjective(x + y, sense="maximize")
-
-model.addCons(2 * x - y >= 0)
-model.addCons(2 * x - y <= 100)
-
-model.addCons(x <= 10)
-model.addCons(x >= 0)
-
-model.addCons(y <= 100)
-model.addCons(y >= 0)
-
-model.optimize()
-
-sol = model.getBestSol()
-print(f"x: {sol[x]}")
-print(f"y: {sol[y]}")

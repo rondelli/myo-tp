@@ -1,15 +1,13 @@
 # disk capacities in TB (= 1.000.000 MB)
-13
+40
 
 # number of files to backup
-8
+6
 
 # files: file_id, size (in MB)
-archivo1 4565805
-archivo2 8042459
-archivo3 9785089
-archivo4 7065607
-archivo5 8069123
-archivo6 5698708
-archivo7 6895889
-archivo8 8040821
+archivo1 8147668
+archivo2 1992577
+archivo3 1402217
+archivo4 2042791
+archivo5 4943828
+archivo6 2829186
