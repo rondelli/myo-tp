@@ -2,10 +2,10 @@ from pyscipopt import Model
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     model = Model("big_data")
-    d = capacidad_discos
+    d = capacidad_discos * 1000000
     f_i = tamaños_archivos
 
-    # ?
+    # esto no es una constraint del modelo en sí
     if d < 0 or any(f < 0 for f in f_i):
         return
 
@@ -31,16 +31,40 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
         model.addCons(sum(x_ij[i, j] * f_i[i] for i in range(cant_archivos)) <= d * y_j[j])
 
     model.optimize()
-
     sol = model.getBestSol()
 
+    print()
+    print(f"Parámetros usados:\n"
+          f"    capacidad discos: {capacidad_discos} TB\n"
+          f"    archivos: {nombres_archivos}\n"
+          f"    tamaños: {tamaños_archivos}\n")
 
+    if sol is not None:
+        cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
+        print(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
 
+        for j in range(cant_discos):    # esto funciona porque los elige en orden ;)
+            archivos_en_disco = []
+            espacio_ocupado = 0
+
+            for i in range(cant_archivos):
+                if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
+                    archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
+                    espacio_ocupado = espacio_ocupado + f_i[i]
+
+            print(f"Disco {j+1}: {espacio_ocupado} MB")
+
+            for archivo in archivos_en_disco:
+                print(archivo)
+
+            print() # jas que feo
+    else:
+        print("No se encontró una solución factible.")
 
 
 '''
 d = capacidad de los discos CONSTANTE
-f_{i} = capacidad del archivo i CONSTANTE (input) - n archivos
+f_{i} = tamaño del archivo i CONSTANTE (input) - n archivos
 x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
 y_{j} = 1 si se elige el disco j, 0 si no
 
