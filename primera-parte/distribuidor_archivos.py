@@ -2,20 +2,44 @@ from pyscipopt import Model
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     model = Model("big_data")
+    d = capacidad_discos
+    f_i = tamaños_archivos
 
-    y_j = [0] * len(nombres_archivos)
-    obj = []
+    # ?
+    if d < 0 or any(f < 0 for f in f_i):
+        return
 
-    for i in range(len(y_j)):
-        var = model.addVar(f"y_{i}", vtype="INTEGER")
-        obj.append(var)
+    cant_archivos = len(nombres_archivos)
 
-    model.setObjective(sum(obj), sense="minimize")
-    print(obj)
+    # y_{j} = 1 si se elige el disco j, 0 si no
+    y_j = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(cant_archivos)]
+
+    model.setObjective(sum(y_j), sense="minimize")
+
+    # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
+    x_ij = {}
+    for i in range(cant_archivos):
+        for j in range(cant_archivos):  # No se puede tener más discos que archivos
+            x_ij[i, j] = model.addVar(f"x_{i}_{j}", vtype="BINARY")
+
+    # que los archivos se elijan solo para un disco
+    for i in range(cant_archivos):
+        model.addCons(sum(x_ij[i, j] for j in range(cant_archivos)) == 1)
+
+    # que no se pasen de capacidad los discos
+    for j in range(cant_archivos):
+        model.addCons(sum(x_ij[i, j] * f_i[i] for i in range(cant_archivos)) <= d * y_j[j])
+
+    model.optimize()
+
+    sol = model.getBestSol()
+
+
+
 
 
 '''
-d = capacidad de los discos
+d = capacidad de los discos CONSTANTE
 f_{i} = capacidad del archivo i CONSTANTE (input) - n archivos
 x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
 y_{j} = 1 si se elige el disco j, 0 si no
