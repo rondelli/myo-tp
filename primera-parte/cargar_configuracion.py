@@ -13,5 +13,3 @@ def leer_configuracion(nombre_archivo):
                 nombres_archivos.append(archivo[0])
                 tamaños_archivos.append(int(archivo[1]))
     return capacidad_disco, nombres_archivos, tamaños_archivos
-
-print(leer_configuracion("./a1.in"))

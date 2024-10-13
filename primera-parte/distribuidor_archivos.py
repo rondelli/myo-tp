@@ -1,10 +1,11 @@
 from pyscipopt import Model
 
-# Crear el modelo
+def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
+    return "holaa"
+
+
 model = Model("big_data")
 
-discos = [1024, 2331, 214]
-archivos = [23, 4, 86, 211, 66, 8437]
 
 
 '''

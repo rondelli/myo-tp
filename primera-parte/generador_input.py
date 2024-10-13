@@ -27,5 +27,3 @@ def generar_archivo_input(nombre_archivo):
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo]) + "\n")
 
-nombre_archivo = "a1.in"
-generar_archivo_input(nombre_archivo)
