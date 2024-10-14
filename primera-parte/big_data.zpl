@@ -1,9 +1,11 @@
+param input := "IN/a_1.in";
+
 # Tamaño del disco
-param d_t := read "a_1.in" as "1n" use 1 comment "#";
+param d_t := read input as "1n" use 1 comment "#";
 param d := d_t * 10**6;
 
 # Conjunto de archivos f_{i} \forall i \in \{1, \ldots, n\}
-set F := { read "a_1.in" as "<1s>" skip 2 comment "#" };
+set F := { read input as "<1s>" skip 2 comment "#" };
 
 # Cantidad de archivos
 param n := card(F);
@@ -15,7 +17,7 @@ param m := n;
 set D := { 1 .. m };
 
 # Tamaños de los archivos f_{i} \forall i \in \{1, \ldots, n\}
-param s[F] := read "a_1.in" as "<1s> 2n" skip 2 comment "#";
+param s[F] := read input as "<1s> 2n" skip 2 comment "#";
 
 # 1 si el archivo $i$ está en el disco $j$, 0 en caso contrario
 var x[<i, j> in F * D] binary;
@@ -34,3 +36,9 @@ subto c1:
 subto c2:
 	forall <j> in D:
 		sum<i> in F: s[i] * x[i, j] <= d * y[j];
+
+# No se puede elegir un disco vacío
+subto c3:
+	forall <j> in D:
+		sum<i> in F: x[i, j] <= n * y[j];
+
