@@ -1,4 +1,4 @@
-from pyscipopt import Model
+import os
 
 def generar_output(nombre_archivo, nombres_archivos, model, x_i, b_i, f_i):
     cant_archivos = len(nombres_archivos)
@@ -6,7 +6,8 @@ def generar_output(nombre_archivo, nombres_archivos, model, x_i, b_i, f_i):
     archivos_elegidos = []
     importancia_total = 0
 
-    with open(nombre_archivo, 'w') as f:
+    ruta_out = os.path.join(os.path.dirname(__file__), '.', 'OUT', nombre_archivo)
+    with open(ruta_out, 'w') as f:
         
         f.write(f"Para la configuracion del archivo, se han elegido {cant_archivos_elegidos} archivos.\n")
 
@@ -18,7 +19,7 @@ def generar_output(nombre_archivo, nombres_archivos, model, x_i, b_i, f_i):
         for archivo in archivos_elegidos:
             f.write(archivo + "\n")
         
-        f.write(f"La suma de sus indicadores de importancia da {importancia_total}.")
+        f.write(f"\nLa suma de sus indicadores de importancia da {importancia_total}.")
 
 def generar_output_fallido(nombre_archivo):
     with open(nombre_archivo, 'w') as f:

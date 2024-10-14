@@ -1,5 +1,5 @@
 from pyscipopt import Model
-from configuracion import generardor_output
+from  generardor_output_2 import *
 
 def distribuir_archivos(d_t, F, s, I):
     model = Model("importance")
@@ -22,6 +22,6 @@ def distribuir_archivos(d_t, F, s, I):
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        generardor_output.generar_output("a_2.out", F, model, x, I, s)
+        generar_output("b_1.out", F, model, x, I, s)
     else:
-        generardor_output.generar_output_fallido("a_2.out")
+        generar_output_fallido("b_1.out")

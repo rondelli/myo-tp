@@ -1,5 +1,5 @@
 from pyscipopt import Model
-from configuracion import generardor_output
+from generardor_output_1 import *
 
 def distribuir_archivos(d_t, F, s):
     model = Model("big_data")
@@ -34,14 +34,14 @@ def distribuir_archivos(d_t, F, s):
         model.addCons(sum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
     # si el disco no tiene archivos, no puede haber sido elegido
-    #for j in range(m):
-    #    model.addCons(sum(x[i, j] for i in range(n)) <= n * y[j])
+    for j in range(m):
+        model.addCons(sum(x[i, j] for i in range(n)) <= n * y[j])
 
     model.optimize()
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        generardor_output.generar_output("OUT\'a_1.in", F, model, y, x, s)
+        generar_output("a_1.out", F, model, y, x, s)
     else:
-        generardor_output.generar_output_fallido("a_1.out")
+        generar_output_fallido("a_1.out")
  

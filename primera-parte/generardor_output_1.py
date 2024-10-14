@@ -1,10 +1,11 @@
-from pyscipopt import Model
+import os
 
 def generar_output(nombre_archivo, nombres_archivos, model, y_j, x_ij, f_i):
     cant_archivos = len(nombres_archivos)
     cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
 
-    with open(nombre_archivo, 'w') as f:
+    ruta_out = os.path.join(os.path.dirname(__file__), '.', 'OUT', nombre_archivo)
+    with open(ruta_out, 'w') as f:
         
         f.write(f"Para la configuracion del archivo, {cant_discos} discos son suficientes.\n")
         
