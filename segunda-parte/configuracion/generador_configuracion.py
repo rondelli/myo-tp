@@ -28,5 +28,3 @@ def generar_configuracion(nombre_archivo):
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo][0]) + " " + str(archivos[archivo][1]) + "\n")
 
-generar_configuracion("prueba.in")
-
