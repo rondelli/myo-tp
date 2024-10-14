@@ -137,7 +137,7 @@
 	\huge MyO -- Trabajo Práctico\\
 }
 \author{
-	\Xime \and \Mati \and \Lucifer \and \Lu
+	\Mati \and \Xime \and \Lucifer \and \Lu
 }
 \date{\small $\text{2}^{\text{do}}$ Semestre 2024
 }
@@ -182,7 +182,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	\subjto
 	& \sum_{j = 1}^{m} x_{ij} = 1, \ \forall i \in \{1, \ldots, n\} \quad\text{(el archivo $i$ debe estar en un solo disco)}\\
 	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j}, \ \forall j \in \{1, \ldots, m\} \quad\text{(archivos que entran en el disco $j$)}\\
-	& x_{ij} \le y_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
+	% & x_{ij} \le y_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
