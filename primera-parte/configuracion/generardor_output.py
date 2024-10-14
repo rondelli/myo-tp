@@ -21,3 +21,7 @@ def generar_output(nombre_archivo, cant_archivos, nombres_archivos, model, y_j, 
 
             for archivo in archivos_en_disco:
                 f.write(archivo + "\n")
+
+def generar_output_fallido(nombre_archivo):
+    with open(nombre_archivo, 'w') as f:
+        f.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
