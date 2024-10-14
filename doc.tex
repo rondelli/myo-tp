@@ -86,6 +86,8 @@
 	%\lstset{captionpos=b}
 	%\lstset{xleftmargin=16pt}
 
+\usepackage{listingsutf8}
+
 \usepackage{float}
 
 \newtheorem{definition}{Definición}[section]
@@ -156,9 +158,18 @@
 
 \pdfbookmark{Título}{title}\maketitle
 
-\section*{Introducción}
+\tableofcontents
 
-\section*{Modelo}
+\section{Primera parte}
+
+Se deben realizar backups de $n$ archivos de la empresa \emph{BigData}
+en discos idénticos de capacidad $d$, sin dividir los archivos. Cada
+archivo es menor que la capacidad de un disco. Se necesita saber cuál es
+la cantidad mínima de discos necesarios para almacenar todos los
+archivos, considerando la capacidad de cada disco y el tamaño de cada
+archivo.
+
+\subsection{Modelo Lineal}
 
 $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
@@ -187,32 +198,31 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
-\section*{Modelo Zimpl}
+\newpage
+\subsection{Modelo Zimpl}
 
-% Esto no es Python
-\begin{lstlisting}
-package main
+\lstinputlisting[inputencoding=utf8/latin1]{primera-parte/big-data.zpl}
 
-import "fmt"
+\newpage
+\subsection*{Modelo PySCIPOpt}
 
-func main() {
-	fmt.Printf("Viva Peron\n")
-}
-\end{lstlisting}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generador_configuracion.py}
 
-\section*{Modelo PySCIPOpt}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generardor_output.py}
 
-% Código que no está en el repo
-\begin{lstlisting}[language=Python]
-#!/usr/bin/env python
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/leer_configuracion.py}
 
-print("Viva Peron")
-\end{lstlisting}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
 
-% Código que está en el repo.
-\lstinputlisting[language=Python]{archivo-borrame.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/main.py}
+
+\section*{Segunda parte}
+
+\section*{Tercera parte}
 
 \section*{Conclusiones}
+
+El peronismo es lo más grande que hay.
 
 %\newpage
 \begin{thebibliography}{99}
