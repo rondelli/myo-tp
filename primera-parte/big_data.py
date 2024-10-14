@@ -1,5 +1,4 @@
 from pyscipopt import Model
-from generardor_output_1 import *
 
 def distribuir_archivos(d_t, F, s):
     model = Model("big_data")
@@ -41,7 +40,7 @@ def distribuir_archivos(d_t, F, s):
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        generar_output("a_1.out", F, model, y, x, s)
+        return [F, model, y, x, s]
     else:
-        generar_output_fallido("a_1.out")
+        return None
  

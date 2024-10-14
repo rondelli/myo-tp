@@ -14,17 +14,15 @@ def generar_configuracion(nombre_archivo):
     cant_archivos = random.randint(1, 50)
     archivos = generar_archivos(cant_archivos)
 
-    ruta_in = os.path.join(os.path.dirname(__file__), '.', 'IN', nombre_archivo)
-    with open(ruta_in, 'w') as f:
-        # capacidad aleatoria
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    with open(ruta_in, "w") as f:
+        
         f.write(f"# Capacidad de dicos en TB (= 1.000.000 MB)\n")
         f.write(str(capacidad_discos) + "\n")
         
-        # cantidad de archivos
         f.write(f"\n# Cantidad de archivos para backup\n")
         f.write(str(cant_archivos) + "\n")
 
-        # listado de archivos
         f.write(f"\n# Archivos: archivo_id, tamaño (MB) \n")
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo]) + "\n")
@@ -34,13 +32,12 @@ def leer_configuracion(nombre_archivo):
     nombres_archivos = []
     tamaños_archivos = []
 
-    ruta_in = os.path.join(os.path.dirname(__file__), '.', 'IN', nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
     with open(ruta_in, "r") as f:
         lineas = f.readlines()
         capacidad_disco = int(lineas[1].strip())
-        # Los archivos empiezan en la linea 8:
+
         for i in range(7, len(lineas)):
-            # Saltear las lineas vacias
             if lineas[i].strip():
                 archivo = lineas[i].split()
                 nombres_archivos.append(archivo[0])

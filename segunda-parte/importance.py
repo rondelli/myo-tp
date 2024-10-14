@@ -22,6 +22,6 @@ def distribuir_archivos(d_t, F, s, I):
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        generar_output("b_1.out", F, model, x, I, s)
+        return [F, model, x, I, s]
     else:
-        generar_output_fallido("b_1.out")
+        return None

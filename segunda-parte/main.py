@@ -20,5 +20,9 @@ print(f"Params:\n"
       f"Files: \n" + "\n".join([f"    {nombre}: {tamaño}, {importancia}" for nombre, tamaño, importancia in zip(nombres_archivos, tamaños_archivos, importancia_archivos)]))
 print()
 
-distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
+solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
+if solucion is not None:
+    generar_output(f"{archivo[:-3]}.out", solucion)
+else:
+    generar_output_fallido(f"{archivo[:-3]}.out")
 
