@@ -1,0 +1,15 @@
+# disk capacities in TB (= 1.000.000 MB)
+38
+
+# number of files to backup
+8
+
+# files: file_id, size (in MB), importance
+archivo1 3845501 10
+archivo2 5378826 7
+archivo3 9188202 8
+archivo4 4870064 4
+archivo5 6952998 9
+archivo6 8045034 8
+archivo7 1324513 6
+archivo8 4880728 4
