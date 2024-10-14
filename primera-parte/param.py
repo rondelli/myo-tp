@@ -13,12 +13,12 @@ file = sys.argv[1]
 print(f"Using {file}\n")
 
 generador_configuracion.generar_configuracion(sys.argv[1])
-capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion.leer_configuracion(f"./{file}")
+disks_capacity, file_names, file_sizes = leer_configuracion.leer_configuracion(f"./{file}")
 
 print(f"Params:\n"
-      f"Disks capacity: {capacidad_disco} TB\n"
-      f"Amount of disks: {len(nombres_archivos)}\n"
-      f"Files: \n" + "\n".join([f"    {nombre}: {tamaño}" for nombre, tamaño in zip(nombres_archivos, tamaños_archivos)]))
+      f"Disks capacity: {disks_capacity} TB\n"
+      f"Amount of disks: {len(file_names)}\n"
+      f"Files: \n" + "\n".join([f"    {nombre}: {tamaño}" for nombre, tamaño in zip(file_names, file_sizes)]))
 print()
 
-big_data.distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos)
+big_data.distribuir_archivos(disks_capacity, file_names, file_sizes)
