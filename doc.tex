@@ -160,16 +160,21 @@
 
 \tableofcontents
 
+\newpage
+
 \section{Primera parte}
+
+\subsection{Introducción}
 
 Se deben realizar backups de $n$ archivos de la empresa \emph{BigData}
 en discos idénticos de capacidad $d$, sin dividir los archivos. Cada
 archivo es menor que la capacidad de un disco. Se necesita saber cuál es
 la cantidad mínima de discos necesarios para almacenar todos los
-archivos, considerando la capacidad de cada disco y el tamaño de cada
-archivo.
+archivos, considerando la capacidad de cada disco y el tamaño de cada archivo. 
 
 \subsection{Modelo Lineal}
+
+Para minimizar la cantidad de discos, utilizamos una variable binaria que nos indica si se esta usando un disco o no y otra para identificar si cada archivo pertenece al disco j. Luego, armamos 3 restricciones principales: la primera se asegura que no cada archivo no esté dividido; la segunda, que los tamaños de los archivos de cada disco no superen la capacidad del disco (siempre y cuando se esté usando ese disco); y la tercera define que ningún disco quede vacío (sería equivalente a la implicación $x_{ij} \implies y_i$
 
 $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
@@ -219,6 +224,8 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 \newpage
 \section{Segunda parte}
 
+\subsection{Introducción}
+
 Se asigna un indicador de importancia $I$ a cada archivo según características
 como sensibilidad, frecuencia de uso, y rareza. El objetivo es encontrar un
 subconjunto de archivos que quepan en un disco de tamaño $d$, y que la suma de
@@ -226,11 +233,13 @@ indicadores de importancia sea máxima.
 
 \subsection{Modelo Lineal}
 
+Para maximizar la importancia de los archivos en un disco, usamos una variable binaria $x_i$ que indica si el archivo $i$ está o no en el disco, y la multiplicamos por la constante $I_i$ que indica la importancia del archivo $i$. La restricción que utilizamos para este problema lineal es que la suma de los tamaños de los archivos no superen el tamaño del disco. 
+
 $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
 $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
-$I$: conjunto de indicadores de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
+$I_i$ constante: indicador de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
 
 $n$: cantidad de archivos. \\
 
@@ -262,8 +271,8 @@ $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{
 
 %\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
 
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/main.py}
-
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/main.py}
+\newpage
 \section{Tercera parte}
 
 \section{Conclusiones}
