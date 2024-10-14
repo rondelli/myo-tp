@@ -1,5 +1,6 @@
 # Disk size
-param d := read "a_1.in" as "1n" use 1 comment "#";
+param d_t := read "a_1.in" as "1n" use 1 comment "#";
+param d := d_t * 10**6;
 
 # Files f_{i} \forall i \in \{1, \ldots, n\}
 set F := { read "a_1.in" as "<1s>" skip 2 comment "#" };
@@ -18,13 +19,9 @@ var y[D] binary; #1 si se esta usando el disco j
 
 minimize number_of_disks: sum<j> in D: y[j];
 
-set I := {1..n};  
-set J := {1..n};  
-
-subto c1: 
-	forall <i> in I: 
-		(sum <j> in J: F[i][j]) = 1; #cada archivo debe estar en un solo disco
-
-subto c2: 
-	forall <j> in J:
-		sum <i> in I: size[i] * F[i][j] <= d * D[J];
+subto c1:
+	forall <i> in F:
+		sum<j> in D: x[i, j] == 1; #cada archivo debe estar en un solo disco
+subto c2:
+	forall <j> in D:
+		sum<i> in F: s[i] * x[i, j] <= d * y[j];
