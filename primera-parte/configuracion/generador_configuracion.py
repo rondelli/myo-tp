@@ -9,9 +9,9 @@ def generar_archivos(cant_archivos):
     return archivos
 
 
-def generar_archivo_input(nombre_archivo):
+def generar_configuracion(nombre_archivo):
     capacidad_discos = random.randint(1, 100)
-    cant_archivos = random.randint(1, 10)
+    cant_archivos = random.randint(1, 50)
     archivos = generar_archivos(cant_archivos)
     with open(nombre_archivo, 'w') as f:
         # capacidad aleatoria
