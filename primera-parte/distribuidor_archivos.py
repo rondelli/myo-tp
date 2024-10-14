@@ -1,4 +1,5 @@
 from pyscipopt import Model
+from configuracion import generardor_output
 
 def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     model = Model("big_data")
@@ -30,6 +31,10 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     for j in range(cant_archivos):
         model.addCons(sum(x_ij[i, j] * f_i[i] for i in range(cant_archivos)) <= d * y_j[j])
 
+    # si el disco no tiene archivos, no puede haber sido elegido
+    for j in range(cant_archivos):
+        model.addCons(sum(x_ij[i, j] for i in range(cant_archivos)) <= cant_archivos * y_j[j])
+
     model.optimize()
     sol = model.getBestSol()
 
@@ -39,14 +44,18 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
           f"    archivos: {nombres_archivos}\n"
           f"    tamaños: {tamaños_archivos}\n")
 
-    if sol is not None:
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
+        generardor_output.generar_output("a_1.out", nombres_archivos, model, y_j, x_ij, f_i)
+    else:
+        generardor_output.generar_output_fallido("a_1.out")
+        
+        """
         cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
         print(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
 
         for j in range(cant_discos):    # esto funciona porque los elige en orden ;)
             archivos_en_disco = []
             espacio_ocupado = 0
-
             for i in range(cant_archivos):
                 if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
                     archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
@@ -58,9 +67,7 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
                 print(archivo)
 
             print() # jas que feo
-    else:
-        print("No se encontró una solución factible.")
-
+            """
 
 '''
 d = capacidad de los discos CONSTANTE
