@@ -171,19 +171,19 @@ archivo.
 
 \subsection{Modelo Lineal}
 
-$F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
+$F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
 $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
 $n$: cantidad de archivos. \\
 
-$m$: cantidad de discos máxima necesaria, en principio $m = n$. \\
+$m$: cantidad de discos disponibles, a lo sumo, un disco por archivo, $m = n$. \\
 
 $D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
 
-$d$: tamaño del disco en GB. \\ 
+$d$: tamaño del disco en TB. \\ 
 
-$x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in {0, 1}$, $0$ en el caso de que no esté\\
+$x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
 
 $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
@@ -191,8 +191,8 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
-	& \sum_{j = 1}^{m} x_{ij} = 1, \ \forall i \in \{1, \ldots, n\} \quad\text{(el archivo $i$ debe estar en un solo disco)}\\
-	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j}, \ \forall j \in \{1, \ldots, m\} \quad\text{(archivos que entran en el disco $j$)}\\
+	& \sum_{j = 1}^{m} x_{ij} = 1 \qquad \forall i \in \{1, \ldots, n\},\ \text{(el archivo $i$ debe estar en un solo disco)}\\
+	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(archivos que entran en el disco $j$)}\\
 	% & x_{ij} \le y_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
@@ -217,6 +217,51 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/main.py}
 
 \section{Segunda parte}
+
+Se asigna un indicador de importancia $I$ a cada archivo según características
+como sensibilidad, frecuencia de uso, y rareza. El objetivo es encontrar un
+subconjunto de archivos que quepan en un disco de tamaño $d$, y que la suma de
+indicadores de importancia sea máxima.
+
+\subsection{Modelo Lineal}
+
+$F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
+
+$s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+
+$I$: conjunto de indicadores de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
+
+$n$: cantidad de archivos. \\
+
+$d$: tamaño del disco en TB. \\ 
+
+$x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{1, \ldots, n\}$, donde $x_{i} \in \{0, 1\}$, $0$ en el caso de que no esté\\
+
+\begin{alignat*}{2}
+	\maximize
+	& \sum_{i = 1}^{n} I_{i} \cdot x_{i}\\
+	\subjto
+	& \sum_{i = 1}^{n} s_{i} x_{i} \le d,\ \quad\text{(archivos que entran en el disco)}\\
+	& x_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}
+\end{alignat*}
+
+\newpage
+\subsection{Modelo Zimpl}
+
+\lstinputlisting[inputencoding=utf8/latin1]{segunda-parte/importance.zpl}
+
+\newpage
+\subsection{Modelo PySCIPOpt}
+
+%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generador_configuracion.py}
+
+%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generardor_output.py}
+
+%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/leer_configuracion.py}
+
+%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
+
+%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/main.py}
 
 \section{Tercera parte}
 
