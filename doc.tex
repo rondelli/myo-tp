@@ -55,9 +55,9 @@
 
 \usepackage{listings}
 	%\lstset{showspaces=true,showtabs=true,tab=\rightarrowfill} % DEBUGGING IT!
-	\lstloadlanguages{Java,[LaTeX]TeX}
+	\lstloadlanguages{Java,Python,[LaTeX]TeX}
 
-	\lstset{language=Java} %\lstset{language={[LaTeX]TeX}}
+	%\lstset{language=Java} %\lstset{language={[LaTeX]TeX}}
 	\lstset{backgroundcolor=\color{blue!5}}
 	\lstset{ % set number
 		numbers=left,
@@ -158,7 +158,7 @@
 
 \section*{Introducción}
 
-\section*{Solución}
+\section*{Modelo}
 
 $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
@@ -186,6 +186,31 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
+
+\section*{Modelo Zimpl}
+
+% Esto no es Python
+\begin{lstlisting}
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Printf("Viva Peron\n")
+}
+\end{lstlisting}
+
+\section*{Modelo PySCIPOpt}
+
+% Código que no está en el repo
+\begin{lstlisting}[language=Python]
+#!/usr/bin/env python
+
+print("Viva Peron")
+\end{lstlisting}
+
+% Código que está en el repo.
+\lstinputlisting[language=Python]{archivo-borrame.py}
 
 \section*{Conclusiones}
 
