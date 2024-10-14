@@ -4,7 +4,6 @@ def generar_archivos(cant_archivos):
     archivos = {}
     contador = 1
     for i in range(cant_archivos):
-        # {nombreArchivo: [tamaño, importancia] }
         archivos["archivo" + str(contador)] = [random.randint(1000000, 10000000), random.randint(1, 10)]
         contador += 1
     return archivos
@@ -28,5 +27,4 @@ def generar_configuracion(nombre_archivo):
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo][0]) + " " + str(archivos[archivo][1]) + "\n")
 
-generar_configuracion("prueba.in")
 
