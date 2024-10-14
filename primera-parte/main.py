@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from configuracion import generador_configuracion
 from configuracion import leer_configuracion
 import distribuidor_archivos
