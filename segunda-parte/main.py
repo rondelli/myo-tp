@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
-from configuracion import generador_configuracion
-from configuracion import leer_configuracion
-import importance
+from configuracion_2 import *
+from importance import *
 
 if len(sys.argv) != 2:
     print(f"Uso: {sys.argv[0]} nombre_archivo")
@@ -12,8 +11,8 @@ if len(sys.argv) != 2:
 archivo = sys.argv[1]
 print(f"Utilizando {archivo}\n")
 
-generador_configuracion.generar_configuracion(archivo)
-capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion.leer_configuracion(f"./{archivo}")
+generar_configuracion(archivo)
+capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(f"./{archivo}")
 
 print(f"Params:\n"
       f"Disks capacity: {capacidad_disco} TB\n"
@@ -21,5 +20,9 @@ print(f"Params:\n"
       f"Files: \n" + "\n".join([f"    {nombre}: {tamaño}, {importancia}" for nombre, tamaño, importancia in zip(nombres_archivos, tamaños_archivos, importancia_archivos)]))
 print()
 
-importance.distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
+solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
+if solucion is not None:
+    generar_output(f"{archivo[:-3]}.out", solucion)
+else:
+    generar_output_fallido(f"{archivo[:-3]}.out")
 
