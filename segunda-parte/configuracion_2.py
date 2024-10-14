@@ -17,15 +17,13 @@ def generar_configuracion(nombre_archivo):
 
     ruta_in = os.path.join(os.path.dirname(__file__), '.', 'IN', nombre_archivo)
     with open(ruta_in, 'w') as f:
-        # capacidad aleatoria
+        
         f.write(f"# Capacidad de dicos en TB (= 1.000.000 MB)\n")
         f.write(str(capacidad_discos) + "\n")
         
-        # cantidad de archivos
         f.write(f"\n# Cantidad de archivos para backup\n")
         f.write(str(cant_archivos) + "\n")
 
-        # listado de archivos
         f.write(f"\n# Archivos: archivo_id, tamaño (MB), importancia\n")
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo][0]) + " " + str(archivos[archivo][1]) + "\n")
@@ -38,11 +36,10 @@ def leer_configuracion(nombre_archivo):
 
     ruta_in = os.path.join(os.path.dirname(__file__), '.', 'IN', nombre_archivo)
     with open(ruta_in, "r") as f:
+        
         lineas = f.readlines()
         capacidad_disco = int(lineas[1].strip())
-        # Los archivos empiezan en la linea 8:
         for i in range(7, len(lineas)):
-            # Saltear las lineas vacias
             if lineas[i].strip():
                 archivo = lineas[i].split()
                 nombres_archivos.append(archivo[0])
