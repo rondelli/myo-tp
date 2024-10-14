@@ -160,27 +160,31 @@
 
 \section*{Solución}
 
-$d$: tamaño del disco en MB. \\ 
+$F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
-$f_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+$s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
 $n$: cantidad de archivos. \\
 
-$F_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $F_{ij} \in {0, 1}$, $0$ en el caso de que no esté\\
+$m$: cantidad de discos máxima necesaria, en principio $m = n$. \\
 
-$D_{j}$ binaria: $1$ indica que es está usando el disco $j$.
+$D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
+
+$d$: tamaño del disco en GB. \\ 
+
+$x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in {0, 1}$, $0$ en el caso de que no esté\\
+
+$y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
 \begin{alignat*}{2}
 	\minimize
-	& \sum_{j = 1}^{m} D_{j}\\
-	%\maximize
-	%& \sum_{i = 1}^{n}\sum_{j = 1}^{m} F_{ij}\\
+	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
-	& \sum_{j = 1}^{m} F_{ij} = 1, \ \forall i \in \{1, \ldots, n\} \quad\text{(el archivo $i$ está en un solo disco)}\\
-	& \sum_{i = 1}^{n} f_{i} F_{ij} \le d\cdot D_{j}, \ \forall j \in \{1, \ldots, m\} \quad\text{(archivos que entran en el disco $j$)}\\
-	& F_{ij} \le D_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
-	& F_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
-	& D_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
+	& \sum_{j = 1}^{m} x_{ij} = 1, \ \forall i \in \{1, \ldots, n\} \quad\text{(el archivo $i$ debe estar en un solo disco)}\\
+	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j}, \ \forall j \in \{1, \ldots, m\} \quad\text{(archivos que entran en el disco $j$)}\\
+	& x_{ij} \le y_{j}M \qquad\text{(no se puede usar un disco vacío)}\\
+	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
+	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
 \section*{Conclusiones}

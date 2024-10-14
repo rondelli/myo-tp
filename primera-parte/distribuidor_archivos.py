@@ -39,7 +39,12 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     model.optimize()
     sol = model.getBestSol()
 
-    #print()
+    print()
+    print(f"Parámetros usados:\n"
+          f"    capacidad discos: {capacidad_discos} TB\n"
+          f"    archivos: {nombres_archivos}\n"
+          f"    tamaños: {tamaños_archivos}\n")
+
     if sol is not None:
         generardor_output.generar_output("a_1.out", cant_archivos, nombres_archivos, model, y_j, x_ij, f_i)
         
@@ -47,11 +52,9 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
         cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
         print(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
 
-        for j in range(cant_discos):
+        for j in range(cant_discos):    # esto funciona porque los elige en orden ;)
             archivos_en_disco = []
             espacio_ocupado = 0
-            
-            #if model.getVal(y_j[j]) > 0.5:
             for i in range(cant_archivos):
                 if model.getVal(x_ij[i, j]) > 0.5: # se eligio el archivo
                     archivos_en_disco.append(f"{nombres_archivos[i]}  {f_i[i]}")
