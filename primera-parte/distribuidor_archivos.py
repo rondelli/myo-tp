@@ -35,7 +35,6 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
     for j in range(cant_archivos):
         model.addCons(sum(x_ij[i, j] for i in range(cant_archivos)) <= cant_archivos * y_j[j])
 
-
     model.optimize()
     sol = model.getBestSol()
 
@@ -46,7 +45,7 @@ def distribuir_archivos(capacidad_discos, nombres_archivos, tamaños_archivos):
           f"    tamaños: {tamaños_archivos}\n")
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        generardor_output.generar_output("a_1.out", cant_archivos, nombres_archivos, model, y_j, x_ij, f_i)
+        generardor_output.generar_output("a_1.out", nombres_archivos, model, y_j, x_ij, f_i)
     else:
         generardor_output.generar_output_fallido("a_1.out")
         

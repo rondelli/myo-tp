@@ -1,7 +1,7 @@
 from pyscipopt import Model
 
-def generar_output(nombre_archivo, cant_archivos, nombres_archivos, model, y_j, x_ij, f_i):
-
+def generar_output(nombre_archivo, nombres_archivos, model, y_j, x_ij, f_i):
+    cant_archivos = len(nombres_archivos)
     cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y_j[j]) > 0.5)
 
     with open(nombre_archivo, 'w') as f:
