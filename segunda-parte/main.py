@@ -14,12 +14,6 @@ print(f"Utilizando {archivo}\n")
 generar_configuracion(archivo)
 capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(f"./{archivo}")
 
-print(f"Params:\n"
-      f"Disks capacity: {capacidad_disco} TB\n"
-      f"Amount of disks: {len(nombres_archivos)}\n"
-      f"Files: \n" + "\n".join([f"    {nombre}: {tamaño}, {importancia}" for nombre, tamaño, importancia in zip(nombres_archivos, tamaños_archivos, importancia_archivos)]))
-print()
-
 solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
 if solucion is not None:
     generar_output(f"{archivo[:-3]}.out", solucion)
