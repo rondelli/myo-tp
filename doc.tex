@@ -212,7 +212,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
 \subsection{Modelo Zimpl}
 
-A continuación se presenta el modelo Zimpl, con los comentarios
+A continuación presentamos el modelo Zimpl, con los comentarios
 correspondientes que indican la relación con el modelo lineal de la sección
 anterior.
 
@@ -222,15 +222,31 @@ anterior.
 \newpage
 \subsection{Modelo PySCIPOpt}
 
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generador_configuracion.py}
+Como parte del trabajo, incluimos una implementación del modelo utilizando
+Python, con la librería PySCIPOpt. La siguiente implementación corresponde 
+a una función equivalente al código presentado con Zimpl.
 
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generador_output.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/big_data.py}
+
+Esta función recibe los datos leidos de un archivo de configuración creado 
+con datos aleatorios, implementado con Python. El siguiente código 
+muestra las funciones necesarias para generar este archivo.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion_1.py}
+
+La solución incluye un script ejecutable que recibe como parámetro el nombre del 
+archivo a generar, genera el archivo y calcula el resultado del modelo. Luego, 
+genera el output correspondiente.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/big_data_main.py}
+
+Utilizamos las siguientes funciones para generar el output.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output.py}
 
 %\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/leer_configuracion.py}
 
 %\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
-
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/big_data_main.py}
 
 \newpage
 \section{Segunda parte}
