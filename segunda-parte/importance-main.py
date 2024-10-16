@@ -2,6 +2,7 @@
 
 import sys
 from configuracion_2 import *
+from generador_output_2 import *
 from importance import *
 
 if len(sys.argv) != 2:

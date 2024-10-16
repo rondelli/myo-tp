@@ -2,7 +2,7 @@
 
 import sys
 from configuracion_1 import *
-from generardor_output_1 import *
+from generador_output_1 import *
 from big_data import *
 
 if len(sys.argv) != 2:
