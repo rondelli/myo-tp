@@ -242,11 +242,7 @@ genera el output correspondiente.
 
 Utilizamos las siguientes funciones para generar el output.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output.py}
-
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/leer_configuracion.py}
-
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output_1.py}
 
 \newpage
 \section{Segunda parte}
@@ -290,22 +286,38 @@ $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{
 \newpage
 \subsection{Modelo Zimpl}
 
-A continuación se presenta el modelo Zimpl, con los comentarios correspondientes que indican la relación con el modelo lineal de la sección anterior.
+A continuación presentamos el modelo Zimpl, con los comentarios correspondientes que indican la relación con el modelo lineal de la sección anterior.
 
 \lstinputlisting[inputencoding=utf8/latin1]{segunda-parte/importance.zpl}
 
 \newpage
 \subsection{Modelo PySCIPOpt}
 
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generador_configuracion.py}
+De la misma manera que en el modelo anterior, generamos el modelo, la configuración y los 
+archivos de output utilizando Python.
 
-%\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/generardor_output.py}
+El modelo es el siguiente.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/importance.py}
+
+Los archivos de configuración se generan de manera similar al modelo previo.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/configuracion_2.py}
+
+El script ejecutable realiza los mismos pasos que el del modelo anterior, pero, considerando 
+la importancia de cada archivo.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/importance-main.py}
+
+Luego, el output se almacena de la siguiente manera.
+
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generardor_output_2.py}
 
 %\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion/leer_configuracion.py}
 
 %\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/distribuidor_archivos.py}
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/importance-main.py}
+
 
 %\newpage
 %\section{Tercera parte}
