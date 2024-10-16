@@ -176,13 +176,12 @@ archivo.
 
 Para minimizar la cantidad de discos, utilizamos una variable binaria
 $y_{j}$ que nos indica si se esta usando el disco $j$ o no, y otra
-variable $x_{ij}$ para identificar si cada archivo $i$ pertenece al
-disco $j$. Luego, armamos 3 restricciones principales: la primera se
-asegura que no cada archivo no esté dividido; la segunda, que los
-tamaños de los archivos en cada disco no superen la capacidad del disco
-(siempre y cuando se esté usando ese disco); y la tercera define que
-ningún disco quede vacío (sería equivalente a la implicación $x_{ij}
-\Rightarrow y_i$).
+variable binaria $x_{ij}$ para identificar si cada archivo $i$ se guarda
+en el disco $j$. Luego, establecimos tres restricciones: la primera se
+asegura que cada archivo esté en un solo disco, la segunda, que los
+tamaños de los archivos de cada disco no superen la capacidad del disco,
+y la tercera define que no se usen discos vacíos---sería equivalente a
+la implicación $x_{ij} \Rightarrow y_i$.
 
 $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
