@@ -326,7 +326,52 @@ Luego, el output se almacena de la siguiente manera.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/generador_output_2.py}
 
 %\newpage
-%\section{Tercera parte}
+\section{Tercera parte}
+
+TODO
+
+\section{Cuarta parte}
+
+\subsection{Introducción}
+
+Se deben realizar backups de $n$ archivos en discos idénticos de
+capacidad $d$.  Se sabe que los archivos son de pocos tamaños distintos,
+y que cada archivo es menor que la capacidad de un disco. Se necesita
+saber cuál es la cantidad mínima de discos necesarios para almacenar
+todos los archivos, considerando la capacidad de cada disco y los
+tamaños de archivos.
+
+\subsection{Modelo Lineal}
+
+$F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
+
+$n$: cantidad de archivos. \\
+
+$s_{k}$: tamaño posible $k$ en MB, con $k = 1, \ldots, q$. \\
+
+$q$: cantidad de tamaños. \\
+
+$m$: cantidad de discos disponibles, a lo sumo, un disco por archivo, $m = n$. \\
+
+$D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
+
+$d$: tamaño del disco en TB. \\ 
+
+$c_{kj}$: cantidad de archivos de tamaño $k$ que entran en el disco $j$, $\forall k = \{1, \ldots, q\},\ \forall j = \{1, \ldots, m\}$, donde $c_{kj} \ge 0$\\
+
+$y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
+
+\begin{alignat*}{2}
+	\minimize
+	& \sum_{j = 1}^{m} y_{j}\\
+	\subjto
+	& \sum_{k = 1}^{q} s_{k} c_{kj} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(cantidad de archivos de que entran en el disco $j$)}\\
+	& \sum_{k = 1}^{q} c_{kj} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
+	& c_{kj} \ge 0, \quad \forall k \in \{1, \ldots, q\}, \ \forall j \in \{1, \ldots, m\}\\
+	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
+\end{alignat*}
+
+
 
 \section{Conclusiones}
 
