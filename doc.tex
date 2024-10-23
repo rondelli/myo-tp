@@ -347,7 +347,9 @@ $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
 $n$: cantidad de archivos. \\
 
-$s_{k}$: tamaño posible $k$ en MB, con $k = 1, \ldots, q$. \\
+$S$: conjunto de tamaños de cada archivo $i$, con $i = 1, \ldots, n$. \\
+
+$s_{k}$: tamaño $k$ en MB, con $k = 1, \ldots, q$. \\
 
 $q$: cantidad de tamaños. \\
 
@@ -365,8 +367,9 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
+	& \sum_{k = 1}^{q} c_{kj} \ge 1 \qquad \forall j \in \{1, \ldots, m\},\ \text{(no puede haber discos usados con cero cantidad de archivos)}\\
 	& \sum_{k = 1}^{q} s_{k} c_{kj} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(cantidad de archivos de que entran en el disco $j$)}\\
-	& \sum_{k = 1}^{q} c_{kj} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
+	& \sum_{k = 1}^{q} c_{kj} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se pueden entrar más de $n$ archivos por disco)}\\
 	& c_{kj} \ge 0, \quad \forall k \in \{1, \ldots, q\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
