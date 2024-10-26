@@ -16,7 +16,9 @@ print(f"Utilizando {archivo}\n")
 
 
 generar_configuracion(archivo, num_archivos, num_conjuntos)
-conjuntos = leer_configuracion(f"./{archivo}")
+archivos, conjuntos = leer_configuracion(f"./{archivo}")
+print(archivos)
+print(conjuntos)
 """
 solucion = elegir_conjuntos(conjuntos)
 

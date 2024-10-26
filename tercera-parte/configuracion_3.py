@@ -26,5 +26,23 @@ def escribir_configuracion(nombre_archivo, C, H):
             f.write(f"Conjunto H_{i+1}: " + " ".join(conjunto) + "\n")
 
 def leer_configuracion(nombre_archivo):
-    pass
+    archivos = []
+    conjuntos = []
+
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    with open(ruta_in, "r") as f:
+        
+        lineas = f.readlines()
+
+        archivos = lineas[0].strip().split(": ")[1].split()
+
+        for linea in lineas[4:]:
+            conjunto = linea.strip().split(": ") 
+
+            if len(conjunto) > 1:
+                conjuntos.append(set(conjunto[1].split()))
+            else:
+                conjuntos.append(set())
+    return archivos, conjuntos
+
 
