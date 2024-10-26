@@ -146,7 +146,7 @@ if len(sys.argv) != 2:
 input_file_name = sys.argv[1]
 print(f"Input file name to generate: {input_file_name}\n")
 
-# generate_input_file(input_file_name)
+generate_input_file(input_file_name)
 
 disk_size, file_names, file_sizes = read_input_file(f"./{input_file_name}")
 

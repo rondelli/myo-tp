@@ -1,4 +1,4 @@
-param input := "IN/a_12.in"; # Path del archivo de input
+param input := "IN/a_1.in"; # Path del archivo de input
 
 # Tamaño del disco en terabytes
 param d_t := read input as "1n" use 1 comment "#";
