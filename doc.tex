@@ -328,7 +328,25 @@ Luego, el output se almacena de la siguiente manera.
 %\newpage
 \section{Tercera parte}
 
-TODO
+\subsection{Introducción}
+
+Dado un conjunto de archivos \( C \) y una familia de conjuntos \( H \), donde \( H \subseteq C \) y cada archivo de \( C \) pertenece a algún conjunto de \( H \), se busca un subconjunto mínimo \( I \subseteq H \) tal que todos los archivos de \( C \) estén cubiertos por al menos un conjunto de \( I \).
+
+\subsection{Modelo Lineal}
+
+$n$: cantidad de archivos. \\
+
+$m$: cantidad de conjuntos \( H \). \\
+
+$x_{j}$ binaria: $1$ indica que el conjunto \( H_j \) pertenece a \( I \). \\ 
+
+$y_{i,j}$ constante binaria: $1$ indica que el conjunto \( H_j \) contiene el archivo $i$. \\ 
+
+\begin{alignat*}{2}
+    \minimize \quad & \sum_{j = 1}^{m} x_{j}\\
+    \subjto \quad & \sum_{j=1}^{m} y_{i,j} \cdot x_j \geq 1 \quad \forall i \quad \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
+    & \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j \quad \text{(todos los conjuntos elegidos deben tener al menos un archivo)}\\
+\end{alignat*}
 
 \section{Cuarta parte}
 
