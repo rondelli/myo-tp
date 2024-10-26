@@ -19,11 +19,11 @@ generar_configuracion(archivo, num_archivos, num_conjuntos)
 archivos, conjuntos = leer_configuracion(f"./{archivo}")
 print(archivos)
 print(conjuntos)
-"""
-solucion = elegir_conjuntos(conjuntos)
+
+solucion = elegir_conjuntos(archivos, conjuntos)
+print(solucion)
 
 if solucion is not None:
-    generar_output(f"{archivo[:-3]}.out", solucion)
+    generar_output(f"{archivo[:-3]}.out", solucion, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
-"""
