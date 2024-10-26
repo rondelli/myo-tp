@@ -1,4 +1,4 @@
-param input := "IN/a_1.in"; # Path del archivo de input
+param input := "IN/a_12.in"; # Path del archivo de input
 
 # Tamaño del disco en terabytes
 param d_t := read input as "1n" use 1 comment "#";
@@ -34,8 +34,9 @@ subto c2:
 	forall <j> in D:
 		sum<i> in F: s[i] * x[i, j] <= d * y[j];
 
+# Esta restricción no es necesaria
 # No se puede elegir un disco vacío
-subto c3:
-	forall <j> in D:
-		sum<i> in F: x[i, j] <= n * y[j];
+#subto c3:
+	#forall <j> in D:
+		#sum<i> in F: x[i, j] <= n * y[j];
 
