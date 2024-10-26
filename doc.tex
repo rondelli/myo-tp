@@ -174,14 +174,14 @@ archivo.
 
 \subsection{Modelo Lineal}
 
-Para minimizar la cantidad de discos, utilizamos una variable binaria
-$y_{j}$ que nos indica si se esta usando el disco $j$ o no, y otra
+Para minimizar la cantidad de discos, usamos una variable binaria
+$y_{j}$ que nos indica si se está usando el disco $j$ o no, y otra
 variable binaria $x_{ij}$ para identificar si cada archivo $i$ se guarda
-en el disco $j$. Luego, establecimos tres restricciones: la primera se
-asegura que cada archivo esté en un solo disco, la segunda, que los
-tamaños de los archivos de cada disco no superen la capacidad del disco,
-y la tercera define que no se usen discos vacíos---sería equivalente a
-la implicación $x_{ij} \Rightarrow y_i$.
+en el disco $j$. Luego, establecimos dos restricciones: la primera se
+asegura de que cada archivo esté en un solo disco, y la segunda, que los
+tamaños de los archivos de cada disco no superen la capacidad del disco.
+%y la tercera define que no se usen discos vacíos---sería equivalente a
+%la implicación $x_{ij} \Rightarrow y_i$.
 
 $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
@@ -205,7 +205,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	\subjto
 	& \sum_{j = 1}^{m} x_{ij} = 1 \qquad \forall i \in \{1, \ldots, n\},\ \text{(el archivo $i$ debe estar en un solo disco)}\\
 	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(archivos que entran en el disco $j$)}\\
-	& \sum_{i = 1}^{n} x_{ij} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
+	% & \sum_{i = 1}^{n} x_{ij} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
@@ -216,7 +216,6 @@ A continuación presentamos el modelo Zimpl, con los comentarios
 correspondientes que indican la relación con el modelo lineal de la sección
 anterior.
 
-\newpage
 \lstinputlisting[inputencoding=utf8/latin1]{primera-parte/big_data.zpl}
 
 \newpage
