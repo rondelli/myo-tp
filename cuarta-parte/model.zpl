@@ -1,4 +1,5 @@
-param input := "a_1.in"; # Path del archivo de input
+# Path del archivo de input
+param input := "IN/a_1.in";
 
 # Tamaño del disco en terabytes
 param d_t := read input as "1n" use 1 comment "#";
@@ -7,8 +8,11 @@ param d := d_t * 10**6;
 # Conjunto de archivos f_{i} \forall i \in \{1, \ldots, n\}
 set F := { read input as "<1s>" skip 2 comment "#" };
 
-param n := read input as "1n" skip 1 use 1 comment "#"; # Cantidad de archivos
-param m := n;       # Cantidad de discos, a lo sumo, un disco por archivo
+# Cantidad de archivos
+param n := read input as "1n" skip 1 use 1 comment "#";
+
+# Cantidad de discos, a lo sumo, un archivo por disco
+param m := n;
 
 # Conjunto de discos
 set D := { 1 .. m };
@@ -37,11 +41,6 @@ subto c1:
 subto c2:
 	forall <j> in D:
 		sum<i> in S: s[i] * c[i, j] <= d * y[j];
-
-# No pueden entrar más de $n$ archivos por disco
-subto c3:
-	forall <j> in D:
-		sum<i> in S: c[i, j] <= n * y[j];
 
 subto c4:
 	forall <i, j> in S * D:
