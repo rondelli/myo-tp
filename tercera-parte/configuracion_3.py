@@ -2,7 +2,6 @@ import os
 import random
 
 def generar_configuracion(nombre_archivo, num_archivos, num_conjuntos):
-    
     C = [f"archivo_{i+1}" for i in range(num_archivos)]
     H = [set() for _ in range(num_conjuntos)]
 
@@ -38,11 +37,9 @@ def leer_configuracion(nombre_archivo):
 
         for linea in lineas[4:]:
             conjunto = linea.strip().split(": ") 
-
             if len(conjunto) > 1:
                 conjuntos.append(set(conjunto[1].split()))
             else:
                 conjuntos.append(set())
+
     return archivos, conjuntos
-
-

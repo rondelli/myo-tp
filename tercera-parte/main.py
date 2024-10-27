@@ -14,7 +14,6 @@ num_archivos = int(sys.argv[2]) # esto esta bien o deberian ser aleatorios tambi
 num_conjuntos = int(sys.argv[3])
 print(f"Utilizando {archivo}\n")
 
-
 generar_configuracion(archivo, num_archivos, num_conjuntos)
 archivos, conjuntos = leer_configuracion(f"./{archivo}")
 print(archivos)
