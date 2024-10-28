@@ -13,7 +13,19 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
     # Cantidad de archivos
     n = len(F)
 
-    S = list(dict.fromkeys(S))  # con esto se pierden los tamaños de los archivos
+    S = list(dict.fromkeys(S))
+    # X: con esto se pierden los tamaños de los archivos
+    # H: claro, acá falta contar la cantidad de cada tamaño de archivos
+    # tipo:
+    #
+    # MB    count
+    # -----------
+    # 50    5
+    # 80    2
+    # 100   7
+    # 
+    # por eso puse un map
+
     # Cantidad de tamaños de archivos
     q = len(S)
 
