@@ -13,8 +13,8 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
     # Cantidad de archivos
     n = len(F)
 
+    S = list(dict.fromkeys(S))  # con esto se pierden los tamaños de los archivos
     # Cantidad de tamaños de archivos
-    S = list(dict.fromkeys(S))
     q = len(S)
 
     # Cantidad de discos, a lo sumo, un disco por archivo
@@ -35,17 +35,39 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
     # minimize disks:
     model.setObjective(quicksum(y), sense="minimize")
 
-    # No pueden haber discos usados con cero cantidad de archivos
     for j in range(m):
-        model.addCons(quicksum(
-            c[k, j] for k in range(q)) >= 1)
+        model.addCons(quicksum(c[k, j] for k in range(q)) >= 1)
 
     # Cantidad archivos de tamaño $k$ que entran en el disco $j$
     for j in range(m):
         model.addCons(quicksum(S[k] * c[k, j] for k in range(q)) <= d * y[j])
 
+    # No pueden entrar más de $n$ archivos por disco
+    for j in range(m):
+        model.addCons(quicksum(c[k, j] for k in range(q)) <= n * y[j])
+
     model.optimize()
     solution = model.getBestSol()
+
+    model.getBestSol()
+    
+    if solution:
+        print("Solución encontrada:")
+        print(f"Cantidad de discos utilizados: {round(float(model.getObjVal()))}\n")
+        for j in range(m):
+            if model.getVal(y[j]) == 0:
+                continue
+            archivos_en_disco = []
+            used_space = 0
+            for i in range(n):
+                if (i, j) in c and model.getVal(c[i, j]) > 0:
+                    archivos_en_disco.append(f"{F[i]}  {S[i]} MB")
+                    used_space += S[i]
+            print(f"Disco {j + 1}: {used_space} MB")
+            for archivo in archivos_en_disco:
+                print(f"  {archivo}")
+    else:
+        print("No se encontró una solución.")
 
     if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
         return [F, model, y, c, S]
