@@ -25,7 +25,6 @@ def generar_output(output_file_name, solution):
             used_space = 0
 
             for i in range(number_of_files):
-                print("(i, j)=", i, j, "model:", model.getVal(c[i, j]))
                 if (i, j) in c:
                     if model.getVal(c[i, j]) == 0:
                         continue
