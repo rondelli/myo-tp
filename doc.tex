@@ -210,6 +210,53 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
+\subsection{Restricción: que no se elijan discos vacíos}
+
+Inicialmente, planteamos el programa lineal con la siguiente restricción 
+
+\begin{alignat*}{2}
+    \sum_{i = 1}^{n} x_{ij} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
+\end{alignat*}
+
+En esta sección, explicamos por qué esta restricción no es necesaria, mediante una demostración por el absurdo.
+
+Supongamos que contamos con dos archivos $F_{1}$ y $F_{2}$; y dos discos, $D_{1}$ y $D_{2}$. En este caso, una solución óptima hipotética sería $y$ = (1, 1), que indica que se utilizan los dos discos.
+
+Supongamos que esta solución considera que los archivos $F_{1}$ y $F_{2}$ se almacenan en el disco $D_{2}$ (considerando que ambos archivos entran en el disco), quedando el disco $D_{1}$ vacío. Si analizamos las restricciones, vemos que todas se cumplen. Es decir:
+
+\begin{alignat*}{2}
+    & \sum_{j = 1}^{2} x_{ij} = 1 \qquad & \forall i \in \{1, 2\},\ \text{se cumple ya que ambos archivos $F_{1}$ y $F_{2}$ están en un sólo disco, $D_{2}$, por hipótesis} \\
+    & \sum_{i = 1}^{2} s_{i} x_{ij} \le d \cdot y_{j} \qquad & \forall j \in \{1, 2\},\ \text{se cumple, ya que...}
+\end{alignat*}
+
+\begin{itemize}
+    \item $0 \leq d \cdot 1$, \text{ya que el disco está vacío (disco 1)}
+    \item $s_{1} + s_{2} \leq d \cdot 1$, \text{por hipótesis (disco 2)}
+\end{itemize}
+
+A parte, notar que $x_{ij} \in \{0,1\} \quad \forall i \in \{1, 2\}, \ \forall j \in \{1, 2\}$, y $y_{j} \in \{0,1\} \quad \forall j \in \{1, 2\}$ por hipótesis. % mmm jajajsj
+
+Queremos ver, a partir de esto, que existe una solución $x*$ mejor, por lo que $x$ no sería una solución óptima.
+
+Consideremos la solución $x*$ = (0, 1). Vemos que también se cumplen las restricciones
+
+\begin{alignat*}{2}
+    & \sum_{j = 1}^{2} x_{ij} = 1 \qquad & \forall i \in \{1, 2\},\ \text{se cumple ya que ambos archivos $F_{1}$ y $F_{2}$ están en un sólo disco, $D_{2}$, por hipótesis} \\
+    & \sum_{i = 1}^{2} s_{i} x_{ij} \le d \cdot y_{j} \qquad & \forall j \in \{1, 2\},\ \text{se cumple, ya que...}
+\end{alignat*}
+
+\begin{itemize}
+    \item $0 \leq d \cdot 0$, \text{ya que no se elige el disco 1}
+    \item $s_{1} + s_{2} \leq d \cdot 1$, \text{por hipótesis (disco 2)}
+\end{itemize}
+
+También se cumplen las condiciones con respecto a los valores que pueden tomar $x_{1, j}$ e $y_{j}$, ya que no fueron modificadas. Entonces, $x*$ es una solución factible.
+
+Para $x$, \sum_{j = 1}^{m} y_{j} = 2.\\ Por otra parte, para $x*$, \sum_{j = 1}^{m} y_{j} = 1.\\
+
+Entonces, $x*$ es una mejor solución que $x$, por lo que $x$ no puede ser una solución óptima. Este absurdo surgió de considerar que puede haber un disco vacío en una solución óptima de nuestro problema lineal. Esto implica que la restricción planteada no aporta valor al problema, ya que probamos que se llega a una solución correcta sin ella.
+
+
 \subsection{Modelo Zimpl}
 
 A continuación presentamos el modelo Zimpl, con los comentarios
