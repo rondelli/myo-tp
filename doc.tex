@@ -172,7 +172,7 @@ la cantidad mínima de discos necesarios para almacenar todos los
 archivos, considerando la capacidad de cada disco y el tamaño de cada
 archivo. 
 
-\subsection{Modelo Lineal}
+\subsection{Modelo Lineal}\label{modelo:primera:parte}
 
 Para minimizar la cantidad de discos, usamos una variable binaria
 $y_{j}$ que nos indica si se está usando el disco $j$ o no, y otra
@@ -210,14 +210,14 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
-\subsection{Restricción: que no se elijan discos vacíos}
+\subsubsection{Restricción: que no se elijan discos vacíos}
 
-Inicialmente, planteamos el programa lineal con la siguiente restricción:
-
+Inicialmente, planteamos el programa lineal de la
+Sección~\ref{modelo:primera:parte} con una tercera restricción:
 \begin{alignat*}{2}
-    \sum_{i = 1}^{n} x_{ij} \le n\cdot y_{j} \quad \forall j \in \{1, \ldots, m\},\ \text{(no se puede usar un disco vacío)}\\
+    \sum_{i = 1}^{n} x_{ij} \le n\cdot y_{j} \quad \forall j \in \{1,
+	\ldots, m\},\ \text{\emph{(no se puede usar un disco vacío)}}
 \end{alignat*}
-
 En esta sección, explicamos porqué esta restricción no es necesaria,
 mediante una demostración por el absurdo.
 
