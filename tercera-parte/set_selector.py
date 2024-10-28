@@ -22,10 +22,6 @@ def elegir_conjuntos(F: list, H: list):
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
         model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
-    
-    # Todos los conjuntos elegidos deben tener al menos un archivo
-    for j in range(m):
-        model.addCons(sum(y[i, j] for i in range(n)) >= x[j])
 
     model.optimize()
     sol = model.getBestSol()
