@@ -1,9 +1,9 @@
 from pyscipopt import Model, quicksum
 
 # d_t: disk size in TB
-# F: file names
+# F: file names with sizes in MB
 # S: File sizes in MB
-def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
+def distribuir_archivos(d_t: int, F: map[str][int], S: list[int]): # FIXME: map
     if d_t < 0 or any(i < 0 for i in S):
         return
 
@@ -12,6 +12,10 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
 
     # Cantidad de archivos
     n = len(F)
+
+    size_counts = {}
+    for s in S:
+        size_counts[s] = size_counts.get(s, 0) + 1
 
     S = list(dict.fromkeys(S))
     # X: con esto se pierden los tamaños de los archivos
@@ -55,8 +59,8 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
         model.addCons(quicksum(S[k] * c[k, j] for k in range(q)) <= d * y[j])
 
     # No pueden entrar más de $n$ archivos por disco
-    for j in range(m):
-        model.addCons(quicksum(c[k, j] for k in range(q)) <= n * y[j])
+    # for j in range(m):
+        # model.addCons(quicksum(c[k, j] for k in range(q)) <= n * y[j])
 
     model.optimize()
     solution = model.getBestSol()
@@ -82,6 +86,6 @@ def distribuir_archivos(d_t: int, F: list[str], S: list[int]):
         print("No se encontró una solución.")
 
     if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        return [F, model, y, c, S]
+        return [F, model, y, c, size_counts]
     else:
         return None

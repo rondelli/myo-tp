@@ -34,7 +34,11 @@ def escribir_configuracion(input_file_name):
             f_in.write(f + " " + str(files[f]) + "\n")
 
 
-# FIXME: file_sizes
+# FIXME:
+# filen_names debería ser un map con
+# <nombre-de-archivo><tamaño-del-archivo>
+# para después en el output recomponer con distribuir_archivos()
+# tipo ir sacando de F el nombre y tamaño, e ir restando de size_counts un 1 en la cantidad por cada tamaño
 def leer_configuracion(input_file_name: str):
     disk_size = 0
     file_names = []
@@ -51,4 +55,4 @@ def leer_configuracion(input_file_name: str):
                 file_names.append(file[0])
                 file_sizes.append(int(file[1]))
 
-    return disk_size, file_names, file_sizes
+    return disk_size, file_names_with_sizes, file_sizes
