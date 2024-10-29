@@ -9,21 +9,24 @@ def generar_output(nombre_archivo, solucion):
     s = solucion[4]
 
     cant_archivos = len(F)
-    cant_discos = sum(1 for j in range(cant_archivos) if model.getVal(y[j]) > 0.5)
+    cant_discos = round(float(model.getObjVal()))
+    number_of_disks = cant_archivos # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
 
     ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT", nombre_archivo)
     with open(ruta_out, "w") as f:
-        
         f.write(f"Para la configuracion del archivo, {cant_discos} discos son suficientes.\n")
-        
-        for j in range(cant_discos):
+        for j in range(number_of_disks):
+            if model.getVal(y[j]) == 0:
+                continue
+
             archivos_en_disco = []
             espacio_ocupado = 0
             
             for i in range(cant_archivos):
-                if model.getVal(x[i, j]) > 0.5: # se eligio el archivo
-                    archivos_en_disco.append(f"{F[i]}  {s[i]}")
-                    espacio_ocupado = espacio_ocupado + s[i]
+                if model.getVal(x[i, j]) == 0:
+                    continue
+                archivos_en_disco.append(f"{F[i]}  {s[i]}")
+                espacio_ocupado = espacio_ocupado + s[i]
 
             f.write(f"\nDisco {j+1}: {espacio_ocupado} MB\n")
 
