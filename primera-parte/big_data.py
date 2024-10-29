@@ -1,13 +1,10 @@
 from pyscipopt import Model
 
-
 def distribuir_archivos(d_t, F, s):
     model = Model("big_data")
     d = d_t * 10**6
-
     if d < 0 or any(s_i < 0 for s_i in s):
         return
-
     n = len(F)
     m = n  # no se puede tener más discos que archivos
 
