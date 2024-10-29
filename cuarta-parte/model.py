@@ -18,17 +18,6 @@ def distribuir_archivos(d_t, F, S):
         size_counts[s] = size_counts.get(s, 0) + 1
 
     S = list(dict.fromkeys(S))
-    # X: con esto se pierden los tamaños de los archivos
-    # H: claro, acá falta contar la cantidad de cada tamaño de archivos
-    # tipo:
-    #
-    # MB    count
-    # -----------
-    # 50    5
-    # 80    2
-    # 100   7
-    # 
-    # por eso puse un map
 
     # Cantidad de tamaños de archivos
     q = len(S)
@@ -66,24 +55,6 @@ def distribuir_archivos(d_t, F, S):
     solution = model.getBestSol()
 
     model.getBestSol()
-    
-    if solution:
-        print("Solución encontrada:")
-        print(f"Cantidad de discos utilizados: {round(float(model.getObjVal()))}\n")
-        for j in range(m):
-            if model.getVal(y[j]) == 0:
-                continue
-            archivos_en_disco = []
-            used_space = 0
-            for i in range(n):
-                if (i, j) in c and model.getVal(c[i, j]) > 0:
-                    archivos_en_disco.append(f"{F[i]}  {S[i]} MB")
-                    used_space += S[i]
-            print(f"Disco {j + 1}: {used_space} MB")
-            for archivo in archivos_en_disco:
-                print(f"  {archivo}")
-    else:
-        print("No se encontró una solución.")
 
     if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
         return [F, model, y, c, S]
