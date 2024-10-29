@@ -29,10 +29,6 @@ def distribuir_archivos(d_t, F, s):
     for j in range(m):
         model.addCons(sum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
-    # si el disco no tiene archivos, no puede haber sido elegido
-    for j in range(m):
-        model.addCons(sum(x[i, j] for i in range(n)) <= n * y[j])
-
     model.optimize()
     sol = model.getBestSol()
 

@@ -33,10 +33,3 @@ subto c1:
 subto c2:
 	forall <j> in D:
 		sum<i> in F: s[i] * x[i, j] <= d * y[j];
-
-# Esta restricción no es necesaria
-# No se puede elegir un disco vacío
-#subto c3:
-	#forall <j> in D:
-		#sum<i> in F: x[i, j] <= n * y[j];
-
