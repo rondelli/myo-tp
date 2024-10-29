@@ -1,6 +1,7 @@
 import os
 import random
 
+
 def generar_archivos(cant_archivos):
     archivos = {}
     contador = 1
@@ -9,17 +10,19 @@ def generar_archivos(cant_archivos):
         contador += 1
     return archivos
 
+
 def generar_configuracion(nombre_archivo):
     capacidad_discos = random.randint(1, 100)
     cant_archivos = random.randint(1, 50)
     archivos = generar_archivos(cant_archivos)
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
     with open(ruta_in, "w") as f:
-        
+
         f.write(f"# Capacidad de dicos en TB (= 1.000.000 MB)\n")
         f.write(str(capacidad_discos) + "\n")
-        
+
         f.write(f"\n# Cantidad de archivos para backup\n")
         f.write(str(cant_archivos) + "\n")
 
@@ -27,12 +30,14 @@ def generar_configuracion(nombre_archivo):
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo]) + "\n")
 
+
 def leer_configuracion(nombre_archivo):
     capacidad_disco = 0
     nombres_archivos = []
     tamaños_archivos = []
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
     with open(ruta_in, "r") as f:
         lineas = f.readlines()
         capacidad_disco = int(lineas[1].strip())

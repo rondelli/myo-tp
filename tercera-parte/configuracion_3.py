@@ -1,6 +1,7 @@
 import os
 import random
 
+
 def generar_configuracion(nombre_archivo, num_archivos, num_conjuntos):
     C = [f"archivo_{i+1}" for i in range(num_archivos)]
     H = [set() for _ in range(num_conjuntos)]
@@ -12,31 +13,35 @@ def generar_configuracion(nombre_archivo, num_archivos, num_conjuntos):
             H[random.randrange(num_conjuntos)].add(C[i])
 
     escribir_configuracion(nombre_archivo, C, H)
-    
+
+
 def escribir_configuracion(nombre_archivo, C, H):
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
-    with open(ruta_in, 'w') as f:    
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
+    with open(ruta_in, 'w') as f:
 
-        f.write("Archivos en el conjunto C: " + " ".join(C) + "\n\n")        
+        f.write("Archivos en el conjunto C: " + " ".join(C) + "\n\n")
 
-        f.write(f"Cantidad de conjuntos H en C: {len(H)}\n\n")        
+        f.write(f"Cantidad de conjuntos H en C: {len(H)}\n\n")
 
         for i, conjunto in enumerate(H):
             f.write(f"Conjunto H_{i+1}: " + " ".join(conjunto) + "\n")
+
 
 def leer_configuracion(nombre_archivo):
     archivos = []
     conjuntos = []
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
     with open(ruta_in, "r") as f:
-        
+
         lineas = f.readlines()
 
         archivos = lineas[0].strip().split(": ")[1].split()
 
         for linea in lineas[4:]:
-            conjunto = linea.strip().split(": ") 
+            conjunto = linea.strip().split(": ")
             if len(conjunto) > 1:
                 conjuntos.append(set(conjunto[1].split()))
             else:

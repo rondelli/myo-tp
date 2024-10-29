@@ -10,7 +10,8 @@ if len(sys.argv) != 4:
     sys.exit(1)
 
 archivo = sys.argv[1]
-num_archivos = int(sys.argv[2]) # esto esta bien o deberian ser aleatorios tambien?
+num_archivos = int(
+    sys.argv[2])  # esto esta bien o deberian ser aleatorios tambien?
 num_conjuntos = int(sys.argv[3])
 print(f"Utilizando {archivo}\n")
 

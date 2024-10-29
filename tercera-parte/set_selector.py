@@ -1,10 +1,11 @@
 from pyscipopt import Model
 
+
 # recibe: archivos, conjuntos H
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
-    n = len(F) # cantidad de archivos
-    m = len(H) # cantidad de conjuntos
+    n = len(F)  # cantidad de archivos
+    m = len(H)  # cantidad de conjuntos
 
     if n == 0: return
 
@@ -18,7 +19,7 @@ def elegir_conjuntos(F: list, H: list):
             y[i, j] = 1 if F[i] in H[j] else 0
 
     model.setObjective(sum(x[j] for j in range(m)), sense="minimize")
-    
+
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
         model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
@@ -26,8 +27,11 @@ def elegir_conjuntos(F: list, H: list):
     model.optimize()
     sol = model.getBestSol()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
+    ) == "feasible":
+        conjuntos_seleccionados = [
+            j for j in range(m) if model.getVal(x[j]) > 0.5
+        ]
         return conjuntos_seleccionados
     else:
         return None

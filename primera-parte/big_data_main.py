@@ -14,12 +14,10 @@ print(f"Utilizando {archivo}\n")
 
 generar_configuracion(archivo)
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(
-        f"./{archivo}"
-)
+    f"./{archivo}")
 
-solucion = distribuir_archivos(
-        capacidad_disco, nombres_archivos, tamaños_archivos
-)
+solucion = distribuir_archivos(capacidad_disco, nombres_archivos,
+                               tamaños_archivos)
 
 if solucion is not None:
     generar_output(f"{archivo[:-3]}.out", solucion)

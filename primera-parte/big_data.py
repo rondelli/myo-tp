@@ -1,14 +1,15 @@
 from pyscipopt import Model
 
+
 def distribuir_archivos(d_t, F, s):
     model = Model("big_data")
     d = d_t * 10**6
-    
+
     if d < 0 or any(s_i < 0 for s_i in s):
         return
 
     n = len(F)
-    m = n   # no se puede tener más discos que archivos
+    m = n  # no se puede tener más discos que archivos
 
     # y_{j} = 1 si se elige el disco j, 0 si no
     y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
@@ -32,8 +33,8 @@ def distribuir_archivos(d_t, F, s):
     model.optimize()
     sol = model.getBestSol()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
+    ) == "feasible":
         return [F, model, y, x, s]
     else:
         return None
- 

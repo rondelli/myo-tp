@@ -1,5 +1,6 @@
 from pyscipopt import Model
 
+
 def distribuir_archivos(d_t, F, s, I):
     model = Model("importance")
     d = d_t * 10**6
@@ -13,14 +14,15 @@ def distribuir_archivos(d_t, F, s, I):
     x = [model.addVar(f"y_{i}", vtype="BINARY") for i in range(n)]
 
     model.setObjective(sum(x[i] * I[i] for i in range(n)), sense="maximize")
-    
+
     # los archivos elegidos deben entrar en el disco
     model.addCons(sum(x[i] * s[i] for i in range(n)) <= d)
 
     model.optimize()
     sol = model.getBestSol()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
+    ) == "feasible":
         return [F, model, x, I, s]
     else:
         return None
