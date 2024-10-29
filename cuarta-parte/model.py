@@ -3,7 +3,7 @@ from pyscipopt import Model, quicksum
 # d_t: disk size in TB
 # F: file names with sizes in MB
 # S: File sizes in MB
-def distribuir_archivos(d_t: int, F: map, S: list[int]): # FIXME: map
+def distribuir_archivos(d_t, F, S):
     if d_t < 0 or any(i < 0 for i in S):
         return
 
