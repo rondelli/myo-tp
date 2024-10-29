@@ -86,6 +86,6 @@ def distribuir_archivos(d_t: int, F: map, S: list[int]): # FIXME: map
         print("No se encontró una solución.")
 
     if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        return [F, model, y, c, size_counts]
+        return [F, model, y, c, S]
     else:
         return None
