@@ -55,4 +55,4 @@ def leer_configuracion(input_file_name: str):
                 file_names.append(file[0])
                 file_sizes.append(int(file[1]))
 
-    return disk_size, file_names_with_sizes, file_sizes
+    return disk_size, file_names, file_sizes

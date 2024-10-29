@@ -3,7 +3,7 @@ from pyscipopt import Model, quicksum
 # d_t: disk size in TB
 # F: file names with sizes in MB
 # S: File sizes in MB
-def distribuir_archivos(d_t: int, F: map[str][int], S: list[int]): # FIXME: map
+def distribuir_archivos(d_t, F, S):
     if d_t < 0 or any(i < 0 for i in S):
         return
 
@@ -86,6 +86,6 @@ def distribuir_archivos(d_t: int, F: map[str][int], S: list[int]): # FIXME: map
         print("No se encontró una solución.")
 
     if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        return [F, model, y, c, size_counts]
+        return [F, model, y, c, S]
     else:
         return None
