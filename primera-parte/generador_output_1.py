@@ -11,13 +11,15 @@ def generar_output(nombre_archivo, solucion):
 
     cant_archivos = len(F)
     cant_discos = round(float(model.getObjVal()))
-    number_of_disks = cant_archivos  # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
+
+    # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
+    number_of_disks = cant_archivos
 
     ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
                             nombre_archivo)
     with open(ruta_out, "w") as f:
         f.write(
-            f"Para la configuracion del archivo, {cant_discos} discos son suficientes.\n"
+            f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n"
         )
         for j in range(number_of_disks):
             if model.getVal(y[j]) == 0:
