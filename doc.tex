@@ -280,6 +280,8 @@ haber un disco vacío en una solución óptima de nuestro problema lineal.
 Esto implica que la restricción planteada no aporta valor al problema,
 ya que probamos que se llega a una solución correcta sin ella.
 
+\newpage
+
 \subsection{Modelo Zimpl}
 
 A continuación presentamos el modelo Zimpl, con los comentarios
@@ -300,8 +302,7 @@ a una función equivalente al código presentado con Zimpl.
 \newpage
 
 Esta función recibe los datos leídos de un archivo de configuración creado 
-con datos aleatorios, implementado con Python. El siguiente código 
-muestra las funciones necesarias para generar este archivo.
+con datos aleatorios. El siguiente código muestra las funciones necesarias para generar este archivo.
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion_1.py}
 
@@ -399,10 +400,7 @@ Luego, el output se almacena de la siguiente manera.
 
 \subsection{Introducción}
 
-Dado un conjunto de archivos $C$ y una familia de conjuntos $H$, donde
-$H \subseteq C$ y cada archivo de $C$ pertenece a algún conjunto de $H$,
-se busca un subconjunto mínimo $I \subseteq H$ tal que todos los
-archivos de $C$ estén cubiertos por al menos un conjunto de $I$.
+Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \mathcal{H} \), donde cada conjunto de archivos $H$ de \( \mathcal{H} \) está incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia \( \mathcal{H} \), se busca un subconjunto mínimo \( \mathcal{I} \) de \( \mathcal{H} \) tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de \( \mathcal{I} \).
 
 \subsection{Modelo Lineal}
 
@@ -418,7 +416,7 @@ contiene el archivo $i$. \\
 \begin{alignat*}{2}
     \minimize & \sum_{j = 1}^{m} x_{j}\\
     \subjto   & \sum_{j=1}^{m} y_{i,j} \cdot x_j \geq 1 \quad \forall i,\ \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
-              & \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
+              %& \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
 \end{alignat*}
 
 \section{Cuarta parte}
