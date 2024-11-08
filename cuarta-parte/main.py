@@ -7,21 +7,21 @@ from generador_output_4 import *
 from model import *
 
 if len(sys.argv) != 2:
-    print(f"Usage: {sys.argv[0]} input_file_name_to_generate")
+    print(f"Uso: {sys.argv[0]} nombre_archivo")
     sys.exit(1)
 
-input_file_name = sys.argv[1]
-print(f"Input file name to generate: {input_file_name}\n")
+archivo = sys.argv[1]
+print(f"Utilizando {archivo}\n")
 
-escribir_configuracion(input_file_name)
+generar_configuracion(archivo)
 
-disk_size, file_names, file_sizes = leer_configuracion(f"./{input_file_name}")
+capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
-print(f"d: {disk_size}\nnames: {file_names}\nsizes: {file_sizes}")
+# Harcodeado jeje: 10 + 13 + 16 + 19 + 22 + 15 = 105 > 100
+max_cant_tamaños = 6
+solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, max_cant_tamaños)
 
-solution = distribuir_archivos(disk_size, file_names, file_sizes)
-
-if solution is not None:
-    generar_output(f"{input_file_name[:-3]}.out", solution)
+if solucion is not None:
+    generar_output(f"{archivo[:-3]}.out", solucion)
 else:
-    generar_output_fallido(f"{input_file_name[:-3]}.out")
+    generar_output_fallido(f"{archivo[:-3]}.out")

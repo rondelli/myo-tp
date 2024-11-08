@@ -1,91 +1,61 @@
-from pyscipopt import Model, quicksum
+from pyscipopt import Model
 
-# d_t: disk size in TB
-# F: file names with sizes in MB
-# S: File sizes in MB
-def distribuir_archivos(d_t: int, F: map, S: list[int]): # FIXME: map
-    if d_t < 0 or any(i < 0 for i in S):
-        return
-
-    # Tamaño del disco en MB
+"""
+d_t --> capacidad del disco
+F --> archivos
+s --> tamaños de archivos 
+T --> maxima cantidad de tamaños
+"""
+def distribuir_archivos(d_t, F, s, T):
+    model = Model("Model")
     d = d_t * 10**6
 
-    # Cantidad de archivos
+    if d < 0 or any(s_i < 0 for s_i in s):
+        return
+
     n = len(F)
+    m = n  # no se puede tener más discos que archivos
 
-    size_counts = {}
-    for s in S:
-        size_counts[s] = size_counts.get(s, 0) + 1
+    # y_{j} = 1 si se elige el disco j, 0 si no
+    y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
 
-    S = list(dict.fromkeys(S))
-    # X: con esto se pierden los tamaños de los archivos
-    # H: claro, acá falta contar la cantidad de cada tamaño de archivos
-    # tipo:
-    #
-    # MB    count
-    # -----------
-    # 50    5
-    # 80    2
-    # 100   7
-    # 
-    # por eso puse un map
+    model.setObjective(sum(y), sense="minimize")
 
-    # Cantidad de tamaños de archivos
-    q = len(S)
-
-    # Cantidad de discos, a lo sumo, un disco por archivo
-    m = n
-
-    # Define model
-    model = Model("big_data_2")
-
-    # c[k, j] integer: cantidad de archivos de tamaño $k$ que entran en el disco $j$
-    c = {}
-    for k in range(q):
+    # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
+    x = {}
+    for i in range(m):
         for j in range(m):
-            c[k, j] = model.addVar(vtype='I', name=f"c_{k}_{j}")
+            x[i, j] = model.addVar(f"x_{i}_{j}", vtype="BINARY")
 
-    # y[j] binary: 1 si se usa el disco $j$, 0 en caso contrario
-    y = [model.addVar(vtype='B', name=f"y_{j}") for j in range(m)]
+    # size_used{size, j} = 1 si el tamaño size está en el disco j, 0 si no
+    size_used = {}
+    for size in set(s):
+        for j in range(m):
+            size_used[size, j] = model.addVar(f"size_used_{size}_{j}", vtype="BINARY")
 
-    # minimize disks:
-    model.setObjective(quicksum(y), sense="minimize")
+    # Cada archivo se elige solo para un disco
+    for i in range(n):
+        model.addCons(sum(x[i, j] for j in range(m)) == 1)
 
+    # Los archivos no superan de capacidad los discos
     for j in range(m):
-        model.addCons(quicksum(c[k, j] for k in range(q)) >= 1)
+        model.addCons(sum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
-    # Cantidad archivos de tamaño $k$ que entran en el disco $j$
+     # Se activan los size_used si ese tamaño está en el disco
+    for size in set(s):
+        for j in range(m):
+            model.addCons(size_used[size, j] <= sum(x[i, j] for i in range(n) if s[i] == size))
+
+    # Limitamos los tamaños únicos por disco
     for j in range(m):
-        model.addCons(quicksum(S[k] * c[k, j] for k in range(q)) <= d * y[j])
+        model.addCons(sum(size_used[size, j] for size in set(s)) <= T)
 
-    # No pueden entrar más de $n$ archivos por disco
-    # for j in range(m):
-        # model.addCons(quicksum(c[k, j] for k in range(q)) <= n * y[j])
 
     model.optimize()
-    solution = model.getBestSol()
+    sol = model.getBestSol()
 
-    model.getBestSol()
-    
-    if solution:
-        print("Solución encontrada:")
-        print(f"Cantidad de discos utilizados: {round(float(model.getObjVal()))}\n")
-        for j in range(m):
-            if model.getVal(y[j]) == 0:
-                continue
-            archivos_en_disco = []
-            used_space = 0
-            for i in range(n):
-                if (i, j) in c and model.getVal(c[i, j]) > 0:
-                    archivos_en_disco.append(f"{F[i]}  {S[i]} MB")
-                    used_space += S[i]
-            print(f"Disco {j + 1}: {used_space} MB")
-            for archivo in archivos_en_disco:
-                print(f"  {archivo}")
-    else:
-        print("No se encontró una solución.")
-
-    if solution is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        return [F, model, y, c, S]
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
+    ) == "feasible":
+        return [F, model, y, x, s]
     else:
         return None
