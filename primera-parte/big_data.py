@@ -1,7 +1,7 @@
 import time
 from pyscipopt import Model
 
-def distribuir_archivos(d_t, F, s, time_limit=18000000000):
+def distribuir_archivos(d_t, F, s, time_limit=60):
     """
     Distribuye archivos entre discos minimizando el número de discos utilizados.
     
@@ -43,34 +43,25 @@ def distribuir_archivos(d_t, F, s, time_limit=18000000000):
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
 
-    # Registrar el tiempo de inicio antes de optimizar
+    # Registrar el tiempo de inicio
     start_time = time.time()
-    feasible_solution_time = None
 
-    # Comienza la optimización en modo no bloqueante
+    # Ejecutar la optimización
     model.optimize()
 
-    # Bucle para monitorear el progreso hasta el tiempo límite
-    while model.getStatus() not in ["optimal", "infeasible", "timelimit"]:
-        # Verificar si se encontró la primera solución factible
-        if model.getNSols() > 0 and feasible_solution_time is None:
-            feasible_solution_time = time.time() - start_time
-            print(f"Se encontró la primera solución factible en {feasible_solution_time:.4f} segundos")
-        
-        # Si ya pasamos el límite de tiempo, detenemos la optimización
-        if time.time() - start_time > time_limit:
-            model.interrupt()  # Interrumpir la optimización manualmente
-            break
-    
+    # Calcular el tiempo total de optimización
     total_time = time.time() - start_time
-    if model.getStatus() == "optimal":
-        print("Se encontró un óptimo!")
 
-    # Imprimir tiempos
+    # Obtener información sobre la primera solución factible y la mejor solución
+    feasible_solution_time = None
+    if model.getNSols() > 0:
+        feasible_solution_time = total_time  # Tiempo hasta la mejor solución dentro del límite
+
+    # Imprimir resultados
     if feasible_solution_time is not None:
-        print(f"Tiempo para la primera solución factible: {feasible_solution_time:.4f} segundos")
-    elif model.getStatus() is not "optimal":
-        print("No se encontró una solución factible dentro del tiempo límite.")
+        print(f"Tiempo hasta la primera solución factible: {feasible_solution_time:.4f} segundos")
+    else:
+        print("No se encontró ninguna solución factible dentro del tiempo límite.")
 
     print(f"Tiempo total hasta la mejor solución o límite alcanzado: {total_time:.4f} segundos")
 
