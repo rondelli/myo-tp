@@ -12,8 +12,8 @@ def generar_archivos(cant_archivos):
 
 
 def generar_configuracion(nombre_archivo):
-    capacidad_discos = random.randint(1, 100)
-    cant_archivos = random.randint(1, 50)
+    capacidad_discos = random.randint(1, 1000)
+    cant_archivos = random.randint(200, 250)
     archivos = generar_archivos(cant_archivos)
 
     ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",

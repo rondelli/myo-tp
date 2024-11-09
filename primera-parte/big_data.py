@@ -1,5 +1,19 @@
 import time
-from pyscipopt import Model
+from pyscipopt import Model, Eventhdlr, SCIP_EVENTTYPE
+
+class FeasibleSolutionCollector(Eventhdlr):
+    def _init_(self):
+        super()._init_()
+        self.solutions = []
+
+    def eventinit(self):
+        self.model.catchEvent(self.model.EVENTTYPE.BESTSOLFOUND, self)
+    
+    def eventexit(self):
+        self.model.dropEvent(self.model.EVENTTYPE.BESTSOLFOUND, self)
+
+    def eventeexec(self, event):
+        print("hola")
 
 def distribuir_archivos(d_t, F, s, time_limit=60):
     """
@@ -15,6 +29,9 @@ def distribuir_archivos(d_t, F, s, time_limit=60):
     - Una lista con la mejor solución encontrada dentro del tiempo límite o None si no se encontró ninguna.
     """
     model = Model("big_data")
+    collector = FeasibleSolutionCollector()
+    model.includeEventhdlr(collector, "FeasibleSolutionCollector", "")
+
     d = d_t * 10**6
     if d < 0 or any(s_i < 0 for s_i in s):
         return None
@@ -40,30 +57,21 @@ def distribuir_archivos(d_t, F, s, time_limit=60):
     for j in range(m):
         model.addCons(sum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
+
+
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-
+    
     # Registrar el tiempo de inicio
     start_time = time.time()
 
-    # Ejecutar la optimización
+    model.setParam("display/freq", 1)
+    model.setParam("display/verblevel", 4)
+
     model.optimize()
+    print(f"Time: {model.getSolvingTime()}")
 
-    # Calcular el tiempo total de optimización
-    total_time = time.time() - start_time
-
-    # Obtener información sobre la primera solución factible y la mejor solución
-    feasible_solution_time = None
-    if model.getNSols() > 0:
-        feasible_solution_time = total_time  # Tiempo hasta la mejor solución dentro del límite
-
-    # Imprimir resultados
-    if feasible_solution_time is not None:
-        print(f"Tiempo hasta la primera solución factible: {feasible_solution_time:.4f} segundos")
-    else:
-        print("No se encontró ninguna solución factible dentro del tiempo límite.")
-
-    print(f"Tiempo total hasta la mejor solución o límite alcanzado: {total_time:.4f} segundos")
+    print(f"Cant sols: {model.getNSols()}")
 
     # Obtener la mejor solución encontrada
     sol = model.getBestSol()
