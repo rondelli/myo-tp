@@ -431,28 +431,17 @@ todos los archivos, considerando la capacidad de cada disco y los
 tamaños de archivos.
 
 \subsection{Modelo Lineal}
-$F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
-
-$s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
-
+$F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
+$s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
 $n$: cantidad de archivos. \\
-
 $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
-
-$D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
-
+$D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$. \\
 % ???????????????????????????????? hace falta? no se como ponerla jeje
-$S$: conjunto de los tamaños de $s_{i}$. \\ 
-
+$S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$. \\ 
 $d$: tamaño del disco en TB. \\ 
-
 $t$: constante, máxima cantidad de tamaños que entran en un disco. \\ 
-
 $x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$. \\
-
-
 $y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$. \\
-
 $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$. \\
 
 \begin{alignat*}{2}
@@ -466,6 +455,11 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
         & z_{sj} \in \{0,1\}, \quad \forall s \in S, \ \forall j \in \{1, \ldots, m\}\\
+        & n \geq  0, n \in \mathbb{Z} \\
+        & s_i \geq 0, \forall i \in \{1, \ldots, n\}\\
+        & m \geq  0, m \leq  n, m \in \mathbb{Z} \\
+        & d \geq  0 \\
+        & t \geq  0, t \in \mathbb{Z} \\
 \end{alignat*}
 
 \section{Conclusiones}
