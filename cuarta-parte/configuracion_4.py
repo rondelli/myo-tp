@@ -1,58 +1,52 @@
 import random
 import os
 
-# Functions
-# Kinda done, check numbers
-def generar_archivos(number_of_files: int):
-    sizes = []
-    for i in range(random.randrange(10, 20)):
-        sizes.append(random.randint(10, 70) * 10**6)
+def generar_archivos(cant_archivos: int):
+    # Tamaños: 10, 13, ..., hasta 70
+    tamaños = [t * 10**6 for t in range(10, 71, 3)]
 
-    files = {}
-    k = 1
-    for i in range(number_of_files):
-        files["file_id_" + str(k)] = random.choice(sizes)
-        k += 1
-    return files
+    tamaños_seleccionados = random.sample(tamaños, random.randint(10, 20))
+
+    archivos = {}
+    for k in range(1, cant_archivos + 1):
+        archivos[f"archivo{k}"] = random.choice(tamaños_seleccionados)
+    return archivos
 
 
-# Kinda done, check numbers
-def escribir_configuracion(input_file_name):
-    disk_size = random.randint(70, 100)
-    number_of_files = random.randint(7, 70)
-    files = generar_archivos(number_of_files)
+def generar_configuracion(nombre_archivo):
+    capacidad_discos = random.randrange(50, 100, 10)
+    cant_archivos = random.randint(1, 50)
+    archivos = generar_archivos(cant_archivos)
 
-    path_in = os.path.join(os.path.dirname(__file__), ".", "IN", input_file_name)
-    with open(path_in, "w") as f_in:
-        f_in.write(f"# disk capacities in TB (= 1.000.000 MB)\n")
-        f_in.write(str(disk_size) + "\n\n")
-        f_in.write(f"# number of files to backup\n")
-        f_in.write(str(number_of_files) + "\n\n")
-        f_in.write(f"# files: file_id, size (in MB)\n")
-        
-        for f in files:
-            f_in.write(f + " " + str(files[f]) + "\n")
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
+    with open(ruta_in, "w") as f:
+
+        f.write(f"# Capacidad de dicos en TB (= 1.000.000 MB)\n")
+        f.write(str(capacidad_discos) + "\n")
+
+        f.write(f"\n# Cantidad de archivos para backup\n")
+        f.write(str(cant_archivos) + "\n")
+
+        f.write(f"\n# Archivos: archivo_id, tamaño (MB) \n")
+        for archivo in archivos:
+            f.write(archivo + " " + str(archivos[archivo]) + "\n")
 
 
-# FIXME:
-# filen_names debería ser un map con
-# <nombre-de-archivo><tamaño-del-archivo>
-# para después en el output recomponer con distribuir_archivos()
-# tipo ir sacando de F el nombre y tamaño, e ir restando de size_counts un 1 en la cantidad por cada tamaño
-def leer_configuracion(input_file_name: str):
-    disk_size = 0
-    file_names = []
-    file_sizes = []
+def leer_configuracion(nombre_archivo: str):
+    capacidad_disco = 0
+    nombres_archivos = []
+    tamaños_archivos = []
 
-    path_in = os.path.join(os.path.dirname(__file__), ".", "IN", input_file_name)
-    with open(path_in, "r") as f_in:
-        lines = f_in.readlines()
-        disk_size = int(lines[1].strip())
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
+                           nombre_archivo)
+    with open(ruta_in, "r") as f:
+        lineas = f.readlines()
+        capacidad_disco = int(lineas[1].strip())
 
-        for i in range(7, len(lines)):
-            if lines[i].strip():
-                file = lines[i].split()
-                file_names.append(file[0])
-                file_sizes.append(int(file[1]))
-
-    return disk_size, file_names, file_sizes
+        for i in range(7, len(lineas)):
+            if lineas[i].strip():
+                archivo = lineas[i].split()
+                nombres_archivos.append(archivo[0])
+                tamaños_archivos.append(int(archivo[1]))
+    return capacidad_disco, nombres_archivos, tamaños_archivos

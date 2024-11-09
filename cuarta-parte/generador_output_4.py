@@ -5,7 +5,7 @@ def generar_output(output_file_name, solution):
     model = solution[1]
     y = solution[2]
     c = solution[3]
-    s = solution[4]
+    S = solution[4]
 
     number_of_files = len(F)
     number_of_disks = number_of_files  # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
@@ -28,8 +28,8 @@ def generar_output(output_file_name, solution):
                 if (i, j) in c:
                     if model.getVal(c[i, j]) == 0:
                         continue
-                    archivos_en_disco.append(f"{F[i]}  {s[i]}")
-                    used_space += s[i]
+                    archivos_en_disco.append(f"{F[i]}  {S[i]}")
+                    used_space += S[i]
 
             f_out.write(f"\nDisco {j+1}: {used_space} MB\n")
 

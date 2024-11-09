@@ -280,6 +280,8 @@ haber un disco vacío en una solución óptima de nuestro problema lineal.
 Esto implica que la restricción planteada no aporta valor al problema,
 ya que probamos que se llega a una solución correcta sin ella.
 
+\newpage
+
 \subsection{Modelo Zimpl}
 
 A continuación presentamos el modelo Zimpl, con los comentarios
@@ -300,8 +302,7 @@ a una función equivalente al código presentado con Zimpl.
 \newpage
 
 Esta función recibe los datos leídos de un archivo de configuración creado 
-con datos aleatorios, implementado con Python. El siguiente código 
-muestra las funciones necesarias para generar este archivo.
+con datos aleatorios. El siguiente código muestra las funciones necesarias para generar este archivo.
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion_1.py}
 
@@ -399,10 +400,7 @@ Luego, el output se almacena de la siguiente manera.
 
 \subsection{Introducción}
 
-Dado un conjunto de archivos $C$ y una familia de conjuntos $H$, donde
-$H \subseteq C$ y cada archivo de $C$ pertenece a algún conjunto de $H$,
-se busca un subconjunto mínimo $I \subseteq H$ tal que todos los
-archivos de $C$ estén cubiertos por al menos un conjunto de $I$.
+Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \mathcal{H} \), donde cada conjunto de archivos $H$ de \( \mathcal{H} \) está incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia \( \mathcal{H} \), se busca un subconjunto mínimo \( \mathcal{I} \) de \( \mathcal{H} \) tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de \( \mathcal{I} \).
 
 \subsection{Modelo Lineal}
 
@@ -418,7 +416,7 @@ contiene el archivo $i$. \\
 \begin{alignat*}{2}
     \minimize & \sum_{j = 1}^{m} x_{j}\\
     \subjto   & \sum_{j=1}^{m} y_{i,j} \cdot x_j \geq 1 \quad \forall i,\ \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
-              & \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
+              %& \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
 \end{alignat*}
 
 \section{Cuarta parte}
@@ -433,30 +431,18 @@ todos los archivos, considerando la capacidad de cada disco y los
 tamaños de archivos.
 
 \subsection{Modelo Lineal}
-
-
-
-$F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
-
+$F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
+$s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
 $n$: cantidad de archivos. \\
-
-$S$: conjunto de tamaños de cada archivo $i$, con $i = 1, \ldots, n$. \\
-
-$s_{k}$: tamaño $k$ en MB, con $k = 1, \ldots, q$. \\
-
-$q$: cantidad de tamaños. \\
-
-$m$: cantidad de discos disponibles, a lo sumo, un disco por archivo, $m = n$. \\
-
-$D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
-
+$m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
+$D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$. \\
+% ???????????????????????????????? hace falta? no se como ponerla jeje
+$S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$. \\ 
 $d$: tamaño del disco en TB. \\ 
-
-$x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
-
-$c_{kj}$: cantidad de archivos de tamaño $k$ que entran en el disco $j$, $\forall k = \{1, \ldots, q\},\ \forall j = \{1, \ldots, m\}$, donde $c_{kj} \ge 0$\\
-
-$y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
+$t$: constante, máxima cantidad de tamaños que entran en un disco. \\ 
+$x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$. \\
+$y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$. \\
+$z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$. \\
 
 \begin{alignat*}{2}
 	\minimize
@@ -464,12 +450,16 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	\subjto
 	& \sum_{j = 1}^{m} x_{ij} = 1 \quad \forall i \in \{1, \ldots, n\},\ \text{(el archivo $i$ debe estar en un solo disco)}\\
 	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \quad \forall j \in \{1, \ldots, m\},\ \text{(los archivos que entran en el disco $j$)}\\
-	& \sum_{k = 1}^{q} c_{kj} \ge 1 \quad \forall j \in \{1, \ldots, m\},\ \text{(no pueden haber discos con cero cantidad de archivos)}\\
-	& \sum_{k = 1}^{q} s_{k} c_{kj} \le d\cdot y_{j} \quad \forall j \in \{1, \ldots, m\},\ \text{(cantidad de archivos de que entran en el disco $j$)}\\
-	% esta restricción está de más
-	% & \sum_{k = 1}^{q} c_{kj} \le n\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\},\ \text{(no pueden entrar más de $n$ archivos por disco)}\\
-	& c_{kj} \in \mathds{Z}_{\ge 0}, \quad \forall k \in \{1, \ldots, q\}, \ \forall j \in \{1, \ldots, m\}\\
-	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
+        & z_{sj} \leq \sum_{i=1}^{n} x_{ij} \quad \text{si } S_i = s, \quad \forall s \in S, \, \forall j \in \{1, \ldots, m\},\ \text{(marcamos los tamaños que están en cada disco)} \\
+        & \sum_{s \in S} z_{sj} \leq t, \quad \forall j \in \{1, \ldots, m\},\ \text{(en cada disco no entran mas de t tamaños)} \\
+	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
+	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
+        & z_{sj} \in \{0,1\}, \quad \forall s \in S, \ \forall j \in \{1, \ldots, m\}\\
+        & n \geq  0, n \in \mathbb{Z} \\
+        & s_i \geq 0, \forall i \in \{1, \ldots, n\}\\
+        & m \geq  0, m \leq  n, m \in \mathbb{Z} \\
+        & d \geq  0 \\
+        & t \geq  0, t \in \mathbb{Z} \\
 \end{alignat*}
 
 \section{Conclusiones}
