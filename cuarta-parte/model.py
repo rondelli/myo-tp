@@ -16,12 +16,6 @@ def distribuir_archivos(d_t, F, S, t):
     n = len(F)
     m = n  # no se puede tener más discos que archivos
 
-    size_counts = {}
-    for s in S:
-        size_counts[s] = size_counts.get(s, 0) + 1
-
-    S = list(dict.fromkeys(S))
-
     # y_{j} = 1 si se elige el disco j, 0 si no
     y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
 
@@ -59,7 +53,6 @@ def distribuir_archivos(d_t, F, S, t):
         model.addCons(sum(z[s, j] for s in set(S)) <= t)
 
     model.optimize()
-
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
