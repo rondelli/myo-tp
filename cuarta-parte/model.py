@@ -6,7 +6,7 @@ F --> archivos
 S --> tamaños de archivos 
 T --> maxima cantidad de tamaños
 """
-def distribuir_archivos(d_t, F, S, t):
+def distribuir_archivos(d_t, F, S, t, time_limit=1800):
     model = Model("Model")
     d = d_t * 10**6
 
@@ -52,7 +52,15 @@ def distribuir_archivos(d_t, F, S, t):
     for j in range(m):
         model.addCons(sum(z[s, j] for s in set(S)) <= t)
 
+    # Configurar el límite de tiempo en el solver
+    model.setParam("limits/time", time_limit)
+    model.setParam("display/freq", 1)
+
     model.optimize()
+
+    print(f"Time: {model.getSolvingTime()}")
+    print(f"Cant sols: {model.getNSols()}")
+
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
