@@ -1,21 +1,7 @@
 import time
-from pyscipopt import Model, Eventhdlr, SCIP_EVENTTYPE
+from pyscipopt import Model
 
-class FeasibleSolutionCollector(Eventhdlr):
-    def _init_(self):
-        super()._init_()
-        self.solutions = []
-
-    def eventinit(self):
-        self.model.catchEvent(self.model.EVENTTYPE.BESTSOLFOUND, self)
-    
-    def eventexit(self):
-        self.model.dropEvent(self.model.EVENTTYPE.BESTSOLFOUND, self)
-
-    def eventeexec(self, event):
-        print("hola")
-
-def distribuir_archivos(d_t, F, s, time_limit=60):
+def distribuir_archivos(d_t, F, s, time_limit=420):
     """
     Distribuye archivos entre discos minimizando el número de discos utilizados.
     
@@ -29,8 +15,6 @@ def distribuir_archivos(d_t, F, s, time_limit=60):
     - Una lista con la mejor solución encontrada dentro del tiempo límite o None si no se encontró ninguna.
     """
     model = Model("big_data")
-    collector = FeasibleSolutionCollector()
-    model.includeEventhdlr(collector, "FeasibleSolutionCollector", "")
 
     d = d_t * 10**6
     if d < 0 or any(s_i < 0 for s_i in s):
@@ -57,16 +41,10 @@ def distribuir_archivos(d_t, F, s, time_limit=60):
     for j in range(m):
         model.addCons(sum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
-
-
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    
-    # Registrar el tiempo de inicio
-    start_time = time.time()
 
     model.setParam("display/freq", 1)
-    model.setParam("display/verblevel", 4)
 
     model.optimize()
     print(f"Time: {model.getSolvingTime()}")
