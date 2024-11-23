@@ -24,6 +24,9 @@ def elegir_conjuntos(F: list, H: list):
     for i in range(n):
         model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
 
+    model.addCons(x[j] <= 1 for j in range(m))
+    model.addCons(x[j] >= 0 for j in range(m))
+
     model.optimize()
     sol = model.getBestSol()
 
