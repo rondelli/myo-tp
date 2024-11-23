@@ -50,13 +50,15 @@ def generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos):
     conjuntos = []
     archivos_alegidos = set()
     while len(archivos_alegidos) < len(nombres_archivos):
-        conjunto = dict()
+        #conjunto = dict()
+        conjunto = set()
         tamaño_conjunto = 0
         while tamaño_conjunto <= capacidad_disco:
             elegido = random.randint(0, len(nombres_archivos)-1)
 
             if tamaños_archivos[elegido] + tamaño_conjunto <= capacidad_disco:
-                conjunto[nombres_archivos[elegido]] = tamaños_archivos[elegido]
+                #conjunto[nombres_archivos[elegido]] = tamaños_archivos[elegido]
+                conjunto.add(nombres_archivos[elegido])
                 tamaño_conjunto += tamaños_archivos[elegido]
                 
                 if nombres_archivos[elegido] not in archivos_alegidos:
