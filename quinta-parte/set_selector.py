@@ -8,9 +8,9 @@ def elegir_conjuntos(F: list, H: list):
     m = len(H)  # cantidad de conjuntos
 
     if n == 0: return
-
+    
     # x_{i} = 1 si se elige el conjunto i, 0 si no
-    x = [model.addVar(f"x_{j}", vtype="CONTINUOS") for j in range(m)]
+    x = [model.addVar(f"x_{j}", vtype="CONTINUOUS") for j in range(m)]
 
     # y_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
     y = {}
@@ -27,8 +27,7 @@ def elegir_conjuntos(F: list, H: list):
     model.optimize()
     sol = model.getBestSol()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
-    ) == "feasible":
+    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
         conjuntos_seleccionados = [
             j for j in range(m) if model.getVal(x[j]) > 0.5
         ]
