@@ -1,16 +1,19 @@
 from pyscipopt import Model
+from pyscipopt import SCIP_PARAMSETTING
 
 
 # recibe: archivos, conjuntos H
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
+    #model.setParam("presolving/enable", False)
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
 
     if n == 0: return
     
     # x_{i} = 1 si se elige el conjunto i, 0 si no
-    x = [model.addVar(f"x_{j}", vtype="CONTINUOUS") for j in range(m)]
+    x = [model.addVar(f"x_{j}", lb=0, ub=1, vtype="CONTINUOUS") for j in range(m)]
 
     # y_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
     y = {}
@@ -24,11 +27,19 @@ def elegir_conjuntos(F: list, H: list):
     for i in range(n):
         model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
 
-    model.addCons(x[j] <= 1 for j in range(m))
-    model.addCons(x[j] >= 0 for j in range(m))
-
     model.optimize()
     sol = model.getBestSol()
+    opt = model.getObjVal()
+
+    print("Primal:", sol)
+    print("Primal:", opt)
+
+    print(">>>", model.getConss(False))
+
+    print(">>>> Dual")
+
+    for c in model.getConss(False):
+        print(f"Dual Constraint {model.getDualSolVal(c)}")
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
         conjuntos_seleccionados = [
@@ -37,3 +48,5 @@ def elegir_conjuntos(F: list, H: list):
         return conjuntos_seleccionados
     else:
         return None
+
+
