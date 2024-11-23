@@ -10,7 +10,7 @@ def elegir_conjuntos(F: list, H: list):
     if n == 0: return
 
     # x_{i} = 1 si se elige el conjunto i, 0 si no
-    x = [model.addVar(f"x_{j}", vtype="CONTINUOS") for j in range(m)]
+    x = [model.addVar(f"x_{j}", vtype="CONTINOUOS") for j in range(m)]
 
     # y_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
     y = {}
@@ -23,6 +23,9 @@ def elegir_conjuntos(F: list, H: list):
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
         model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
+
+    model.addCons(x[j] <= 1 for j in range(m))
+    model.addCons(x[j] >= 0 for j in range(m))
 
     model.optimize()
     sol = model.getBestSol()
