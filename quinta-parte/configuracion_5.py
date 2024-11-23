@@ -9,7 +9,6 @@ def generar_archivos(cant_archivos):
         contador += 1
     return archivos
 
-
 def generar_configuracion(nombre_archivo):
     capacidad_discos = random.randint(1, 300)
     cant_archivos = random.randint(400, 550)
@@ -29,7 +28,6 @@ def generar_configuracion(nombre_archivo):
         for archivo in archivos:
             f.write(archivo + " " + str(archivos[archivo]) + "\n")
 
-
 def leer_configuracion(nombre_archivo):
     capacidad_disco = 0
     nombres_archivos = []
@@ -47,3 +45,26 @@ def leer_configuracion(nombre_archivo):
                 nombres_archivos.append(archivo[0])
                 tamaños_archivos.append(int(archivo[1]))
     return capacidad_disco, nombres_archivos, tamaños_archivos
+
+def generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos):
+    conjuntos = []
+    archivos_alegidos = set()
+    while len(archivos_alegidos) < len(nombres_archivos):
+        conjunto = dict()
+        tamaño_conjunto = 0
+        while tamaño_conjunto <= capacidad_disco:
+            elegido = random.randint(0, len(nombres_archivos)-1)
+
+            if tamaños_archivos[elegido] + tamaño_conjunto <= capacidad_disco:
+                conjunto[nombres_archivos[elegido]] = tamaños_archivos[elegido]
+                tamaño_conjunto += tamaños_archivos[elegido]
+                
+                if nombres_archivos[elegido] not in archivos_alegidos:
+                    archivos_alegidos.add(nombres_archivos[elegido])
+            else: 
+            # Medio feo. Podría pasar que en el conjunto no entren mas archivos y aún no se haya alcanzado el limite del disco.
+            # En este caso, si resulta que un archivo elegido no entra, dejamos de agregar archivos en el conjunto.
+                break
+        conjuntos.append(conjunto)
+
+    return conjuntos
