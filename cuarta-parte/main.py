@@ -13,12 +13,11 @@ if len(sys.argv) != 2:
 archivo = sys.argv[1]
 print(f"Utilizando {archivo}\n")
 
-# generar_configuracion(archivo)
+generar_configuracion(archivo)
 
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
-# Harcodeado jeje: 10 + 13 + 16 + 19 + 22 + 15 = 105 > 100
-max_cant_tamaños = 6
+max_cant_tamaños = 11
 solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, max_cant_tamaños)
 
 if solucion is not None:

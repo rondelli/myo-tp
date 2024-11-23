@@ -3,7 +3,7 @@ import os
 
 def generar_archivos(cant_archivos: int):
     # Tamaños: 10, 13, ..., hasta 70
-    tamaños = [t * 10**6 for t in range(10, 71, 3)]
+    tamaños = [t * 10**6 for t in range(1, 100, 3)]
 
     tamaños_seleccionados = random.sample(tamaños, random.randint(10, 20))
 
@@ -14,8 +14,8 @@ def generar_archivos(cant_archivos: int):
 
 
 def generar_configuracion(nombre_archivo):
-    capacidad_discos = random.randrange(50, 100, 10)
-    cant_archivos = random.randint(1, 50)
+    capacidad_discos = random.randrange(1, 300, 10)
+    cant_archivos = random.randint(400, 550)
     archivos = generar_archivos(cant_archivos)
 
     ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
