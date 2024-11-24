@@ -32,7 +32,7 @@ def elegir_conjuntos(F: list, H: list):
     model.optimize()
 
     # y*
-    solucion_dual = [model.getDualSolVal(c) for c in model.getConss()]
+    solucion_dual = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     # Activación de presolve
     model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
