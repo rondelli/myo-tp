@@ -23,10 +23,12 @@ conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaño
 solucion_dual = elegir_conjuntos(nombres_archivos, conjuntos)
 
 # PASO 4
-solucion_modelo_2 = generar_output_modelo_2(distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_dual))
+distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_dual)
+solucion_modelo_2 = generar_output_modelo_2(distribucion)
+
+# PASO 5
 if sum(solucion_modelo_2[1]) > 1:
     conjuntos.append(set(solucion_modelo_2[0]))
-
 
 '''
 if solucion_dual is not None:
