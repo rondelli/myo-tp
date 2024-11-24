@@ -54,7 +54,7 @@ def elegir_conjuntos(F: list, H: list):
         else:
             print("[NO] Los valores objetivo del primal y del dual no coinciden")
 
-        return conjuntos_seleccionados
+        return solucion_dual
     else:
         print("No se encontró una solución factible.")
         return None
