@@ -161,9 +161,12 @@
 \tableofcontents
 
 \newpage
-\section{Primera parte}
+\section{Introducción}
+\newpage
+\section{Desarrollo}
+\subsection{Parte 1}
 
-\subsection{Introducción}
+\subsubsection{Introducción}
 
 Se deben realizar backups de $n$ archivos de la empresa \emph{BigData}
 en discos idénticos de capacidad $d$, sin dividir los archivos. Cada
@@ -172,7 +175,7 @@ la cantidad mínima de discos necesarios para almacenar todos los
 archivos, considerando la capacidad de cada disco y el tamaño de cada
 archivo. 
 
-\subsection{Modelo Lineal}\label{modelo:primera:parte}
+\subsubsection{Modelo Lineal}\label{modelo:primera:parte}
 
 Para minimizar la cantidad de discos, usamos una variable binaria
 $y_{j}$ que nos indica si se está usando el disco $j$ o no, y otra
@@ -210,7 +213,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
-\subsubsection{Restricción: que no se elijan discos vacíos}
+\subsubsubsection{Restricción: que no se elijan discos vacíos}
 
 Inicialmente, habíamos planteado el programa lineal de la
 Sección~\ref{modelo:primera:parte} con una tercera restricción:
@@ -282,7 +285,7 @@ ya que probamos que se llega a una solución correcta sin ella.
 
 \newpage
 
-\subsection{Modelo Zimpl}
+\subsubsection{Modelo Zimpl}
 
 A continuación presentamos el modelo Zimpl, con los comentarios
 correspondientes que indican la relación con el modelo lineal de la sección
@@ -291,7 +294,7 @@ anterior.
 \lstinputlisting[inputencoding=utf8/latin1]{primera-parte/big_data.zpl}
 
 \newpage
-\subsection{Modelo PySCIPOpt}
+\subsubsection{Modelo PySCIPOpt}
 
 Como parte del trabajo, incluimos una implementación del modelo utilizando
 Python, con la librería PySCIPOpt. La siguiente implementación corresponde 
@@ -321,16 +324,16 @@ Utilizamos las siguientes funciones para generar el output.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output_1.py}
 
 \newpage
-\section{Segunda parte}
+\subsection{Parte 2}
 
-\subsection{Introducción}
+\subsubsection{Introducción}
 
 Se asigna un indicador de importancia $I$ a cada archivo según
 características como sensibilidad, frecuencia de uso, y rareza. El
 objetivo es encontrar un subconjunto de archivos que quepan en un disco
 de tamaño $d$, y que la suma de indicadores de importancia sea máxima.
 
-\subsection{Modelo Lineal}
+\subsubsection{Modelo Lineal}
 
 Para maximizar la importancia de los archivos en un disco, usamos una
 variable binaria $x_i$ que indica si el archivo $i$ está o no en el
@@ -364,14 +367,14 @@ $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{
 \end{alignat*}
 
 \newpage
-\subsection{Modelo Zimpl}
+\subsubsection{Modelo Zimpl}
 
 A continuación presentamos el modelo Zimpl, con los comentarios correspondientes que indican la relación con el modelo lineal de la sección anterior.
 
 \lstinputlisting[inputencoding=utf8/latin1]{segunda-parte/importance.zpl}
 
 \newpage
-\subsection{Modelo PySCIPOpt}
+\subsubsection{Modelo PySCIPOpt}
 
 De la misma manera que en el modelo anterior, generamos el modelo, la configuración y los 
 archivos de output utilizando Python.
@@ -400,13 +403,13 @@ Luego, el output se almacena de la siguiente manera.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/generador_output_2.py}
 
 %\newpage
-\section{Tercera parte}
+\subsection{Parte 3}
 
-\subsection{Introducción}
+\subsubsection{Introducción}
 
 Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \mathcal{H} \), donde cada conjunto de archivos $H$ de \( \mathcal{H} \) está incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia \( \mathcal{H} \), se busca un subconjunto mínimo \( \mathcal{I} \) de \( \mathcal{H} \) tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de \( \mathcal{I} \).
 
-\subsection{Modelo Lineal}
+\subsubsection{Modelo Lineal}
 
 $n$: cantidad de archivos. \\
 
@@ -427,9 +430,9 @@ contiene el archivo $i$. \\
               & m \geq 0, \quad \\
 \end{alignat*}
 
-\section{Cuarta parte}
+\subsection{Parte 4}
 
-\subsection{Introducción}
+\subsubsection{Introducción}
 
 Se deben realizar backups de $n$ archivos en discos idénticos de
 capacidad $d$.  Se sabe que los archivos son de pocos tamaños distintos,
@@ -438,7 +441,7 @@ saber cuál es la cantidad mínima de discos necesarios para almacenar
 todos los archivos, considerando la capacidad de cada disco y los
 tamaños de archivos.
 
-\subsection{Modelo Lineal}
+\subsubsection{Modelo Lineal}
 $F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
 $s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
 $n$: cantidad de archivos. \\
@@ -469,7 +472,9 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
         & d \geq  0 \\
         & t \geq  0, t \in \mathbb{Z} \\
 \end{alignat*}
-
+\subsection{Parte 5}
+\subsection{Parte 6}
+\section{Resultados de script}
 \section{Conclusiones}
 
 Logramos familiarizarnos con el uso de SCIP, tanto desde su interfaz en
