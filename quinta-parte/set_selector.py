@@ -40,7 +40,12 @@ def elegir_conjuntos(F: list, H: list):
 
         # Calcular el valor objetivo del primal y dual
         primal_obj_value = model.getObjVal()
-        dual_obj_value = sum(solucion_dual)
+        dual_obj_value = sum(solucion_dual)  # rhs es 1 para todas las restricciones
+
+        print("\nSol>>>")
+        print("Primal:", primal_obj_value)
+        print("Dual:", dual_obj_value)
+        print("Gap: {:.2%}".format(abs(primal_obj_value - dual_obj_value) / primal_obj_value))
 
         print("x*: ", conjuntos_seleccionados)
         print("y*: ", solucion_dual)
@@ -54,4 +59,15 @@ def elegir_conjuntos(F: list, H: list):
 
         return conjuntos_seleccionados
     else:
+        print("No se encontró una solución factible.")
         return None
+
+# Ejemplo de uso
+F = ["archivo1", "archivo2", "archivo3", "archivo4"]
+H = [
+    {"archivo1", "archivo2"},
+    {"archivo2", "archivo3"},
+    {"archivo1", "archivo3", "archivo4"},
+]
+
+#elegir_conjuntos(F, H)
