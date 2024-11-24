@@ -18,13 +18,13 @@ capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{a
 
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
-solucion_P = elegir_conjuntos(nombres_archivos, conjuntos)
+solucion_dual = elegir_conjuntos(nombres_archivos, conjuntos)
 #solucion_D = importancia_archivos(nombres_archivos, conjuntos)
 
 #solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_D)
 
-if solucion_P is not None:
-    generar_output(f"{archivo[:-3]}.out", solucion_P, conjuntos)
+if solucion_dual is not None:
+    generar_output(f"{archivo[:-3]}.out", solucion_dual, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
 
