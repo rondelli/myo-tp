@@ -16,18 +16,26 @@ print(f"Utilizando {archivo}\n")
 generar_configuracion(archivo)
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
+# PASO 1
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
+# PASO 2 Y 3: y*
 solucion_dual = elegir_conjuntos(nombres_archivos, conjuntos)
-#solucion_D = importancia_archivos(nombres_archivos, conjuntos)
 
-#solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_D)
+# PASO 4
+solucion_modelo_2 = generar_output_modelo_2(distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_dual))
+if sum(solucion_modelo_2[1]) > 1:
+    conjuntos.append(solucion_modelo_2[0])
 
+print(conjuntos)
+
+
+'''
 if solucion_dual is not None:
     generar_output(f"{archivo[:-3]}.out", solucion_dual, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
-
+'''
 #archivos = []
 # for conjunto in conjuntos:
 #     for archivo in conjunto:

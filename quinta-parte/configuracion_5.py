@@ -70,3 +70,24 @@ def generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos):
         conjuntos.append(conjunto)
 
     return conjuntos
+
+import os
+
+
+# solucion = F, model, x, I, s
+def generar_output_modelo_2(solucion):
+    F = solucion[0]
+    model = solucion[1]
+    x = solucion[2]
+    I = solucion[3]
+
+    cant_archivos = len(F)
+    archivos_elegidos = []
+    importancia_archivos = []
+
+    for i in range(cant_archivos):
+        if model.getVal(x[i]) > 0.5:  # se eligio el archivo
+            archivos_elegidos.append(F[i])
+            importancia_archivos.append(I[i])
+    
+    return archivos_elegidos, importancia_archivos
