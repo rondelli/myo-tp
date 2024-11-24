@@ -38,9 +38,6 @@ def elegir_conjuntos(F: list, H: list):
 
     print(">>>> Dual")
 
-    for c in model.getConss(False):
-        print(f"Dual Constraint {model.getDualSolVal(c)}")
-
     # Disculpen la intromisión jaja, habría que retornar una lista con el dual de cada archivo, no? 
     # asi la agarramos en el main para invocar al modelo de la parte 2
     
@@ -48,6 +45,9 @@ def elegir_conjuntos(F: list, H: list):
         conjuntos_seleccionados = [
             j for j in range(m) if model.getVal(x[j]) > 0.5
         ]
+        solucion_dual = [model.getDualSolVal(c) for c in model.getConss()]
+        print("x*: ", conjuntos_seleccionados)
+        print("y*: ", solucion_dual)
         return conjuntos_seleccionados
     else:
         return None
