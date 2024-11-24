@@ -43,20 +43,16 @@ def elegir_conjuntos(F: list, H: list):
         # x*
         conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
 
-        primal_obj_value = model.getObjVal()
-        dual_obj_value = sum(solucion_dual) # rhs es 1 para todas las restricciones
+        primal_obj = model.getObjVal()
+        dual_obj = sum(solucion_dual) # rhs es 1 para todas las restricciones
 
-        print("\nSol>>>")
+        print("\nPrimal obj: ", primal_obj)
+        print("Dual obj: ", dual_obj)
 
-        print("x*: ", conjuntos_seleccionados)
-        print("y*: ", solucion_dual)
-        print("primal obj: ", primal_obj_value)
-        print("dual obj: ", dual_obj_value)
-
-        if abs(dual_obj_value - primal_obj_value) < 1e-6:
-            print("Los valores objetivo coinciden")
+        if abs(dual_obj - primal_obj) < 1e-6:
+            print("[OK] Los valores objetivo coinciden")
         else:
-            print("Los valores objetivo del primal y del dual no coinciden.")
+            print("[NO] Los valores objetivo del primal y del dual no coinciden")
 
         return conjuntos_seleccionados
     else:
