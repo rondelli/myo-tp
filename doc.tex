@@ -341,13 +341,13 @@ el tamaño del disco.
 
 $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
-$s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+$s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
 $I_i$ constante: indicador de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
 
-$n$: cantidad de archivos. \\
+$n$ constante: cantidad de archivos. \\
 
-$d$: tamaño del disco en TB. \\ 
+$d$ constante: tamaño del disco en TB. \\ 
 
 $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{1, \ldots, n\}$, donde $x_{i} \in \{0, 1\}$, $0$ en el caso de que no esté\\
 
@@ -356,7 +356,11 @@ $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{
 	& \sum_{i = 1}^{n} I_{i} \cdot x_{i}\\
 	\subjto
 	& \sum_{i = 1}^{n} s_{i} x_{i} \le d,\ \quad\text{(archivos que entran en el disco)}\\
-	& x_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}
+	& x_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\} \\
+        & s_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
+        & I_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
+        & n \geq 0\\
+        & d \geq 0\\
 \end{alignat*}
 
 \newpage
@@ -417,6 +421,10 @@ contiene el archivo $i$. \\
     \minimize & \sum_{j = 1}^{m} x_{j}\\
     \subjto   & \sum_{j=1}^{m} y_{i,j} \cdot x_j \geq 1 \quad \forall i,\ \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
               %& \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
+              & x_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
+              & y_{i, j} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \quad \forall j \in \{1, \ldots, m\} \\
+              & n \geq 0, \quad \\
+              & m \geq 0, \quad \\
 \end{alignat*}
 
 \section{Cuarta parte}
@@ -443,15 +451,15 @@ $t$: constante, máxima cantidad de tamaños que entran en un disco. \\
 $x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$. \\
 $y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$. \\
 $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$. \\
-
 \begin{alignat*}{2}
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
 	& \sum_{j = 1}^{m} x_{ij} = 1 \quad \forall i \in \{1, \ldots, n\},\ \text{(el archivo $i$ debe estar en un solo disco)}\\
-	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \quad \forall j \in \{1, \ldots, m\},\ \text{(los archivos que entran en el disco $j$)}\\
-        & z_{sj} \leq \sum_{i=1}^{n} x_{ij} \quad \text{si } S_i = s, \quad \forall s \in S, \, \forall j \in \{1, \ldots, m\},\ \text{(marcamos los tamaños que están en cada disco)} \\
-        & \sum_{s \in S} z_{sj} \leq t, \quad \forall j \in \{1, \ldots, m\},\ \text{(en cada disco no entran mas de t tamaños)} \\
+	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \quad \forall j \in \{1, \ldots, m\} \text{(los archivos que entran en el disco $j$)}\\
+    % esta restricción esta medio rara, creo que el "si S_i=s" sobra:
+        & z_{sj} \leq \sum_{i=1}^{n} x_{ij} \quad \text{si } S_i = s, \quad \forall s \in S, \, \forall j \in \{1, \ldots, m\} \text{(marcamos los tamaños que están en cada disco)} \\
+        & \sum_{s \in S} z_{sj} \leq t, \quad \forall j \in \{1, \ldots, m\} \text{(en cada disco no entran mas de t tamaños)} \\
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
         & z_{sj} \in \{0,1\}, \quad \forall s \in S, \ \forall j \in \{1, \ldots, m\}\\
