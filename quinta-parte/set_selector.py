@@ -4,6 +4,7 @@ from pyscipopt import SCIP_PARAMSETTING
 # Función para seleccionar conjuntos dados los archivos y conjuntos
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
+
     model.setPresolve(SCIP_PARAMSETTING.OFF)
     model.setHeuristics(SCIP_PARAMSETTING.OFF)
     model.disablePropagation()
@@ -35,12 +36,12 @@ def elegir_conjuntos(F: list, H: list):
     sol = model.getBestSol()
     
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
+        # x*
         conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
 
-        # Obtener valores duales para cada restricción
-        solucion_dual = [model.getDualSolVal(c) for c in constraints]
+        # y*
+        solucion_dual = [model.getDualSolVal(c) for c in model.getConss()]
 
-        # Calcular el valor objetivo del primal y dual
         primal_obj_value = model.getObjVal()
         dual_obj_value = sum(solucion_dual) # rhs es 1 para todas las restricciones
 
