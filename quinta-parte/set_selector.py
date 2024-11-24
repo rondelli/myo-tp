@@ -5,6 +5,8 @@ from pyscipopt import SCIP_PARAMSETTING
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
     model.setPresolve(SCIP_PARAMSETTING.OFF)
+    model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()
     
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
@@ -40,7 +42,7 @@ def elegir_conjuntos(F: list, H: list):
 
         # Calcular el valor objetivo del primal y dual
         primal_obj_value = model.getObjVal()
-        dual_obj_value = sum(solucion_dual)  # rhs es 1 para todas las restricciones
+        dual_obj_value = sum(solucion_dual) # rhs es 1 para todas las restricciones
 
         print("\nSol>>>")
         print("Primal:", primal_obj_value)
@@ -63,11 +65,11 @@ def elegir_conjuntos(F: list, H: list):
         return None
 
 # Ejemplo de uso
-F = ["archivo1", "archivo2", "archivo3", "archivo4"]
+F = ["archivo1", "archivo2", "archivo3", "archivo4", "archivo5"]
 H = [
     {"archivo1", "archivo2"},
     {"archivo2", "archivo3"},
-    {"archivo1", "archivo3", "archivo4"},
+    {"archivo1", "archivo3", "archivo4", "archivo5"},
 ]
 
 #elegir_conjuntos(F, H)
