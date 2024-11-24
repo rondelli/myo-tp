@@ -19,16 +19,21 @@ capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{a
 # PASO 1
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
-# PASO 2 Y 3: y*
-modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
+while True:
+    # PASO 2 Y 3: y*
+    modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
 
-# PASO 4
-distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
-solucion_modelo_2 = generar_output_modelo_2(distribucion)
+    # PASO 4
+    distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
+    solucion_modelo_2 = generar_output_modelo_2(distribucion)
 
-# PASO 5
-if sum(solucion_modelo_2[1]) > 1:
-    conjuntos.append(set(solucion_modelo_2[0]))
+    # PASO 5
+    # copy_of_model = Model(sourceModel=modelo_3)
+
+    if sum(solucion_modelo_2[1]) > 1:
+        conjuntos.append(set(solucion_modelo_2[0]))
+    else:
+        break
 
 '''
 if solucion_dual is not None:
