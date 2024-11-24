@@ -162,21 +162,20 @@
 
 \newpage
 \section{Introducción}
+Este trabajo práctico tiene como objetivo aplicar conceptos de modelado y optimización utilizando técnicas de programación lineal y tecnologías. Buscamos, a través de una serie de problemas relacionados con la gestión de archivos en una empresa de datos, diseñar soluciones eficientes que optimicen el uso de recursos, como el almacenamiento en discos y la importancia de los datos.
+
+La actividad se divide en seis partes, cada una con enfoquesespecíficos que abarcan desde el modelado directo en \emph{SCiP} hasta la implementación de algoritmos en Python con la biblioteca \emph{PySCIPOpt}. A lo largo del trabajo, se considerarán restricciones como la capacidad limitada de los discos, la importancia de los archivos y la estructura de conjuntos para maximizar la eficiencia del almacenamiento y la relevancia de los datos seleccionados.
 \newpage
 \section{Desarrollo}
 \subsection{Parte 1}
-
 \subsubsection{Introducción}
-
 Se deben realizar backups de $n$ archivos de la empresa \emph{BigData}
 en discos idénticos de capacidad $d$, sin dividir los archivos. Cada
 archivo es menor que la capacidad de un disco. Se necesita saber cuál es
 la cantidad mínima de discos necesarios para almacenar todos los
 archivos, considerando la capacidad de cada disco y el tamaño de cada
 archivo. 
-
 \subsubsection{Modelo Lineal}\label{modelo:primera:parte}
-
 Para minimizar la cantidad de discos, usamos una variable binaria
 $y_{j}$ que nos indica si se está usando el disco $j$ o no, y otra
 variable binaria $x_{ij}$ para identificar si cada archivo $i$ se guarda
@@ -185,7 +184,6 @@ asegura de que cada archivo esté en un solo disco, y la segunda, que los
 tamaños de los archivos de cada disco no superen la capacidad del disco.
 %y la tercera define que no se usen discos vacíos---sería equivalente a
 %la implicación $x_{ij} \Rightarrow y_i$.
-
 $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
 $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
@@ -213,8 +211,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\}
 \end{alignat*}
 
-\subsubsubsection{Restricción: que no se elijan discos vacíos}
-
+\subsubsection{Restricción: que no se elijan discos vacíos}
 Inicialmente, habíamos planteado el programa lineal de la
 Sección~\ref{modelo:primera:parte} con una tercera restricción:
 \begin{alignat*}{2}
@@ -309,7 +306,7 @@ con datos aleatorios. El siguiente código muestra las funciones necesarias para
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion_1.py}
 
-\newpage
+%\newpage
 
 La solución incluye un script ejecutable que recibe como parámetro el nombre del 
 archivo a generar, genera el archivo y calcula el resultado del modelo. Luego, 
@@ -402,7 +399,7 @@ Luego, el output se almacena de la siguiente manera.
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/generador_output_2.py}
 
-%\newpage
+\newpage
 \subsection{Parte 3}
 
 \subsubsection{Introducción}
@@ -429,18 +426,15 @@ contiene el archivo $i$. \\
               & n \geq 0, \quad \\
               & m \geq 0, \quad \\
 \end{alignat*}
-
+\newpage
 \subsection{Parte 4}
-
 \subsubsection{Introducción}
-
 Se deben realizar backups de $n$ archivos en discos idénticos de
 capacidad $d$.  Se sabe que los archivos son de pocos tamaños distintos,
 y que cada archivo es menor que la capacidad de un disco. Se necesita
 saber cuál es la cantidad mínima de discos necesarios para almacenar
 todos los archivos, considerando la capacidad de cada disco y los
 tamaños de archivos.
-
 \subsubsection{Modelo Lineal}
 $F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
 $s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
@@ -472,9 +466,13 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
         & d \geq  0 \\
         & t \geq  0, t \in \mathbb{Z} \\
 \end{alignat*}
+\newpage
 \subsection{Parte 5}
+\newpage
 \subsection{Parte 6}
+\newpage
 \section{Resultados de script}
+\newpage
 \section{Conclusiones}
 
 Logramos familiarizarnos con el uso de SCIP, tanto desde su interfaz en
