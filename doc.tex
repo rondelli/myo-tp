@@ -25,6 +25,8 @@
 \usepackage{xcolor}
 \usepackage{colortbl}
 
+\usepackage{rotating}
+
 \usepackage{tikz} % no tiene opciones
 	\usetikzlibrary{calc}
 	\usetikzlibrary{arrows}
@@ -162,20 +164,36 @@
 
 \newpage
 \section{Introducción}
-Este trabajo práctico tiene como objetivo aplicar conceptos de modelado y optimización utilizando técnicas de programación lineal y tecnologías. Buscamos, a través de una serie de problemas relacionados con la gestión de archivos en una empresa de datos, diseñar soluciones eficientes que optimicen el uso de recursos, como el almacenamiento en discos y la importancia de los datos.
 
-La actividad se divide en seis partes, cada una con enfoquesespecíficos que abarcan desde el modelado directo en \emph{SCiP} hasta la implementación de algoritmos en Python con la biblioteca \emph{PySCIPOpt}. A lo largo del trabajo, se considerarán restricciones como la capacidad limitada de los discos, la importancia de los archivos y la estructura de conjuntos para maximizar la eficiencia del almacenamiento y la relevancia de los datos seleccionados.
+Este trabajo práctico tiene como objetivo aplicar conceptos de modelado
+y de optimización utilizando técnicas de programación lineal, y distintas
+tecnologías y herramientas. Buscamos, a través de una serie de problemas
+relacionados con la gestión de archivos en una empresa de datos, diseñar
+soluciones eficientes que optimicen el uso de recursos, como el
+almacenamiento en discos y la importancia de los datos.
+
+La actividad se divide en seis partes, cada una con enfoques específicos
+que abarcan desde el modelado directo en \emph{SCiP} hasta la
+implementación de algoritmos en Python con la biblioteca
+\emph{PySCIPOpt}. A lo largo del trabajo, se considerarán restricciones
+como la capacidad limitada de los discos, la importancia de los archivos
+y la estructura de conjuntos para maximizar la eficiencia del
+almacenamiento y la relevancia de los datos seleccionados.
+
 \newpage
-\section{Desarrollo}
-\subsection{Parte 1}
-\subsubsection{Introducción}
+\section{Parte 1}
+
+\subsection{Descripción}
+
 Se deben realizar backups de $n$ archivos de la empresa \emph{BigData}
 en discos idénticos de capacidad $d$, sin dividir los archivos. Cada
 archivo es menor que la capacidad de un disco. Se necesita saber cuál es
 la cantidad mínima de discos necesarios para almacenar todos los
 archivos, considerando la capacidad de cada disco y el tamaño de cada
 archivo. 
-\subsubsection{Modelo Lineal}\label{modelo:primera:parte}
+
+\subsection{Modelo Lineal}\label{modelo:primera:parte}
+
 Para minimizar la cantidad de discos, usamos una variable binaria
 $y_{j}$ que nos indica si se está usando el disco $j$ o no, y otra
 variable binaria $x_{ij}$ para identificar si cada archivo $i$ se guarda
@@ -184,7 +202,10 @@ asegura de que cada archivo esté en un solo disco, y la segunda, que los
 tamaños de los archivos de cada disco no superen la capacidad del disco.
 %y la tercera define que no se usen discos vacíos---sería equivalente a
 %la implicación $x_{ij} \Rightarrow y_i$.
-$F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
+
+\subsubsection{Definición de variables}
+
+\noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
 $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
@@ -200,6 +221,8 @@ $x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i
 
 $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
+\subsubsection{Modelo}
+
 \begin{alignat*}{2}
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
@@ -212,6 +235,7 @@ $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 \end{alignat*}
 
 \subsubsection{Restricción: que no se elijan discos vacíos}
+
 Inicialmente, habíamos planteado el programa lineal de la
 Sección~\ref{modelo:primera:parte} con una tercera restricción:
 \begin{alignat*}{2}
@@ -321,16 +345,16 @@ Utilizamos las siguientes funciones para generar el output.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output_1.py}
 
 \newpage
-\subsection{Parte 2}
+\section{Parte 2}
 
-\subsubsection{Introducción}
+\subsection{Descripción}
 
 Se asigna un indicador de importancia $I$ a cada archivo según
 características como sensibilidad, frecuencia de uso, y rareza. El
 objetivo es encontrar un subconjunto de archivos que quepan en un disco
 de tamaño $d$, y que la suma de indicadores de importancia sea máxima.
 
-\subsubsection{Modelo Lineal}
+\subsection{Modelo Lineal}
 
 Para maximizar la importancia de los archivos en un disco, usamos una
 variable binaria $x_i$ que indica si el archivo $i$ está o no en el
@@ -339,7 +363,9 @@ importancia del archivo $i$. La restricción que utilizamos para este
 problema lineal, es que la suma de los tamaños de los archivos no superen
 el tamaño del disco. 
 
-$F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
+\subsubsection{Definición de variables}
+
+\noindent $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
 $s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
@@ -400,15 +426,17 @@ Luego, el output se almacena de la siguiente manera.
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/generador_output_2.py}
 
 \newpage
-\subsection{Parte 3}
+\section{Parte 3}
 
-\subsubsection{Introducción}
+\subsection{Descripción}
 
 Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \mathcal{H} \), donde cada conjunto de archivos $H$ de \( \mathcal{H} \) está incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia \( \mathcal{H} \), se busca un subconjunto mínimo \( \mathcal{I} \) de \( \mathcal{H} \) tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de \( \mathcal{I} \).
 
-\subsubsection{Modelo Lineal}
+\subsection{Modelo Lineal}
 
-$n$: cantidad de archivos. \\
+\subsubsection{Definición de variables}
+
+\noindent $n$: cantidad de archivos. \\
 
 $m$: cantidad de conjuntos \( H \). \\
 
@@ -416,6 +444,8 @@ $x_{j}$ binaria: $1$ indica que el conjunto $H_{j}$ pertenece a $I$. \\
 
 $y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$
 contiene el archivo $i$. \\ 
+
+\subsubsection{Modelo}
 
 \begin{alignat*}{2}
     \minimize & \sum_{j = 1}^{m} x_{j}\\
@@ -426,28 +456,49 @@ contiene el archivo $i$. \\
               & n \geq 0, \quad \\
               & m \geq 0, \quad \\
 \end{alignat*}
+
 \newpage
-\subsection{Parte 4}
-\subsubsection{Introducción}
+\section{Parte 4}
+
+\subsection{Descripción}
+
 Se deben realizar backups de $n$ archivos en discos idénticos de
 capacidad $d$.  Se sabe que los archivos son de pocos tamaños distintos,
 y que cada archivo es menor que la capacidad de un disco. Se necesita
 saber cuál es la cantidad mínima de discos necesarios para almacenar
 todos los archivos, considerando la capacidad de cada disco y los
 tamaños de archivos.
-\subsubsection{Modelo Lineal}
-$F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
-$s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
-$n$: cantidad de archivos. \\
-$m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
-$D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$. \\
+
+\subsection{Modelo Lineal}
+
+\subsubsection{Definición de variables}
+
+\noindent $F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$.
+
+$s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$.
+
+$n$: cantidad de archivos.
+
+$m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$.
+
+$D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$.
+
 % ???????????????????????????????? hace falta? no se como ponerla jeje
-$S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$. \\ 
-$d$: tamaño del disco en TB. \\ 
-$t$: constante, máxima cantidad de tamaños que entran en un disco. \\ 
-$x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$. \\
-$y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$. \\
-$z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$. \\
+
+$S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$.
+
+$d$: tamaño del disco en TB.
+
+$t$: constante, máxima cantidad de tamaños que entran en un disco.
+
+$x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$.
+
+$y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$.
+
+$z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$.
+
+\subsubsection{Modelo}
+
 \begin{alignat*}{2}
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
@@ -466,12 +517,45 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
         & d \geq  0 \\
         & t \geq  0, t \in \mathbb{Z} \\
 \end{alignat*}
+
 \newpage
-\subsection{Parte 5}
+\section{Parte 5}
+
+\subsection{Descripción}
+
+\subsection{Modelo Lineal}
+
+\subsubsection{Definición de variables}
+
+\subsubsection{Modelo}
+
+\subsubsection{Pseudocódigo de alto nivel}
+
 \newpage
-\subsection{Parte 6}
-\newpage
+\section{Parte 6}
+
+\subsection{Descripción}
+
+\subsection{Modelo Lineal}
+
+\subsubsection{Definición de variables}
+
+\subsubsection{Modelo}
+
+\subsubsection{Pseudocódigo de alto nivel}
+
 \section{Resultados de script}
+
+\newpage
+\begin{turn}{90}
+\begin{minipage}{\textheight}
+\begin{verbatim}
+caso | cant | cota dual | mejor1 | var1 | tiempo1 | mejor4 | var4 | tiempo4 | mejor5 | var5 | tiempo5 | mejor6 | var6 | tiempo6
+  3  |  666 | 230       |  323   | 3    |  33     |  332   |  323 |  233    |  233   |  323 |  2323   |  23    | 23   |  233 
+\end{verbatim}
+\end{minipage}
+\end{turn}
+
 \newpage
 \section{Conclusiones}
 
