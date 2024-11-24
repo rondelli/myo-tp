@@ -15,7 +15,15 @@ print(f"Utilizando {archivo}\n")
 
 generar_configuracion(archivo)
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
+
+#capacidad_disco = 2
+#nombres_archivos = ["a1", "a2", "a3"]
+#tamaños_archivos = [7392401, 8543009, 2383278]
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+
+
+F = ["archivo1", "archivo2", "archivo3"] 
+H = [ {"archivo1", "archivo2"}, {"archivo2", "archivo3"}, {"archivo1", "archivo3"}]
 
 solucion_P = elegir_conjuntos(nombres_archivos, conjuntos)
 #solucion_D = importancia_archivos(nombres_archivos, conjuntos)
