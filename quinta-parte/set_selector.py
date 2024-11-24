@@ -23,7 +23,7 @@ def elegir_conjuntos(F: list, H: list):
 
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
-        cons = model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
+        model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
 
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
@@ -40,7 +40,7 @@ def elegir_conjuntos(F: list, H: list):
     sol = model.getBestSol()
     
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
-        # x*
+        # x* NO SE ESTA USANDO
         conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
 
         primal_obj = model.getObjVal()
