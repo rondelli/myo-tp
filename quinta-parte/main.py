@@ -25,9 +25,7 @@ solucion_dual = elegir_conjuntos(nombres_archivos, conjuntos)
 # PASO 4
 solucion_modelo_2 = generar_output_modelo_2(distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, solucion_dual))
 if sum(solucion_modelo_2[1]) > 1:
-    conjuntos.append(solucion_modelo_2[0])
-
-print(conjuntos)
+    conjuntos.append(set(solucion_modelo_2[0]))
 
 
 '''
