@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from configuracion_5 import *
 from set_selector import *
