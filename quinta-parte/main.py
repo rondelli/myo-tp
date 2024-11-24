@@ -20,7 +20,7 @@ capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{a
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
 # PASO 2 Y 3: y*
-y = elegir_conjuntos(nombres_archivos, conjuntos)[1]
+modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
 
 # PASO 4
 distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
