@@ -2,7 +2,12 @@ import os
 import random
 
 
-def generar_configuracion(nombre_archivo, num_archivos, num_conjuntos):
+def generar_configuracion(nombre_archivo, num_archivos=None, num_conjuntos=None):
+    if num_archivos is None:
+        num_archivos = random.randint(400, 550)
+    if num_conjuntos is None:
+        num_conjuntos = random.randint(10, 300)
+
     C = [f"archivo_{i+1}" for i in range(num_archivos)]
     H = [set() for _ in range(num_conjuntos)]
 
