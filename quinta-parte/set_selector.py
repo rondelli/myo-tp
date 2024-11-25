@@ -41,7 +41,10 @@ def elegir_conjuntos(F: list, H: list):
     
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         # x* NO SE ESTA USANDO
-        conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
+
+        # Xime no confía ni en python ni en scip
+        # conjuntos_seleccionados2 = [j for j in range(m) if model.getVal(x[j]) > 0.5]
+        conjuntos_seleccionados = [v.getIndex() for v in model.getVars() if v.getLPSol() > 0.5]
 
         primal_obj = model.getObjVal()
         dual_obj = sum(solucion_dual) # rhs es 1 para todas las restricciones
@@ -93,10 +96,12 @@ def obtener_solucion_primal(model):
     
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         # x* NO SE ESTA USANDO
-        #conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
-        conjuntos_seleccionados = [v.getObj() for v in model.getVars() if v.getObj() > 0.5]
-        return conjuntos_seleccionados, model.getObjVal()
 
+        conjuntos_seleccionados = [v.getIndex() for v in model.getVars() if v.getLPSol() > 0.5]
+        # print(">>>>")
+        # print(conjuntos_seleccionados)
+
+        return conjuntos_seleccionados, model.getObjVal()
 
 def obtener_solucion_dual(model):
     # Desactivación temporal de presolve
