@@ -51,14 +51,15 @@ while True:
 
     if sum(solucion_modelo_2[1]) > 1:
         conjuntos.append(set(solucion_modelo_2[0]))
+        break
     else:
         break
 
-# x_estrella_int = pasar_a_entero(x* real)
-# print(y)
-# okay = es_optimo(modelo, x_estrella_int)
+x_estrella_int = obtener_solucion_entera(modelo, x)
+#print(y)
+#okay = es_optimo(modelo, x_estrella_int)
 
-conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)
 
 if conjuntos_seleccionados is not None:
     generar_output(f"{archivo[:-3]}.out", conjuntos_seleccionados, conjuntos)
