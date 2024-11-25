@@ -72,6 +72,25 @@ def obtener_solucion_dual(model):
 
     # Activación de presolve
     model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
-    return y
+    return y, sum(y)
+
+def es_optimo(model, solucion):
+    model.freeTransform()
+    variables = model.getVars() 
+
+    for var, val in zip(variables, solucion): 
+        model.fixVar(var, val)
+
+    model.optimize()
+    status = model.getStatus()
+
+    for var in variables: 
+        model.freeTransform() 
+    
+    if status in ["optimal", "feasible"]:
+        valor_objetivo = model.getObjVal() 
+        return [True, valor_objetivo]
+    else: 
+        return [False, None]
 
 
