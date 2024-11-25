@@ -1,6 +1,8 @@
 import csv
 import os
 
+# EL NOMBRE DE ESTO ES MUY IP pero no se me ocurre algo mejor
+
 def guardar_prueba(datos):
     headers = ["caso", "cant", "cota dual", "mejor1", "var1", "tiempo1", "mejor4", "var4", "tiempo4", "mejor5", "var5", "tiempo5", "mejor6", "var6", "tiempo6"]
 
@@ -17,3 +19,19 @@ def guardar_prueba(datos):
             archivo_csv.writerow(headers)
         
         archivo_csv.writerows(datos)
+
+def leer_configuracion():
+    ruta_archivo = os.path.join(os.path.dirname(__file__), 'archivo.cfg')
+    configuraciones = {}
+
+    with open(ruta_archivo, 'r') as archivo:
+        for linea in archivo:
+            if '=' in linea:
+                # Separar clave y valor
+                clave, valor = linea.strip().split('=', 1)
+                # Remover comillas si existen
+                valor = valor.strip().strip('\'"')
+                configuraciones[clave] = valor
+    
+    return configuraciones
+
