@@ -59,14 +59,39 @@ def elegir_conjuntos(F: list, H: list):
         print("No se encontró una solución factible.")
         return None
 
+def crear_modelo(F: list, H: list):
+    model = Model("set_selector")
+    
+    n = len(F)  # cantidad de archivos
+    m = len(H)  # cantidad de conjuntos
+
+    if n == 0: return
+    
+    # x_{j} = 1 si se elige el conjunto j, 0 si no
+    x = [model.addVar(f"x_{j}", lb=0, ub=1, vtype="CONTINUOUS") for j in range(m)]
+
+    # y_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
+    y = {}
+    for i in range(n):
+        for j in range(m):
+            y[i, j] = 1 if F[i] in H[j] else 0
+
+    model.setObjective(sum(x[j] for j in range(m)), sense="minimize")
+
+    # Todos los archivos deben estar en al menos un conjunto elegido
+    for i in range(n):
+        model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
+    
+    model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
+    model.optimize()
+
+    return model
+
 
 def obtener_solucion_dual(model):
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
-    model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
-
-    model.optimize()
-
+    
     # y*
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
