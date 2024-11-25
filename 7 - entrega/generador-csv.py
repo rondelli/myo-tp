@@ -10,7 +10,6 @@ ruta_archivo = os.path.join(ruta_actual, nombre_archivo)
 
 fue_generado = os.path.isfile(ruta_archivo)
 
-# Abrir el archivo en modo escritura
 with open(ruta_archivo, 'a', newline='') as archivo:
     archivo_csv = csv.writer(archivo)
 
