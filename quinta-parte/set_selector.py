@@ -88,11 +88,11 @@ def crear_modelo(F: list, H: list):
     model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
 
     # Desactivación temporal de presolve
+    # model.setPresolve(SCIP_PARAMSETTING.OFF)
     model.setPresolve(SCIP_PARAMSETTING.OFF)
     model.optimize()
 
     return model
-
 
 def obtener_solucion_primal(model):
     # Activación de presolve
@@ -103,14 +103,16 @@ def obtener_solucion_primal(model):
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         # x* NO SE ESTA USANDO
 
-        conjuntos_seleccionados = [v.getIndex() for v in model.getVars() if v.getLPSol() > 0.5]
+        conjuntos_seleccionados = [v.getIndex() for v in model.getVars()] # if v.getLPSol() >= 0.5]
         # print(">>>>")
         # print(conjuntos_seleccionados)
 
+        model.setPresolve(SCIP_PARAMSETTING.OFF)
         return conjuntos_seleccionados, model.getObjVal()
 
 def obtener_solucion_dual(model):
     # y*
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     return y, sum(y)
