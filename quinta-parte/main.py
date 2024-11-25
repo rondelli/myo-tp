@@ -6,14 +6,22 @@ from set_selector import *
 from generador_output_5 import * 
 from importance import *
 
-if len(sys.argv) != 2:
-    print(f"Uso: {sys.argv[0]} nombre_archivo")
+if len(sys.argv) != 3:
+    print(f"Uso: {sys.argv[0]} OPTION nombre_archivo\n")
+    print(f"      OPTIONS: -g | -u")
+    print(f"      -g generar archivo")
+    print(f"      -u usar archivo ya generado")
     sys.exit(1)
 
-archivo = sys.argv[1]
-print(f"Utilizando {archivo}\n")
+archivo = sys.argv[2]
 
-generar_configuracion(archivo)
+if sys.argv[1] == "-g":
+    print(f"Generando {archivo}\n")
+    generar_configuracion(archivo)
+
+if sys.argv[1] == "-u":
+    print(f"Usando {archivo}\n")
+
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
 # PASO 1
