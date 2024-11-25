@@ -21,7 +21,18 @@ conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaño
 
 while True:
     # PASO 2 Y 3: y*
-    modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
+    modelo = crear_modelo(nombres_archivos, conjuntos)
+    y, obj_y = obtener_solucion_dual(modelo)
+    x, obj_x = obtener_solucion_primal(modelo)
+
+    print("obj x", obj_x)
+    print("obj y", obj_y)
+
+    print("X>>>>", x)
+    optimo = es_optimo(modelo, x)
+    print(f"es óptimo {optimo}")
+
+    # modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
 
     # PASO 4
     distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
@@ -32,10 +43,13 @@ while True:
 
     if sum(solucion_modelo_2[1]) > 1:
         conjuntos.append(set(solucion_modelo_2[0]))
+        break
     else:
         break
 
-print(y)
+# x_estrella_int = pasar_a_entero(x* real)
+# print(y)
+# okay, obj_x_int = es_optimo(x_estrella_int)
 
 '''
 if solucion_dual is not None:
