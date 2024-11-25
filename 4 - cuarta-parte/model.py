@@ -1,3 +1,4 @@
+import sys
 from pyscipopt import Model
 
 """
@@ -6,7 +7,7 @@ F --> archivos
 S --> tamaños de archivos 
 T --> maxima cantidad de tamaños
 """
-def distribuir_archivos(d_t, F, S, t, time_limit=1800):
+def distribuir_archivos(d_t, F, S, t, time_limit=420):
     model = Model("Model")
     d = d_t * 10**6
 
@@ -57,6 +58,9 @@ def distribuir_archivos(d_t, F, S, t, time_limit=1800):
     model.setParam("display/freq", 1)
 
     model.optimize()
+    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
+
 
     print(f"Time: {model.getSolvingTime()}")
     print(f"Cant sols: {model.getNSols()}")
@@ -65,6 +69,7 @@ def distribuir_archivos(d_t, F, S, t, time_limit=1800):
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
     ) == "feasible":
+        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
         return [F, model, y, x, S]
     else:
         return None
