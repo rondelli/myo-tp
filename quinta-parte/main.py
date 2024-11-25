@@ -28,7 +28,7 @@ while True:
     print("obj x", obj_x)
     print("obj y", obj_y)
 
-    print("X>>>>", x)
+    # print("X>>>>", x)
     optimo = es_optimo(modelo, x)
     print(f"es óptimo {optimo}")
 
