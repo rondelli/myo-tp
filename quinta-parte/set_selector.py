@@ -96,9 +96,11 @@ def crear_modelo(F: list, H: list):
     model.disablePropagation()
 
     model.optimize()
-
     return model
 
+# La cantidad de constraints coinciden con la cantidad de archivos, por
+# ende, la cantidad de variables del dual coinciden con la cantidad de
+# archivos del input.
 def obtener_solucion_primal(model):
     # Activación de presolve
     # model.setPresolve(SCIP_PARAMSETTING.DEFAULT) # esta línea no tiene efecto porque el model ya está optimize()
@@ -117,6 +119,7 @@ def obtener_solucion_dual(model):
     # Aseguarse de apagar el presolving
     model.setPresolve(SCIP_PARAMSETTING.OFF)
 
+    # La longitud de y coincide con la cantidad de archivos del input
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     return y, sum(y)

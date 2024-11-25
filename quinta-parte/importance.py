@@ -1,5 +1,6 @@
 from pyscipopt import Model
 
+
 # Model segunada parte
 def distribuir_archivos(d_t, F, s, I):
     model = Model("importance")

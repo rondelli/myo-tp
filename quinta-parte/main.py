@@ -31,10 +31,16 @@ while True:
     # PASO 2 Y 3: y*
     modelo = crear_modelo(nombres_archivos, conjuntos)
     
-    y, obj_y = obtener_solucion_dual(modelo)
+    # El orden de estas dos líneas no importa: x, y ó y, x es lo mismo
     x, obj_x = obtener_solucion_primal(modelo)
+    y, obj_y = obtener_solucion_dual(modelo)
 
-    # modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
+    print("[Debugging] obj x\n", obj_x)
+    print("[Debugging] obj y\n", obj_y)
+
+    # print("[Debugging] x\n", x)
+    optimo = es_optimo(modelo, x)
+    print(f"[Debugging] es óptimo: {optimo}")
 
     # PASO 4
     distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
