@@ -125,8 +125,9 @@ def obtener_solucion_dual(model):
     return y, sum(y)
 
 # No se usa por el momento
-def obtener_conjuntos_seleccionados(model):
-    conjuntos_seleccionados = [v.getIndex() for v in model.getVars()]
+# esto está ok? no debería ser si solucion[i] == 1?
+def obtener_conjuntos_seleccionados(solucion):
+    conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
 
 # Esta función supone que el model es `optimal`
