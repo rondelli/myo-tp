@@ -125,6 +125,7 @@ def es_optimo(model, solucion):
         model.fixVar(var, val)
 
     model.optimize()
+    print("Debugging>>>>", model.getObjVal())
     status = model.getStatus()
 
     for var in variables: 
@@ -135,5 +136,3 @@ def es_optimo(model, solucion):
         return [True, valor_objetivo]
     else: 
         return [False, None]
-
-
