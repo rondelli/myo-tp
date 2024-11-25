@@ -27,9 +27,8 @@ def leer_configuracion():
     with open(ruta_archivo, 'r') as archivo:
         for linea in archivo:
             if '=' in linea:
-                # Separar clave y valor
                 clave, valor = linea.strip().split('=', 1)
-                # Remover comillas si existen
+
                 valor = valor.strip().strip('\'"')
                 configuraciones[clave] = valor
     
