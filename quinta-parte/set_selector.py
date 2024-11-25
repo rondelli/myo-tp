@@ -2,6 +2,7 @@ from pyscipopt import Model
 from pyscipopt import SCIP_PARAMSETTING
 
 # Función para seleccionar conjuntos dados los archivos y conjuntos
+"""
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
     
@@ -61,6 +62,7 @@ def elegir_conjuntos(F: list, H: list):
     else:
         print("No se encontró una solución factible.")
         return None
+"""
 
 def crear_modelo(F: list, H: list):
     model = Model("set_selector")
@@ -90,27 +92,31 @@ def crear_modelo(F: list, H: list):
     # Desactivación temporal de presolve
     # model.setPresolve(SCIP_PARAMSETTING.OFF)
     model.setPresolve(SCIP_PARAMSETTING.OFF)
+
     model.optimize()
 
     return model
 
 def obtener_solucion_primal(model):
     # Activación de presolve
-    model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
+    # model.optimize()
+    # model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
 
     sol = model.getBestSol()
     
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         # x* NO SE ESTA USANDO
 
-        conjuntos_seleccionados = [v.getIndex() for v in model.getVars()] # if v.getLPSol() >= 0.5]
+        conjuntos_seleccionados = [v.getLPSol() for v in model.getVars()] # if v.getLPSol() >= 0.5]
         # print(">>>>")
         # print(conjuntos_seleccionados)
 
         model.setPresolve(SCIP_PARAMSETTING.OFF)
         return conjuntos_seleccionados, model.getObjVal()
+        #return sol, model.getObjVal()
 
 def obtener_solucion_dual(model):
+    # model.optimize()
     # y*
     model.setPresolve(SCIP_PARAMSETTING.OFF)
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
@@ -118,21 +124,30 @@ def obtener_solucion_dual(model):
     return y, sum(y)
 
 def es_optimo(model, solucion):
-    model.freeTransform()
     variables = model.getVars() 
 
-    for var, val in zip(variables, solucion): 
-        model.fixVar(var, val)
+    sol = model.getBestSol()
 
+    #print("Antes:", sol)
+    for var, val in zip(variables, solucion):
+        model.setSolVal(sol, var, val)
+
+    #print("Despues:", sol)
+
+    return model.checkSol(sol)
+
+"""
     model.optimize()
-    print("Debugging>>>>", model.getObjVal())
+
+    # print("Debugging>>>>", model.getObjVal())
     status = model.getStatus()
 
-    for var in variables: 
-        model.releaseVar(var) 
+    #for var in variables: 
+        #model.releaseVar(var) 
     
     if status in ["optimal", "feasible"]:
         valor_objetivo = model.getObjVal() 
         return [True, valor_objetivo]
     else: 
         return [False, None]
+"""
