@@ -129,7 +129,7 @@ def es_optimo(model, solucion):
     status = model.getStatus()
 
     for var in variables: 
-        model.freeTransform() 
+        model.releaseVar(var) 
     
     if status in ["optimal", "feasible"]:
         valor_objetivo = model.getObjVal() 
