@@ -22,15 +22,9 @@ conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaño
 while True:
     # PASO 2 Y 3: y*
     modelo = crear_modelo(nombres_archivos, conjuntos)
+    
     y, obj_y = obtener_solucion_dual(modelo)
     x, obj_x = obtener_solucion_primal(modelo)
-
-    print("obj x", obj_x)
-    print("obj y", obj_y)
-
-    # print("X>>>>", x)
-    optimo = es_optimo(modelo, x)
-    print(f"es óptimo {optimo}")
 
     # modelo_3, y = elegir_conjuntos(nombres_archivos, conjuntos)
 
@@ -49,7 +43,7 @@ while True:
 
 # x_estrella_int = pasar_a_entero(x* real)
 # print(y)
-# okay, obj_x_int = es_optimo(x_estrella_int)
+# okay = es_optimo(modelo, x_estrella_int)
 
 '''
 if solucion_dual is not None:

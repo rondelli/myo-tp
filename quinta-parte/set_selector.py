@@ -90,7 +90,6 @@ def crear_modelo(F: list, H: list):
     model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
 
     # Desactivación temporal de presolve
-    # model.setPresolve(SCIP_PARAMSETTING.OFF)
     model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     model.optimize()
@@ -99,40 +98,36 @@ def crear_modelo(F: list, H: list):
 
 def obtener_solucion_primal(model):
     # Activación de presolve
-    # model.optimize()
-    # model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
+    model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
 
     sol = model.getBestSol()
     
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
+
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
-        # x* NO SE ESTA USANDO
+        
+        # Ya no devuelve un array de posiciones, devuelve la solución obtenida por scip
+        x = [v.getLPSol() for v in model.getVars()]
 
-        conjuntos_seleccionados = [v.getLPSol() for v in model.getVars()] # if v.getLPSol() >= 0.5]
-        # print(">>>>")
-        # print(conjuntos_seleccionados)
-
-        model.setPresolve(SCIP_PARAMSETTING.OFF)
-        return conjuntos_seleccionados, model.getObjVal()
-        #return sol, model.getObjVal()
+        return x, model.getObjVal()
 
 def obtener_solucion_dual(model):
-    # model.optimize()
-    # y*
     model.setPresolve(SCIP_PARAMSETTING.OFF)
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     return y, sum(y)
+
+def obtener_conjuntos_seleccionados(model):
+    conjuntos_seleccionados = [v.getIndex() for v in model.getVars()]
+    return conjuntos_seleccionados
 
 def es_optimo(model, solucion):
     variables = model.getVars() 
 
     sol = model.getBestSol()
 
-    #print("Antes:", sol)
     for var, val in zip(variables, solucion):
         model.setSolVal(sol, var, val)
-
-    #print("Despues:", sol)
 
     return model.checkSol(sol)
 
