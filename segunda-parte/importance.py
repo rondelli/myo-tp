@@ -19,10 +19,15 @@ def distribuir_archivos(d_t, F, s, I):
     model.addCons(sum(x[i] * s[i] for i in range(n)) <= d)
 
     model.optimize()
+    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
+
+    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
+
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
     ) == "feasible":
+        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
         return [F, model, x, I, s]
     else:
         return None

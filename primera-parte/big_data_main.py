@@ -13,6 +13,7 @@ archivo = sys.argv[1]
 print(f"Utilizando {archivo}\n")
 
 # generar_configuracion(archivo)
+
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(
     f"./{archivo}")
 

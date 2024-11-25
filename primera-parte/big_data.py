@@ -1,4 +1,5 @@
 import time
+import sys
 from pyscipopt import Model
 
 def distribuir_archivos(d_t, F, s, time_limit=420):
@@ -47,13 +48,14 @@ def distribuir_archivos(d_t, F, s, time_limit=420):
     model.setParam("display/freq", 1)
 
     model.optimize()
-    print(f"Time: {model.getSolvingTime()}")
+    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
 
-    print(f"Cant sols: {model.getNSols()}")
+    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
 
     # Obtener la mejor solución encontrada
     sol = model.getBestSol()
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
+        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
         return [F, model, y, x, s]
     else:
         return None
