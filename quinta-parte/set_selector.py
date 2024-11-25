@@ -58,3 +58,20 @@ def elegir_conjuntos(F: list, H: list):
     else:
         print("No se encontró una solución factible.")
         return None
+
+
+def obtener_solucion_dual(model):
+    # Desactivación temporal de presolve
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
+
+    model.optimize()
+
+    # y*
+    y = [model.getDualSolVal(c) for c in model.getConss(False)]
+
+    # Activación de presolve
+    model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
+    return y
+
+

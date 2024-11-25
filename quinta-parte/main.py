@@ -35,6 +35,8 @@ while True:
     else:
         break
 
+print(y)
+
 '''
 if solucion_dual is not None:
     generar_output(f"{archivo[:-3]}.out", solucion_dual, conjuntos)
