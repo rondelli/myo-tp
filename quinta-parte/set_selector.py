@@ -1,7 +1,7 @@
 from pyscipopt import Model
 from pyscipopt import SCIP_PARAMSETTING
 
-# Función para seleccionar conjuntos dados los archivos y conjuntos
+# Esta función ya no se usa (@Lu si no la usás, borrala tranki)
 """
 def elegir_conjuntos(F: list, H: list):
     model = Model("set_selector")
@@ -64,33 +64,36 @@ def elegir_conjuntos(F: list, H: list):
         return None
 """
 
+# Crea el modelo y lo devuelve optimizado
 def crear_modelo(F: list, H: list):
     model = Model("set_selector")
     
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
 
-    if n == 0: return
+    if n == 0:
+        return
     
     # x_{j} = 1 si se elige el conjunto j, 0 si no
     x = [model.addVar(f"x_{j}", lb=0, ub=1, vtype="CONTINUOUS") for j in range(m)]
 
-    # y_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
-    y = {}
+    # a_{i, j} = constante. 1 si el archivo i esta en el conjunto j, 0 si no
+    a = {}
     for i in range(n):
         for j in range(m):
-            y[i, j] = 1 if F[i] in H[j] else 0
+            a[i, j] = 1 if F[i] in H[j] else 0
 
     model.setObjective(sum(x[j] for j in range(m)), sense="minimize")
 
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
-        model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
+        model.addCons(sum(a[i, j] * x[j] for j in range(m)) >= 1)
     
-    model.disablePropagation()  # esto parece ser la clave para que obj(dual) = obj(primal)
-
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
+
+    # Esto parece ser la clave para que obj(dual) = obj(primal)
+    model.disablePropagation()
 
     model.optimize()
 
@@ -98,29 +101,32 @@ def crear_modelo(F: list, H: list):
 
 def obtener_solucion_primal(model):
     # Activación de presolve
-    model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
+    # model.setPresolve(SCIP_PARAMSETTING.DEFAULT) # esta línea no tiene efecto porque el model ya está optimize()
 
     sol = model.getBestSol()
     
     model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
-        
         # Ya no devuelve un array de posiciones, devuelve la solución obtenida por scip
         x = [v.getLPSol() for v in model.getVars()]
 
         return x, model.getObjVal()
 
 def obtener_solucion_dual(model):
+    # Aseguarse de apagar el presolving
     model.setPresolve(SCIP_PARAMSETTING.OFF)
+
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     return y, sum(y)
 
+# No se usa por el momento
 def obtener_conjuntos_seleccionados(model):
     conjuntos_seleccionados = [v.getIndex() for v in model.getVars()]
     return conjuntos_seleccionados
 
+# Esta función supone que el model es `optimal`
 def es_optimo(model, solucion):
     variables = model.getVars() 
 
@@ -130,19 +136,3 @@ def es_optimo(model, solucion):
         model.setSolVal(sol, var, val)
 
     return model.checkSol(sol)
-
-"""
-    model.optimize()
-
-    # print("Debugging>>>>", model.getObjVal())
-    status = model.getStatus()
-
-    #for var in variables: 
-        #model.releaseVar(var) 
-    
-    if status in ["optimal", "feasible"]:
-        valor_objetivo = model.getObjVal() 
-        return [True, valor_objetivo]
-    else: 
-        return [False, None]
-"""
