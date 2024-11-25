@@ -51,7 +51,6 @@ while True:
 
     if sum(solucion_modelo_2[1]) > 1:
         conjuntos.append(set(solucion_modelo_2[0]))
-        break
     else:
         break
 
@@ -59,12 +58,13 @@ while True:
 # print(y)
 # okay = es_optimo(modelo, x_estrella_int)
 
-'''
-if solucion_dual is not None:
-    generar_output(f"{archivo[:-3]}.out", solucion_dual, conjuntos)
+conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+
+if conjuntos_seleccionados is not None:
+    generar_output(f"{archivo[:-3]}.out", conjuntos_seleccionados, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
-'''
+
 #archivos = []
 # for conjunto in conjuntos:
 #     for archivo in conjunto:
