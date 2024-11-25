@@ -87,6 +87,15 @@ def crear_modelo(F: list, H: list):
 
     return model
 
+'''
+def obtener_solucion_primal(model):
+    sol = model.getBestSol()
+    
+    if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
+        # x* NO SE ESTA USANDO
+        conjuntos_seleccionados = [j for j in range(m) if model.getVal(x[j]) > 0.5]
+        return conjuntos_seleccionados, model.getObjVal()
+'''
 
 def obtener_solucion_dual(model):
     # Desactivación temporal de presolve
