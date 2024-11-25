@@ -5,8 +5,9 @@ from configuracion_5 import *
 from set_selector import *
 from generador_output_5 import * 
 from importance import *
+import time
 
-if len(sys.argv) != 3:
+if len(sys.argv) != 4:
     print(f"Uso: {sys.argv[0]} OPTION nombre_archivo\n")
     print(f"      OPTIONS: -g | -u")
     print(f"      -g generar archivo")
@@ -22,23 +23,29 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
+try:
+    minutos = float(sys.argv[3])
+except ValueError:
+    print("Ingresa un número válido para los minutos.")
+    sys.exit(1)
+
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
 # PASO 1
 conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
+duracion = minutos * 60
+tiempo_inicio = time.time()
 while True:
     # PASO 2 Y 3: y*
     modelo = crear_modelo(nombres_archivos, conjuntos)
     
-    # El orden de estas dos líneas no importa: x, y ó y, x es lo mismo
     x, obj_x = obtener_solucion_primal(modelo)
     y, obj_y = obtener_solucion_dual(modelo)
 
     print("[Debugging] obj x\n", obj_x)
     print("[Debugging] obj y\n", obj_y)
 
-    # print("[Debugging] x\n", x)
     optimo = es_optimo(modelo, x)
     print(f"[Debugging] es óptimo: {optimo}")
 
@@ -48,16 +55,14 @@ while True:
 
     # PASO 5
     # copy_of_model = Model(sourceModel=modelo_3)
-
-    if sum(solucion_modelo_2[1]) > 1:
+    if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
         conjuntos.append(set(solucion_modelo_2[0]))
-        break
+        #break
     else:
         break
 
 x_estrella_int = obtener_solucion_entera(modelo, x)
-#print(y)
-#okay = es_optimo(modelo, x_estrella_int)
+#print(x_estrella_int)
 
 conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)
 
@@ -65,10 +70,3 @@ if conjuntos_seleccionados is not None:
     generar_output(f"{archivo[:-3]}.out", conjuntos_seleccionados, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
-
-#archivos = []
-# for conjunto in conjuntos:
-#     for archivo in conjunto:
-#         if archivo not in archivos:
-#             archivos.append(archivo)
-# print(len(archivos) == len(nombres_archivos))
