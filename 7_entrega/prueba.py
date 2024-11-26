@@ -4,7 +4,7 @@ from funciones import *
 import sys
 import os
 
-sys.path.insert(0, "./1-primera-parte")
+sys.path.insert(0, "./1_primera_parte")
 import model_part_1
 
 # 1 - leer config
