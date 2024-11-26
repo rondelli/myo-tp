@@ -4,48 +4,26 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
 # Model segunada parte
-def distribuir_archivos(d_t, F, s, I):
-    modelo = crear_modelo_2(d_t, F, s, I, time_limit=420)
-    x, obj_x = obtener_solucion_primal_2(modelo)
-    y, obj_y = obtener_solucion_dual_2(modelo)
+# No usar esta función, es para la parte vieja
+def distribuir_archivos(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+    # modelo = crear_modelo_2(d_t, F, s, I, time_limit)
+    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
+    x, obj_x = obtener_solucion_primal_2(model)
+    # y, obj_y = obtener_solucion_dual_2(model)
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
-    sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
+    # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
-"""
-def distribuir_archivos(d_t, F, s, I):
-    model = Model("importance")
-    d = d_t * 10**6
+    solution = model.getBestSol()
+    status = model.getStatus()
 
-    if d < 0 or any(s_i < 0 for s_i in s):
-        return
-
-    n = len(F)
-
-    # x_{i} = 1 si se elige el archivo i, 0 si no
-    x = [model.addVar(f"y_{i}", vtype="BINARY") for i in range(n)]
-
-    model.setObjective(quicksum(x[i] * I[i] for i in range(n)), sense="maximize")
-
-    # los archivos elegidos deben entrar en el disco
-    model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
-    model.optimize()
-
-    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
-
-    sol = model.getBestSol()
-
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
-    ) == "feasible":
+    if solution is not None and status in ["optimal", "feasible"]:
         sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
-        return [F, model, x, I, s]
+        return [F, model, fake_x, I, s]
     else:
         return None
-"""
 
-# Crea el modelo y lo devuelve optimizado
-def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
 
     d = d_t * 10**6
@@ -55,10 +33,33 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
     ########################################################################
     # BINARY
     # x_{i} = 1 si se elige el archivo i, 0 si no
-    """
     x = [model.addVar(f"y_{i}", vtype="BINARY") for i in range(n)]
-    """
     ########################################################################
+
+    # maximize importance:
+    model.setObjective(quicksum(x[i] * I[i] for i in range(n)), sense="maximize")
+
+    # los archivos elegidos deben entrar en el disco
+    model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
+
+    # Configurar el límite de tiempo en el solver
+    model.setParam("limits/time", time_limit)
+    model.setParam("display/freq", 1)
+
+    model.optimize()
+
+    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+
+    return model, x
+
+# Crea el modelo y lo devuelve optimizado
+def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+    model = Model("model_part_2")
+
+    d = d_t * 10**6
+
+    n = len(F)
 
     ########################################################################
     # CONTINUOUS

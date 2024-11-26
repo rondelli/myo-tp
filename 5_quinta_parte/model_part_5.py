@@ -58,7 +58,8 @@ def obtener_solucion_primal(model):
     # esto no debería necesitarse si el modelo ya viene optimizado con el presolving off
     # model.setPresolve(SCIP_PARAMSETTING.OFF)
 
-    if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
+    status = model.getStatus()
+    if sol is not None and status in ["optimal", "feasible"]:
         # Ya no devuelve un array de posiciones, devuelve la solución obtenida por scip
         x = [v.getLPSol() for v in model.getVars()]
 
