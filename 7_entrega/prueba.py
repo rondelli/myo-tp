@@ -4,17 +4,26 @@ import sys
 import os
 
 sys.path.insert(0, "./1_primera_parte")
+sys.path.insert(0, "./2_segunda_parte")
+sys.path.insert(0, "./3_tercera_parte")
 sys.path.insert(0, "./4_cuarta_parte")
 sys.path.insert(0, "./5_quinta_parte")
 sys.path.insert(0, "./6_sexta_parte")
 
 import model_part_1
+import model_part_2
+import model_part_3
+import model_part_4
+import model_part_5
+import model_part_6
+
 # ...todos los demás
 from funciones import *
 
 # 1 - leer config
 configuraciones = leer_configuracion()
-print(">>>", configuraciones)
+
+sys.stderr.write(f"[Debugging] {configuraciones}\n")
 
 inPath = configuraciones.get('inPath')
 outPath = configuraciones.get('outPath')
@@ -23,18 +32,18 @@ threshold = int(configuraciones.get('threshold', 0))
 archivos = os.listdir(inPath)
 archivos = [f for f in archivos]
 
-print(archivos)
+sys.stderr.write(f"[Debugging] {archivos}\n")
 
 # prueba de modelos
-for archivo in archivos:
-    print(archivo)
-    d_t, F, s = leer_archivo(archivo)
+for a in archivos:
+    sys.stderr.write(f"[Debugging] {a}\n")
+    d_t, F, s = leer_archivo(a)
     modelo_1 = model_part_1.crear_modelo_1(d_t, F, s, threshold*60)
-    #modelo_4 = model_part_2.crear_modelo_1(d_t, F, s, threshold*60)
-    #modelo_5 = model_part_3.crear_modelo_1(d_t, F, s, threshold*60)
-    #modelo_6 = model_part_4.crear_modelo_1(d_t, F, s, threshold*60)
+    #modelo_4 = model_part_2.crear_modelo_2(d_t, F, s, threshold*60)
+    #modelo_5 = model_part_3.crear_modelo_5(d_t, F, s, threshold*60)
+    #modelo_6 = model_part_4.crear_modelo_6(d_t, F, s, threshold*60)
         
-    caso = archivo
+    caso = a
     cant = len(F)
 
     mejor_1, var_1, tiempo_1 = datos_modelo(modelo_1)
