@@ -13,11 +13,8 @@ archivo = sys.argv[1]
 print(f"Utilizando {archivo}\n")
 
 generar_configuracion(archivo)
-capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(
-    f"./{archivo}")
-
-solucion = distribuir_archivos(capacidad_disco, nombres_archivos,
-                               tamaños_archivos, importancia_archivos)
+capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(f"{archivo}")
+solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
 
 if solucion is not None:
     generar_output(f"{archivo[:-3]}.out", solucion)

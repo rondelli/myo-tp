@@ -9,7 +9,7 @@ from pyscipopt import SCIP_PARAMSETTING
 def distribuir_archivos(d_t, F, s, time_limit=420):
     modelo = crear_modelo_1(d_t, F, s, time_limit)
     x, obj_x = obtener_solucion_primal_1(modelo)
-    y, obj_y = obtener_solucion_dual(modelo)
+    y, obj_y = obtener_solucion_dual_2(modelo)
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
     sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
@@ -107,7 +107,7 @@ def obtener_solucion_primal_1(model):
     else:
         return None
 
-def obtener_solucion_dual(model):
+def obtener_solucion_dual_2(model):
     # No debería ser necesario si el modelo ya viene optimizado con el presolving off
     # Aseguarse de apagar el presolving
     # model.setPresolve(SCIP_PARAMSETTING.OFF)

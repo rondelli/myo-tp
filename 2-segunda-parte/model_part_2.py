@@ -5,6 +5,15 @@ from pyscipopt import SCIP_PARAMSETTING
 
 # Model segunada parte
 def distribuir_archivos(d_t, F, s, I):
+    modelo = crear_modelo_2(d_t, F, s, I, time_limit=420)
+    x, obj_x = obtener_solucion_primal_2(modelo)
+    y, obj_y = obtener_solucion_dual_2(modelo)
+
+    sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
+    sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
+
+"""
+def distribuir_archivos(d_t, F, s, I):
     model = Model("importance")
     d = d_t * 10**6
 
@@ -33,9 +42,10 @@ def distribuir_archivos(d_t, F, s, I):
         return [F, model, x, I, s]
     else:
         return None
+"""
 
 # Crea el modelo y lo devuelve optimizado
-def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: float, time_limit=420):
+def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
 
     d = d_t * 10**6
@@ -94,12 +104,12 @@ def obtener_solucion_primal_2(model):
 
         x = [v.getLPSol() for v in model.getVars(False)]
 
-        sys.stderr.write(f"[Debugging]: todas las variables del primal model_part_1 {x}\n\n")
+        sys.stderr.write(f"[Debugging]: {x}\n\n")
         return x, model.getObjVal()
     else:
         return None
 
-def obtener_solucion_dual(model):
+def obtener_solucion_dual_2(model):
     # No debería ser necesario si el modelo ya viene optimizado con el presolving off
     # Aseguarse de apagar el presolving
     # model.setPresolve(SCIP_PARAMSETTING.OFF)
