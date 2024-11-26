@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import Optional
 from configuracion_5 import *
 from set_selector import *
 from generador_output_5 import * 
@@ -29,39 +30,44 @@ except ValueError:
     print("Ingresa un número válido para los minutos.")
     sys.exit(1)
 
-capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
-# PASO 1
-conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+def obtener_conjuntos(archivo, threshold: int = float('inf')) ->  None:
+    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
 
-duracion = minutos * 60
-tiempo_inicio = time.time()
-while True:
-    # PASO 2 Y 3: y*
-    modelo = crear_modelo(nombres_archivos, conjuntos)
-    
-    x, obj_x = obtener_solucion_primal(modelo)
-    y, obj_y = obtener_solucion_dual(modelo)
 
-    print("[Debugging] obj x\n", obj_x)
-    print("[Debugging] obj y\n", obj_y)
+    # PASO 1
+    conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
-    optimo = es_optimo(modelo, x)
-    print(f"[Debugging] es óptimo: {optimo}")
+    duracion = threshold * 60
+    tiempo_inicio = time.time()
 
-    # PASO 4
-    distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
-    solucion_modelo_2 = generar_output_modelo_2(distribucion)
+    while True:
+        # PASO 2 Y 3: y*
+        modelo = crear_modelo(nombres_archivos, conjuntos)
+        
+        x, obj_x = obtener_solucion_primal(modelo)
+        y, obj_y = obtener_solucion_dual(modelo)
 
-    # PASO 5
-    # copy_of_model = Model(sourceModel=modelo_3)
-    if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
-        conjuntos.append(set(solucion_modelo_2[0]))
-        #break
-    else:
-        break
+        print("[Debugging] obj x\n", obj_x)
+        print("[Debugging] obj y\n", obj_y)
 
-x_estrella_int = obtener_solucion_entera(modelo, x)
+        optimo = es_optimo(modelo, x)
+        print(f"[Debugging] es óptimo: {optimo}")
+
+        # PASO 4
+        distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
+        solucion_modelo_2 = generar_output_modelo_2(distribucion)
+
+        # PASO 5
+        # copy_of_model = Model(sourceModel=modelo_3)
+        if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
+            conjuntos.append(set(solucion_modelo_2[0]))
+            #break
+        else:
+            
+            x_estrella_int = obtener_solucion_entera(modelo, x) 
+            return x_estrella_int
+        
 #print(x_estrella_int)
 
 conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)
