@@ -67,8 +67,8 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
 
     return model, y, x
 
@@ -124,8 +124,8 @@ def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
 
     return model
 

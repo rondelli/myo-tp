@@ -145,8 +145,8 @@ def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
 
     return model
 
