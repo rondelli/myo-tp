@@ -18,11 +18,11 @@ def elegir_conjuntos(F: list, H: list):
         for j in range(m):
             y[i, j] = 1 if F[i] in H[j] else 0
 
-    model.setObjective(sum(x[j] for j in range(m)), sense="minimize")
+    model.setObjective(quicksum(x[j] for j in range(m)), sense="minimize")
 
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
-        model.addCons(sum(y[i, j] * x[j] for j in range(m)) >= 1)
+        model.addCons(quicksum(y[i, j] * x[j] for j in range(m)) >= 1)
 
     model.optimize()
     sol = model.getBestSol()

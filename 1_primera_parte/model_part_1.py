@@ -149,4 +149,4 @@ def obtener_solucion_dual_1(model):
     # La longitud de y coincide con la cantidad de archivos del input
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
-    return y, sum(y)
+    return y, quicksum(y)
