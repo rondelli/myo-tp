@@ -522,6 +522,7 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
 \section{Parte 5}
 
 \subsection{Descripción}
+El objetivo de este ejercicio es resolver el problema de las secciones 1 y 4 suponiendo que los tamaños de los archivos pertenecen a un conjunto pequeño. Para ello, se genera una familia de conjuntos \( H \) que cubra todos los archivos y quepa en discos, se plantea un modelo de programación lineal relajado (\( P \)) y se resuelve su dual para asignar valores a los archivos. Usando estos valores como indicadores de importancia, se selecciona un subconjunto de archivos. Si la solución es mejorable, se actualiza \( H \) y se repite el proceso, ajustando finalmente la solución para que sea entera.
 
 \subsection{Modelo Lineal}
 
@@ -533,8 +534,8 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
 
 \newpage
 \section{Parte 6}
-
 \subsection{Descripción}
+En esta sección, se explican mejoras al algoritmo de la sección 5.
 
 \subsection{Modelo Lineal}
 
