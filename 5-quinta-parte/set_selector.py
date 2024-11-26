@@ -1,4 +1,5 @@
 from pyscipopt import Model
+from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
@@ -22,11 +23,11 @@ def crear_modelo(F: list, H: list):
         for j in range(m):
             a[i, j] = 1 if F[i] in H[j] else 0
 
-    model.setObjective(sum(x[j] for j in range(m)), sense="minimize")
+    model.setObjective(quicksum(x[j] for j in range(m)), sense="minimize")
 
     # Todos los archivos deben estar en al menos un conjunto elegido
     for i in range(n):
-        model.addCons(sum(a[i, j] * x[j] for j in range(m)) >= 1)
+        model.addCons(quicksum(a[i, j] * x[j] for j in range(m)) >= 1)
     
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
@@ -62,13 +63,14 @@ def obtener_solucion_primal(model):
         return x, model.getObjVal()
 
 def obtener_solucion_dual(model):
+    # No debería ser necesario si el modelo ya viene optimizado con el presolving off
     # Aseguarse de apagar el presolving
-    model.setPresolve(SCIP_PARAMSETTING.OFF)
+    # model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     # La longitud de y coincide con la cantidad de archivos del input
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
-    return y, sum(y)
+    return y, quicksum(y)
 
 # No se usa por el momento
 # esto está ok? no debería ser si solucion[i] == 1?

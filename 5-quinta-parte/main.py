@@ -9,7 +9,7 @@ from importance import *
 import time
 
 if len(sys.argv) != 4:
-    print(f"Uso: {sys.argv[0]} OPTION nombre_archivo\n")
+    print(f"Uso: {sys.argv[0]} OPTION nombre_archivo minutos\n")
     print(f"      OPTIONS: -g | -u")
     print(f"      -g generar archivo")
     print(f"      -u usar archivo ya generado")
@@ -30,10 +30,8 @@ except ValueError:
     print("Ingresa un número válido para los minutos.")
     sys.exit(1)
 
-
-def obtener_conjuntos(archivo, threshold: int = float('inf')) ->  None:
+def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
-
 
     # PASO 1
     conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
@@ -48,11 +46,11 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) ->  None:
         x, obj_x = obtener_solucion_primal(modelo)
         y, obj_y = obtener_solucion_dual(modelo)
 
-        print("[Debugging] obj x\n", obj_x)
-        print("[Debugging] obj y\n", obj_y)
+        sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
+        sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
         optimo = es_optimo(modelo, x)
-        print(f"[Debugging] es óptimo: {optimo}")
+        sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
 
         # PASO 4
         distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
@@ -62,17 +60,18 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) ->  None:
         # copy_of_model = Model(sourceModel=modelo_3)
         if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
             conjuntos.append(set(solucion_modelo_2[0]))
-            #break
+            break # una pasada
         else:
-            
             x_estrella_int = obtener_solucion_entera(modelo, x) 
             return x_estrella_int
         
 #print(x_estrella_int)
 
+"""
 conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)
 
 if conjuntos_seleccionados is not None:
     generar_output(f"{archivo[:-3]}.out", conjuntos_seleccionados, conjuntos)
 else:
     generar_output_fallido(f"{archivo[:-3]}.out")
+"""
