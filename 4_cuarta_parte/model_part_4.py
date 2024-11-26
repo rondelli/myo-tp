@@ -81,6 +81,8 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
         return None
 
 def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
+    sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
+
     model = Model("model_part_4")
     d = d_t * 10**6
 
@@ -138,8 +140,8 @@ def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
     # Esto es la clave para que obj(dual) = obj(primal)
     # según documentación de pyscipopt
     #
-    model.disablePropagation()
     model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()
     #
     ####################################################
 
