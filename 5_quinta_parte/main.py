@@ -4,16 +4,16 @@ import sys
 
 from typing import Optional
 from configuracion_5 import *
-from set_selector import *
 from generador_output_5 import * 
-#from importance import *
 
-sys.path.insert(0, "../1-primera-parte")
-sys.path.insert(0, "../2-segunda-parte")
-sys.path.insert(0, "../3-segunda-parte")
-sys.path.insert(0, "../4-segunda-parte")
+sys.path.insert(0, "../1_primera_parte")
+sys.path.insert(0, "../2_segunda_parte")
+sys.path.insert(0, "../3_tercera_parte")
+sys.path.insert(0, "../4_cuarta_parte")
+
 from model_part_1 import *
 from model_part_2 import *
+from model_part_3 import *
 
 import time
 
