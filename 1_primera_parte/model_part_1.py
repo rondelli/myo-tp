@@ -17,8 +17,8 @@ def distribuir_archivos(d_t: int, F: list[str], s: list[int], time_limit=420):
     # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
     solution = model.getBestSol()
-
     status = model.getStatus()
+
     if solution is not None and status in ["optimal", "feasible"]:
         return [F, model, fake_y, fake_x, s]
     else:
