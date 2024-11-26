@@ -7,15 +7,15 @@ from pyscipopt import SCIP_PARAMSETTING
 # Para que no se rompa lo viejo, aunque me parece que lo rompe
 # No usar esta función
 def distribuir_archivos(d_t, F, s, time_limit=420):
-    modelo = crear_modelo1(d_t, F, s, time_limit)
-    x, obj_x = obtener_solucion_primal1(modelo)
+    modelo = crear_modelo_1(d_t, F, s, time_limit)
+    x, obj_x = obtener_solucion_primal_1(modelo)
     y, obj_y = obtener_solucion_dual(modelo)
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
     sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
 # Crea el modelo y lo devuelve optimizado
-def crear_modelo1(d_t: int, F: list[str], s: list[int], time_limit=420):
+def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model = Model("model_part_1")
 
     d = d_t * 10**6
@@ -27,7 +27,7 @@ def crear_modelo1(d_t: int, F: list[str], s: list[int], time_limit=420):
     n = len(F)
     m = n  # no se puede tener más discos que archivos
 
-    ##################################################################
+    ########################################################################
     # BINARY
     # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
     #
@@ -41,9 +41,9 @@ def crear_modelo1(d_t: int, F: list[str], s: list[int], time_limit=420):
     y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
     """
     #
-    ##################################################################
+    ########################################################################
 
-    ##################################################################
+    ########################################################################
     # CONTINUOUS
     # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
     #
@@ -55,7 +55,7 @@ def crear_modelo1(d_t: int, F: list[str], s: list[int], time_limit=420):
     # y_{j} = 1 si se elige el disco j, 0 si no
     y = [model.addVar(f"y_{j}", lb=0, ub=1, vtype="CONTINUOUS") for j in range(m)]
     #
-    ##################################################################
+    ########################################################################
 
     # minimize disks:
     model.setObjective(quicksum(y), sense="minimize")
@@ -86,17 +86,17 @@ def crear_modelo1(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     model.optimize()
 
-    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
 
     return model
 
-def obtener_solucion_primal1(model):
+def obtener_solucion_primal_1(model):
     sol = model.getBestSol()
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
+        sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
 
         # El nombre de variable x, acá es missleading, es x porque es el primal.
         # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo seleccionado y las $y$: disco seleccionado
