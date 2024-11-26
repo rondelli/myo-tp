@@ -31,8 +31,14 @@ def crear_modelo(F: list, H: list):
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
 
-    # Esto parece ser la clave para que obj(dual) = obj(primal)
+    ####################################################
+    # Esto es la clave para que obj(dual) = obj(primal)
+    # según documentación de pyscipopt
+    #
     model.disablePropagation()
+    model.setHeuristics(pyscipopt.SCIP_PARAMSETTING.OFF)
+    #
+    ####################################################
 
     model.optimize()
     return model
@@ -46,7 +52,8 @@ def obtener_solucion_primal(model):
 
     sol = model.getBestSol()
     
-    model.setPresolve(SCIP_PARAMSETTING.OFF)
+    # esto no debería necesitarse si el modelo ya viene optimizado con el presolving off
+    # model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         # Ya no devuelve un array de posiciones, devuelve la solución obtenida por scip
