@@ -3,7 +3,7 @@
 import sys
 from configuracion_2 import *
 from generador_output_2 import *
-from importance import *
+from model_part_2 import *
 
 if len(sys.argv) != 2:
     print(f"Uso: {sys.argv[0]} nombre_archivo")
@@ -12,7 +12,7 @@ if len(sys.argv) != 2:
 archivo = sys.argv[1]
 print(f"Utilizando {archivo}\n")
 
-# generar_configuracion(archivo)
+generar_configuracion(archivo)
 capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(
     f"./{archivo}")
 

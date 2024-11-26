@@ -1,3 +1,4 @@
+import sys
 from pyscipopt import Model
 
 # Model segunada parte
