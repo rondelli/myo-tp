@@ -52,9 +52,9 @@ def datos_modelo(model):
     try:
         #_, mejor = model_part_1.obtener_solucion_primal_1(model)
         mejor = model.getObjVal() # esto es lo mimso que lo de arriba --> si no encuentra el optimo da 0 :c
+        var = model.getNVars()
+        tiempo = model.getSolvingTime()
+        cota_dual = model.getDualbound()
     except TypeError:
-        var, mejor = None, None
-    var = model.getNVars()
-    tiempo = model.getSolvingTime()
-    cota_dual = dual_bound = model.getDualbound()
+        var, mejor, tiempo, cota_dual = None, None
     return cota_dual, mejor, var, tiempo
