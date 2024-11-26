@@ -56,4 +56,5 @@ def datos_modelo(model):
         var, mejor = None, None
     var = model.getNVars()
     tiempo = model.getSolvingTime()
-    return mejor, var, tiempo
+    cota_dual = dual_bound = model.getDualbound()
+    return cota_dual, mejor, var, tiempo
