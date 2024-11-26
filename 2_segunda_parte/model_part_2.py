@@ -8,8 +8,12 @@ from pyscipopt import SCIP_PARAMSETTING
 def distribuir_archivos(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     # modelo = crear_modelo_2(d_t, F, s, I, time_limit)
     model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
-    x, obj_x = obtener_solucion_primal_2(model)
+    # x, obj_x = obtener_solucion_primal_2(model)
     # y, obj_y = obtener_solucion_dual_2(model)
+    try:
+        x, obj_x = obtener_solucion_primal_2(model)
+    except TypeError:
+        x, obj_x = None, None
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
     # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
