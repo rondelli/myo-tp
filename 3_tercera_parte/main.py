@@ -3,7 +3,7 @@
 import sys
 from configuracion_3 import *
 from generador_output_3 import *
-from set_selector import *
+from model_part_3 import *
 
 if len(sys.argv) != 2:
     print(f"Uso: {sys.argv[0]} nombre_archivo")
