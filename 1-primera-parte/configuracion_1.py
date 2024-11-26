@@ -35,8 +35,7 @@ def leer_configuracion(nombre_archivo):
     nombres_archivos = []
     tamaños_archivos = []
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
-                           nombre_archivo)
+    # ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
     with open(ruta_in, "r") as f:
         lineas = f.readlines()
         capacidad_disco = int(lineas[1].strip())

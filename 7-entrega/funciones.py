@@ -1,8 +1,6 @@
 import csv
 import os
 
-# EL NOMBRE DE ESTO ES MUY IP pero no se me ocurre algo mejor
-
 def guardar_prueba(datos):
     headers = ["caso", "cant", "cota dual", "mejor1", "var1", "tiempo1", "mejor4", "var4", "tiempo4", "mejor5", "var5", "tiempo5", "mejor6", "var6", "tiempo6"]
 
@@ -33,3 +31,29 @@ def leer_configuracion():
     
     return configuraciones
 
+def leer_archivo(nombre_archivo):
+    capacidad_disco = 0
+    nombres_archivos = []
+    tamaños_archivos = []
+
+    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN", nombre_archivo)
+    with open(ruta_in, "r") as f:
+        lineas = f.readlines()
+        capacidad_disco = int(lineas[1].strip())
+
+        for i in range(7, len(lineas)):
+            if lineas[i].strip():
+                archivo = lineas[i].split()
+                nombres_archivos.append(archivo[0])
+                tamaños_archivos.append(int(archivo[1]))
+    return capacidad_disco, nombres_archivos, tamaños_archivos
+
+def datos_modelo(model):
+    try:
+        #_, mejor = model_part_1.obtener_solucion_primal_1(model)
+        mejor = model.getObjVal() # esto es lo mimso que lo de arriba --> si no encuentra el optimo da 0 :c
+    except TypeError:
+        var, mejor = None, None
+    var = model.getNVars()
+    tiempo = model.getSolvingTime()
+    return mejor, var, tiempo
