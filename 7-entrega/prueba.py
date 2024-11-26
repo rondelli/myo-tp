@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from funciones import *
-import glob
 
 # 1 - leer config
 configuraciones = leer_configuracion()
@@ -12,7 +11,10 @@ outPath = configuraciones.get('outPath')
 threshold = int(configuraciones.get('threshold', 0))
 
 archivos = os.listdir(inPath)
-archivos = [f for f in archivos if os.path.isfile(f)]
+archivos = [f for f in archivos]
+
+print(archivos)
+
 
 # Imprimir los nombres de los archivos
 #for archivo in archivos:
