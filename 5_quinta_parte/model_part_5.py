@@ -4,7 +4,8 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
-sys.path.insert(0, "../3_segunda_parte")
+# Se usa acá? ó sólo en main?
+sys.path.insert(0, "../3_tercera_parte")
 from model_part_3 import *
 
 # Esta función supone que el model es `optimal`
