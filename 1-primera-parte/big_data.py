@@ -54,6 +54,7 @@ def distribuir_archivos(d_t, F, s, time_limit=420):
 
     # Obtener la mejor solución encontrada
     sol = model.getBestSol()
+
     if sol is not None and (model.getStatus() == "optimal" or model.getStatus() == "feasible"):
         sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
         return [F, model, y, x, s]

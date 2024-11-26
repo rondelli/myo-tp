@@ -5,7 +5,7 @@ import glob
 
 # 1 - leer config
 configuraciones = leer_configuracion()
-print(configuraciones)
+print(">>>", configuraciones)
 
 inPath = configuraciones.get('inPath').replace('/', os.sep)
 outPath = configuraciones.get('outPath').replace('/', os.sep)
