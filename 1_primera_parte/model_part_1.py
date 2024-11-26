@@ -10,7 +10,11 @@ def distribuir_archivos(d_t: int, F: list[str], s: list[int], time_limit=420):
     # model = crear_modelo_1(d_t, F, s, time_limit)
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
 
-    x, obj_x = obtener_solucion_primal_1(model)
+    try:
+        x, obj_x = obtener_solucion_primal_1(model)
+    except TypeError:
+        x, obj_x = None, None
+
     # y, obj_y = obtener_solucion_dual_1(model)
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
