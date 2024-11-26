@@ -6,17 +6,19 @@ from typing import Optional
 from configuracion_5 import *
 from set_selector import *
 from generador_output_5 import * 
+from importance import *
 
 sys.path.insert(0, "../1-primera-parte")
 sys.path.insert(0, "../2-segunda-parte")
 sys.path.insert(0, "../3-segunda-parte")
 sys.path.insert(0, "../4-segunda-parte")
-from model_part_1 import *
-from model_part_2 import *
+# from model_part_1 import *
+# from model_part_2 import *
 
 import time
 
-if len(sys.argv) != 4:
+#if len(sys.argv) != 4:
+if len(sys.argv) != 3:
     print(f"Uso: {sys.argv[0]} OPTION nombre_archivo minutos\n")
     print(f"      OPTIONS: -g | -u")
     print(f"      -g generar archivo")
@@ -32,11 +34,11 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
-try:
-    minutos = float(sys.argv[3])
-except ValueError:
-    print("Ingresa un número válido para los minutos.")
-    sys.exit(1)
+# try:
+#     minutos = float(sys.argv[3])
+# except ValueError:
+#     print("Ingresa un número válido para los minutos.")
+#     sys.exit(1)
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
@@ -70,10 +72,9 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
             conjuntos.append(set(solucion_modelo_2[0]))
             break # una pasada
         else:
-            x_estrella_int = obtener_solucion_entera(modelo, x) 
-            return x_estrella_int
-        
-#print(x_estrella_int)
+            break
+    x_estrella_int = obtener_solucion_entera(modelo, x) 
+    return x_estrella_int
 
 """
 conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)

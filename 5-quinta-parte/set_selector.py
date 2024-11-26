@@ -4,6 +4,8 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
+import pyscipopt
+
 # Crea el modelo y lo devuelve optimizado
 def crear_modelo(F: list, H: list):
     model = Model("set_selector")
@@ -95,18 +97,20 @@ def obtener_solucion_entera(model, solucion_continua):
     sol = model.getBestSol()
     mejor_combinacion = None
     mejor_solucion = float('inf')
-    
+    # model = Model()
+
     for i in range(1, 10):
         umbral = i/10
         redondeos = [1 if valor >= umbral else 0 for valor in solucion_continua]
         if es_optimo_rapido(model, variables, redondeos, sol):
+        # if es_optimo(model, redondeos):
             valor_objetivo = model.getSolObjVal(sol)
+            model.hideOutput()
             if valor_objetivo < mejor_solucion:
                 mejor_solucion = valor_objetivo
                 mejor_combinacion = redondeos
-        
-    #print("MEJOR:", mejor_combinacion)
-    #print("SOL:", mejor_solucion)
+    print("ENTERA:", mejor_combinacion)
+    # print("SOL:", mejor_solucion)
     return mejor_combinacion
 
 def es_optimo_rapido(model, variables, solucion, sol):
