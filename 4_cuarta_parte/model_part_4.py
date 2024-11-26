@@ -58,6 +58,11 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
         for j in range(m):
             model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
 
+    # z{s, j} = 1 si ese tamaño está en el disco
+    for s in set(S):
+        for j in range(m):
+            model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+
     # Limitamos los tamaños únicos por disco
     for j in range(m):
         model.addCons(quicksum(z[s, j] for s in set(S)) <= t)

@@ -4,7 +4,7 @@ from pyscipopt import Model, quicksum
 import sys
 from configuracion_4 import *
 from generador_output_4 import *
-from model import *
+from model_part_4 import *
 
 if len(sys.argv) != 2:
     print(f"Uso: {sys.argv[0]} nombre_archivo")

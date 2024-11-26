@@ -14,6 +14,7 @@ sys.path.insert(0, "../4_cuarta_parte")
 from model_part_1 import *
 from model_part_2 import *
 from model_part_3 import *
+from model_part_5 import *
 
 import time
 
@@ -51,10 +52,10 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
 
     while True:
         # PASO 2 Y 3: y*
-        modelo = crear_modelo(nombres_archivos, conjuntos)
+        modelo = crear_modelo_3(nombres_archivos, conjuntos)
         
-        x, obj_x = obtener_solucion_primal(modelo)
-        y, obj_y = obtener_solucion_dual(modelo)
+        x, obj_x = obtener_solucion_primal_3(modelo)
+        y, obj_y = obtener_solucion_dual_3(modelo)
 
         sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
         sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
@@ -70,17 +71,11 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         # copy_of_model = Model(sourceModel=modelo_3)
         if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
             conjuntos.append(set(solucion_modelo_2[0]))
-            break # una pasada
+            # break # una pasada
         else:
+            print(sum(solucion_modelo_2[1]))
             break
     x_estrella_int = obtener_solucion_entera(modelo, x) 
     return x_estrella_int
 
-"""
-conjuntos_seleccionados = obtener_conjuntos_seleccionados(x_estrella_int)
-
-if conjuntos_seleccionados is not None:
-    generar_output(f"{archivo[:-3]}.out", conjuntos_seleccionados, conjuntos)
-else:
-    generar_output_fallido(f"{archivo[:-3]}.out")
-"""
+obtener_conjuntos(archivo, 420)
