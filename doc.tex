@@ -141,7 +141,7 @@
 	\huge MyO -- Trabajo Práctico\\
 }
 \author{
-	\Mati \and \Xime \and \Lucifer \and \Lu
+	\Xime \and \Lucifer \and \Lu
 }
 \date{\small $\text{2}^{\text{do}}$ Semestre 2024
 }
@@ -166,22 +166,22 @@
 \section{Introducción}
 
 Este trabajo práctico tiene como objetivo aplicar conceptos de modelado
-y de optimización utilizando técnicas de programación lineal, y distintas
+y de optimización, utilizando técnicas de programación lineal, y distintas
 tecnologías y herramientas. Buscamos, a través de una serie de problemas
 relacionados con la gestión de archivos en una empresa de datos, diseñar
 soluciones eficientes que optimicen el uso de recursos, como el
 almacenamiento en discos y la importancia de los datos.
 
 La actividad se divide en seis partes, cada una con enfoques específicos
-que abarcan desde el modelado directo en \emph{SCiP} hasta la
+que abarcan desde el modelado directo en \verb|SCIP|, hasta la
 implementación de algoritmos en Python con la biblioteca
-\emph{PySCIPOpt}. A lo largo del trabajo, se considerarán restricciones
-como la capacidad limitada de los discos, la importancia de los archivos
+\verb|PySCIPOpt|. A lo largo de este trabajo, se considerarán restricciones
+como la capacidad limitada de los discos, la importancia de los archivos,
 y la estructura de conjuntos para maximizar la eficiencia del
 almacenamiento y la relevancia de los datos seleccionados.
 
 \newpage
-\section{Parte 1}
+\section{Parte 1}\label{primera:parte}
 
 \subsection{Descripción}
 
@@ -207,19 +207,19 @@ tamaños de los archivos de cada disco no superen la capacidad del disco.
 
 \noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
-$s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+\noindent $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
-$n$: cantidad de archivos. \\
+\noindent $n$: cantidad de archivos. \\
 
-$m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
+\noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
 
-$D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
+\noindent $D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
 
-$d$: tamaño del disco en TB. \\ 
+\noindent $d$: tamaño del disco en TB. \\ 
 
-$x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
+\noindent $x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
 
-$y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
+\noindent $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
 \subsubsection{Modelo}
 
@@ -312,7 +312,7 @@ A continuación presentamos el modelo Zimpl, con los comentarios
 correspondientes que indican la relación con el modelo lineal de la sección
 anterior.
 
-\lstinputlisting[inputencoding=utf8/latin1]{primera-parte/big_data.zpl}
+\lstinputlisting[inputencoding=utf8/latin1]{1_primera_parte/big_data.zpl}
 
 \newpage
 \subsubsection{Modelo PySCIPOpt}
@@ -321,14 +321,14 @@ Como parte del trabajo, incluimos una implementación del modelo utilizando
 Python, con la librería PySCIPOpt. La siguiente implementación corresponde 
 a una función equivalente al código presentado con Zimpl.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/big_data.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/model_part_1.py}
 
 \newpage
 
 Esta función recibe los datos leídos de un archivo de configuración creado 
 con datos aleatorios. El siguiente código muestra las funciones necesarias para generar este archivo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/configuracion_1.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/configuracion_1.py}
 
 %\newpage
 
@@ -336,13 +336,13 @@ La solución incluye un script ejecutable que recibe como parámetro el nombre d
 archivo a generar, genera el archivo y calcula el resultado del modelo. Luego, 
 genera el output correspondiente.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/big_data_main.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/big_data_main.py}
 
 \newpage
 
 Utilizamos las siguientes funciones para generar el output.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{primera-parte/generador_output_1.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/generador_output_1.py}
 
 \newpage
 \section{Parte 2}
@@ -367,15 +367,17 @@ el tamaño del disco.
 
 \noindent $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
-$s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+\noindent $s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
-$I_i$ constante: indicador de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
+\noindent $I_i$ constante: indicador de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
 
-$n$ constante: cantidad de archivos. \\
+\noindent $n$ constante: cantidad de archivos. \\
 
-$d$ constante: tamaño del disco en TB. \\ 
+\noindent $d$ constante: tamaño del disco en TB. \\
 
-$x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{1, \ldots, n\}$, donde $x_{i} \in \{0, 1\}$, $0$ en el caso de que no esté\\
+\noindent $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{1, \ldots, n\}$, donde $x_{i} \in \{0, 1\}$, $0$ en el caso de que no esté
+
+\subsubsection{Modelo}
 
 \begin{alignat*}{2}
 	\maximize
@@ -394,7 +396,7 @@ $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{
 
 A continuación presentamos el modelo Zimpl, con los comentarios correspondientes que indican la relación con el modelo lineal de la sección anterior.
 
-\lstinputlisting[inputencoding=utf8/latin1]{segunda-parte/importance.zpl}
+\lstinputlisting[inputencoding=utf8/latin1]{2_segunda_parte/importance.zpl}
 
 \newpage
 \subsubsection{Modelo PySCIPOpt}
@@ -404,33 +406,38 @@ archivos de output utilizando Python.
 
 El modelo es el siguiente.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/importance.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/model_part_2.py}
 
 \newpage
 
 Los archivos de configuración se generan de manera similar al modelo previo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/configuracion_2.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/configuracion_2.py}
 
 \newpage
 
 El script ejecutable realiza los mismos pasos que el del modelo anterior, pero, considerando 
 la importancia de cada archivo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/importance-main.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/importance-main.py}
 
 \newpage
 
 Luego, el output se almacena de la siguiente manera.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{segunda-parte/generador_output_2.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/generador_output_2.py}
 
 \newpage
 \section{Parte 3}
 
 \subsection{Descripción}
 
-Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \mathcal{H} \), donde cada conjunto de archivos $H$ de \( \mathcal{H} \) está incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia \( \mathcal{H} \), se busca un subconjunto mínimo \( \mathcal{I} \) de \( \mathcal{H} \) tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de \( \mathcal{I} \).
+Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos
+$\mathcal{H}$, donde cada conjunto de archivos $H$ de $\mathcal{H}$ está
+incluido en $C$, y cada archivo de $C$ pertenece a algún conjunto de la familia
+$\mathcal{H}$, se busca un subconjunto mínimo $\mathcal{I}$ de $\mathcal{H}$
+tal que todos los archivos de $C$ estén cubiertos por al menos un conjunto de
+$\mathcal{I}$.
 
 \subsection{Modelo Lineal}
 
@@ -438,12 +445,12 @@ Dado un conjunto de archivos $C$ y una familia de conjuntos de archivos \( \math
 
 \noindent $n$: cantidad de archivos. \\
 
-$m$: cantidad de conjuntos \( H \). \\
+\noindent $m$: cantidad de conjuntos $H$. \\
 
-$x_{j}$ binaria: $1$ indica que el conjunto $H_{j}$ pertenece a $I$. \\ 
+\noindent $x_{j}$ binaria: $1$ indica que el conjunto $H_{j}$ pertenece a $I$. \\
 
-$y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$
-contiene el archivo $i$. \\ 
+\noindent $y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$
+contiene el archivo $i$.
 
 \subsubsection{Modelo}
 
@@ -454,16 +461,16 @@ contiene el archivo $i$. \\
               & x_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
               & y_{i, j} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \quad \forall j \in \{1, \ldots, m\} \\
               & n \geq 0, \quad \\
-              & m \geq 0, \quad \\
+              & m \geq 0, \quad
 \end{alignat*}
 
 \newpage
-\section{Parte 4}
+\section{Parte 4}\label{cuarta:parte}
 
 \subsection{Descripción}
 
 Se deben realizar backups de $n$ archivos en discos idénticos de
-capacidad $d$.  Se sabe que los archivos son de pocos tamaños distintos,
+capacidad $d$. Se sabe que los archivos son de pocos tamaños distintos,
 y que cada archivo es menor que la capacidad de un disco. Se necesita
 saber cuál es la cantidad mínima de discos necesarios para almacenar
 todos los archivos, considerando la capacidad de cada disco y los
@@ -473,29 +480,29 @@ tamaños de archivos.
 
 \subsubsection{Definición de variables}
 
-\noindent $F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$.
+\noindent $F$: conjunto de nombres de cada archivo $i$, con $i \in \{1, \ldots, n\}$. \\
 
-$s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$.
+\noindent $s_{i}$: tamaño del archivo $i$ en MB, con $i \in \{1, \ldots, n\}$. \\
 
-$n$: cantidad de archivos.
+\noindent $n$: cantidad de archivos. \\
 
-$m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$.
+\noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
 
-$D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$.
+\noindent $D$: conjunto de $j$ discos de tamaño $d$, con $j \in \{1, \ldots, m\}$. \\
 
 % ???????????????????????????????? hace falta? no se como ponerla jeje
 
-$S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$.
+\noindent $S$: conjunto de los tamaños de $s_{i}$, con $i \in \{1, \ldots, n\}$. \\
 
-$d$: tamaño del disco en TB.
+\noindent $d$: tamaño del disco en TB. \\
 
-$t$: constante, máxima cantidad de tamaños que entran en un disco.
+\noindent $t$: constante, máxima cantidad de tamaños que entran en un disco. \\
 
-$x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$.
+\noindent $x_{ij}$: binaria, toma el valor $1$ si el archivo $i$ está en el disco $j$, y $0$ en caso contrario, para $\forall i \in \{1, \ldots, n\}$ y $\forall j \in \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$. \\
 
-$y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$.
+\noindent $y_{j}$: binaria, toma el valor $1$ si se está usando el disco $j$, y $0$ en caso contrario, para $\forall j \in \{1, \ldots, m\}$, donde $y_{j} \in \{0, 1\}$. \\
 
-$z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$.
+\noindent $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$.
 
 \subsubsection{Modelo}
 
@@ -515,14 +522,23 @@ $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al 
         & s_i \geq 0, \forall i \in \{1, \ldots, n\}\\
         & m \geq  0, m \leq  n, m \in \mathbb{Z} \\
         & d \geq  0 \\
-        & t \geq  0, t \in \mathbb{Z} \\
+        & t \geq  0, t \in \mathbb{Z}
 \end{alignat*}
 
 \newpage
 \section{Parte 5}
 
 \subsection{Descripción}
-El objetivo de este ejercicio es resolver el problema de las secciones 1 y 4 suponiendo que los tamaños de los archivos pertenecen a un conjunto pequeño. Para ello, se genera una familia de conjuntos \( H \) que cubra todos los archivos y quepa en discos, se plantea un modelo de programación lineal relajado (\( P \)) y se resuelve su dual para asignar valores a los archivos. Usando estos valores como indicadores de importancia, se selecciona un subconjunto de archivos. Si la solución es mejorable, se actualiza \( H \) y se repite el proceso, ajustando finalmente la solución para que sea entera.
+
+El objetivo de este ejercicio es resolver el problema de las
+Secciones~\ref{primera:parte}~y~\ref{cuarta:parte} suponiendo que los tamaños
+de los archivos pertenecen a un conjunto pequeño. Para ello, se genera una
+familia de conjuntos $H$ que cubra todos los archivos y quepa en los discos, se
+plantea un modelo de programación lineal relajado $P$ y se resuelve su dual
+para asignar valores a los archivos. Usando estos valores como indicadores de
+importancia, se selecciona un subconjunto de archivos. Si la solución es
+mejorable, se actualiza $H$ y se repite el proceso, ajustando finalmente la
+solución para que sea entera.
 
 \subsection{Modelo Lineal}
 
@@ -534,7 +550,9 @@ El objetivo de este ejercicio es resolver el problema de las secciones 1 y 4 sup
 
 \newpage
 \section{Parte 6}
+
 \subsection{Descripción}
+
 En esta sección, se explican mejoras al algoritmo de la sección 5.
 
 \subsection{Modelo Lineal}
@@ -560,17 +578,11 @@ caso | cant | cota dual | mejor1 | var1 | tiempo1 | mejor4 | var4 | tiempo4 | me
 \newpage
 \section{Conclusiones}
 
-Logramos familiarizarnos con el uso de SCIP, tanto desde su interfaz en
-Python mediante PySCIPOpt, como a través del uso de Zimpl directamente
-en el solver de SCIP. Este proceso nos ayudó a familiarizarnos con la
-parte práctica del solver y con las herramientas de modelado vistas en
-la materia.
+Logramos familiarizarnos con el uso de SCIP, y con PySCIPOpt.
+Pudimos apreciar el alto nivel de abstracción de la sintaxis de Zimpl, utilizado directamente SCIP.
 
-Por otro lado, tuvimos que sortear distintas dificultades,
-principalmente la instalación de estas nuevas tecnologías. Al mismo
-tiempo, reforzamos la capacidad para resolver problemas utilizando la
-documentación oficial como recurso principal y aclarar dudas a partir de
-ella. Esperamos con ansias las siguientes partes.
+Este trabajo nos ayudó a familiarizarnos con las herramientas de modelado, y
+pudimos relacionarlas y aplicar lo visto en la materia.
 
 %\newpage
 \begin{thebibliography}{99}

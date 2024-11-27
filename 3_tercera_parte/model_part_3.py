@@ -6,10 +6,8 @@ from math import floor, ceil
 
 import pyscipopt
 
-# No usear esta función.
-# Es para que lo viejo no se rompa.
 def elegir_conjuntos(F: list, H: list):
-    model = Model("set_selector")
+    model = Model("model_part_3")
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
 
@@ -42,7 +40,7 @@ def elegir_conjuntos(F: list, H: list):
     else:
         return None
 
-# Crea el modelo y lo devuelve optimizado
+# Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_3(F: list, H: list):
     model = Model("model_part_3")
     
@@ -113,10 +111,6 @@ def obtener_solucion_dual_3(model):
 
     return y, quicksum(y)
 
-# No se usa por el momento
-# esto está ok? no debería ser si solucion[i] == 1?
-# float == 1 puede traer problemas, tipo 1 == 0.9999 ?
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
-

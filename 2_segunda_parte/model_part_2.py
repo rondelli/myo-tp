@@ -4,13 +4,12 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
 # Model segunada parte
-# No usar esta función, es para la parte vieja
 def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float]):
     model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, 10000)
-    # try:
-        # x, obj_x = obtener_solucion_primal_2(model)
-    # except TypeError:
-        # x, obj_x = None, None
+    try:
+        x, obj_x = obtener_solucion_primal_2(model)
+    except TypeError:
+        x, obj_x = None, None
 
     # sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
 
@@ -53,7 +52,7 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
 
     return model, x
 
-# Crea el modelo y lo devuelve optimizado
+# Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
 
