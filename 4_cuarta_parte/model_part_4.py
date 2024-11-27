@@ -17,6 +17,8 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
 def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
     model = Model("model_part_4")
+    model.setParam("limits/time", time_limit)
+
     d = d_t * 10**6
 
     n = len(F)
@@ -65,18 +67,17 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
         model.addCons(quicksum(z[s, j] for s in set(S)) <= t)
 
     # Configurar el límite de tiempo en el solver
-    model.setParam("limits/time", time_limit)
-    model.setParam("display/freq", 1)
+    #model.setParam("display/freq", 1)
 
         # Desactivación temporal de presolve
-    model.setPresolve(SCIP_PARAMSETTING.OFF)
+    #model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     ####################################################
     # Esto es la clave para que obj(dual) = obj(primal)
     # según documentación de pyscipopt
     #
-    model.setHeuristics(SCIP_PARAMSETTING.OFF)
-    model.disablePropagation()
+    #model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    #model.disablePropagation()
     #
     ####################################################
 
@@ -85,14 +86,7 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
     sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
 
-    sol = model.getBestSol()
-
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
-    ) == "feasible":
-        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
-        return [F, model, y, x, S]
-    else:
-        return None
+    return model
 
 # NO SE USA
 def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
