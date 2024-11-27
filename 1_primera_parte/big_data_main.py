@@ -16,7 +16,7 @@ print(f"Utilizando {archivo}\n")
 
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
 
-solucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos)
+solucion = distribuir_archivos_1(capacidad_disco, nombres_archivos, tamaños_archivos, 420)
 
 if solucion is not None:
     generar_output(f"{archivo[:-3]}.out", solucion)

@@ -5,8 +5,7 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
 # Para que no se rompa lo viejo
-# No usar esta función
-def distribuir_archivos(d_t: int, F: list[str], s: list[int], time_limit=420):
+def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     # model = crear_modelo_1(d_t, F, s, time_limit)
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
 
