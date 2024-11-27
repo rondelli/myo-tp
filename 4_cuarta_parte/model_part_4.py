@@ -3,17 +3,6 @@ from pyscipopt import Model
 from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
-"""
-def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
-    model = crear_modelo_4(d_t, F, S, t, time_limit)
-
-    x, obj_x = obtener_solucion_primal_4(model)
-    y, obj_y = obtener_solucion_dual_4(model)
-
-    sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
-    sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
-"""
-
 def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
     model = Model("model_part_4")
@@ -82,7 +71,7 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     else:
         return None
 
-# NO SE USA
+# Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 4 RELAJADO] Inicio\n\n")
 

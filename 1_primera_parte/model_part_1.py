@@ -4,7 +4,6 @@ from pyscipopt import Model
 from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
-# Para que no se rompa lo viejo
 def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     # model = crear_modelo_1(d_t, F, s, time_limit)
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
@@ -14,10 +13,7 @@ def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     except TypeError:
         x, obj_x = None, None
 
-    # y, obj_y = obtener_solucion_dual_1(model)
-
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
-    # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
     solution = model.getBestSol()
     status = model.getStatus()
@@ -71,7 +67,7 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     return model, y, x
 
-# Crea el modelo y lo devuelve optimizado
+# Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 1] Inicio\n\n")
     model = Model("model_part_1")
