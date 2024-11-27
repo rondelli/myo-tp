@@ -39,6 +39,23 @@ for a in archivos:
     sys.stderr.write(f"[Debugging] {a}\n")
     d_t, F, s = leer_archivo(a)
 
+    cota_dual_1 = 98237428978
+    cota_dual_4 = 98237428978
+    cota_dual_5 = 98237428978
+
+    mejor_1 = "inf"
+    var_1 = "variable1"
+    tiempo_1 = 480
+    mejor_4 = "inf"
+    var_4 = "variable4"
+    tiempo_4 = 480
+    mejor_5 = "inf"
+    var_5 = 480
+    tiempo_5 = 480
+    mejor_6 = "inf"
+    var_6 = 480
+    tiempo_6 = 480
+
     datos = model_part_1.distribuir_archivos_1(d_t, F, s, threshold*60)
     if datos is not None:
         cota_dual_1, mejor_1, var_1, tiempo_1 = datos_modelo(datos[1])
@@ -67,7 +84,6 @@ for a in archivos:
 
     cota_dual_5, mejor_5, var_5, tiempo_5 = datos_modelo(modelo_5)
 
-    # cota_dual = max([cota_dual_1, cota_dual_4, cota_dual_5])
     cotas = [cota_dual_1, cota_dual_4, cota_dual_5]
     cotas_validas = [c for c in cotas if c is not None]
 
@@ -76,4 +92,4 @@ for a in archivos:
     else:
         cota_dual = None
 
-    guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, 0, 0, 0]])
+    guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])
