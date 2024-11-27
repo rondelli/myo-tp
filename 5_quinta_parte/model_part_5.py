@@ -1,39 +1,15 @@
-#!/usr/bin/env python3
-
 import sys
+import time
+from pyscipopt import Model
+from pyscipopt import quicksum
+from pyscipopt import SCIP_PARAMSETTING
+from itertools import product
+from math import floor, ceil
 
-from typing import Optional
-from configuracion_5 import *
-from generador_output_5 import * 
-from model_part_5_2 import *
-
+from configuracion_1 import leer_configuracion
+from configuracion_5 import generar_conjuntos, generar_output_modelo_2
 from model_part_2 import *
 from model_part_3 import *
-
-import time
-
-#if len(sys.argv) != 4:
-if len(sys.argv) != 3:
-    print(f"Uso: {sys.argv[0]} OPTION nombre_archivo minutos\n")
-    print(f"      OPTIONS: -g | -u")
-    print(f"      -g generar archivo")
-    print(f"      -u usar archivo ya generado")
-    sys.exit(1)
-
-archivo = sys.argv[2]
-
-if sys.argv[1] == "-g":
-    print(f"Generando {archivo}\n")
-    generar_configuracion(archivo)
-
-if sys.argv[1] == "-u":
-    print(f"Usando {archivo}\n")
-
-# try:
-#     minutos = float(sys.argv[3])
-# except ValueError:
-#     print("Ingresa un número válido para los minutos.")
-#     sys.exit(1)
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
@@ -45,7 +21,6 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     tiempo_inicio = time.time()
 
     while True:
-        # PASO 2 Y 3: y*
         modelo = crear_modelo_3(nombres_archivos, conjuntos)
         
         x, obj_x = obtener_solucion_primal_3(modelo)
@@ -65,11 +40,45 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         # copy_of_model = Model(sourceModel=modelo_3)
         if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
             conjuntos.append(set(solucion_modelo_2[0]))
-            # break # una pasada
         else:
-            print(sum(solucion_modelo_2[1]))
             break
-    x_estrella_int = obtener_solucion_entera(modelo, x) 
     return modelo
 
-obtener_conjuntos(archivo, 7)
+# Esta función supone que el model es `optimal`
+def es_optimo(model, solucion):
+    variables = model.getVars() 
+
+    sol = model.getBestSol()
+
+    for var, val in zip(variables, solucion):
+        model.setSolVal(sol, var, val)
+
+    return model.checkSol(sol)
+
+def obtener_solucion_entera(model, solucion_continua):
+    print("CONTINUA:", solucion_continua)
+    variables = model.getVars()
+    sol = model.getBestSol()
+    mejor_combinacion = None
+    mejor_solucion = float('inf')
+    # model = Model()
+
+    for i in range(1, 10):
+        umbral = i/10
+        redondeos = [1 if valor >= umbral else 0 for valor in solucion_continua]
+        if es_optimo_rapido(model, variables, redondeos, sol):
+        # if es_optimo(model, redondeos):
+            valor_objetivo = model.getSolObjVal(sol)
+            model.hideOutput()
+            if valor_objetivo < mejor_solucion:
+                mejor_solucion = valor_objetivo
+                mejor_combinacion = redondeos
+    print("ENTERA:", mejor_combinacion)
+    # print("SOL:", mejor_solucion)
+    return mejor_combinacion
+
+def es_optimo_rapido(model, variables, solucion, sol):
+    for var, val in zip(variables, solucion):
+        model.setSolVal(sol, var, val)
+    
+    return model.checkSol(sol)
