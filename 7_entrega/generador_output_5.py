@@ -1,10 +1,11 @@
 import os
 
 
-def generar_output(nombre_archivo, solucion, conjuntos):
-    ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
-                            nombre_archivo)
-    with open(ruta_out, "w") as f:
+def generar_output(outPath, nombre_archivo, solucion, conjuntos):
+    path_out = os.path.join(
+        os.path.dirname(__file__), "..", outPath, "OUT5", nombre_archivo
+    )
+    with open(path_out, "w") as f:
         f.write(
             f"Para la configuracion del archivo, se han elegido {len(solucion)} de los {len(conjuntos)} conjuntos de H:\n\n"
         )
@@ -12,8 +13,11 @@ def generar_output(nombre_archivo, solucion, conjuntos):
             f.write(f"Conjunto H_{solucion[i]}: {conjuntos[solucion[i]]}.\n")
 
 
-def generar_output_fallido(nombre_archivo):
-    with open(nombre_archivo, "w") as f:
+def generar_output_fallido(outPath, nombre_archivo):
+    path_out = os.path.join(
+        os.path.dirname(__file__), "..", outPath, "OUT5", nombre_archivo
+    )
+    with open(path_out, "w") as f:
         f.write(
             f"No se ha encontrado solucion para la configuracion del archivo.\n"
         )
