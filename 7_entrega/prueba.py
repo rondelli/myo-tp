@@ -31,7 +31,7 @@ threshold = int(configuraciones.get('threshold', 0))
 
 archivos = os.listdir(inPath)
 
-archivos = [f for f in archivos]
+archivos = ["f0018.in", "f0032.in"] # [f for f in archivos]
 sys.stderr.write(f"[Debugging] {archivos}\n")
 
 # prueba de modelos
@@ -51,6 +51,7 @@ for a in archivos:
         cota_dual_4, mejor_4, var_4, tiempo_4 = datos_modelo(modelo_4[1])
         output_4.generar_output(outPath, a + "_file.out", modelo_4)
     else:
+        cota_dual_4, mejor_4, var_4, tiempo_4 = None, None, None, None
         output_4.generar_output_fallido(outPath, a + "_file.out")
 
     data_5  = model_part_5.obtener_conjuntos(a, threshold)
