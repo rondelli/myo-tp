@@ -5,7 +5,7 @@ from pyscipopt import SCIP_PARAMSETTING
 
 # Model segunada parte
 def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float]):
-    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, 10000)
+    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, 420)
     try:
         x, obj_x = obtener_solucion_primal_2(model)
     except TypeError:
