@@ -4,7 +4,7 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
 """
-def distribuir_archivos(d_t, F, S, t, time_limit=420):
+def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model = crear_modelo_4(d_t, F, S, t, time_limit)
 
     x, obj_x = obtener_solucion_primal_4(model)
@@ -68,28 +68,16 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model.setParam("limits/time", time_limit)
     model.setParam("display/freq", 1)
 
-        # Desactivación temporal de presolve
-    model.setPresolve(SCIP_PARAMSETTING.OFF)
-
-    ####################################################
-    # Esto es la clave para que obj(dual) = obj(primal)
-    # según documentación de pyscipopt
-    #
-    model.setHeuristics(SCIP_PARAMSETTING.OFF)
-    model.disablePropagation()
-    #
-    ####################################################
-
     model.optimize()
 
     sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
     sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
 
     sol = model.getBestSol()
+    status = model.getStatus()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
-    ) == "feasible":
-        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
+    if sol is not None and status in ["optimal", "feasible"]:
+        sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
         return [F, model, y, x, S]
     else:
         return None
