@@ -14,8 +14,7 @@ def generar_configuracion(nombre_archivo):
     cant_archivos = random.randint(400, 550)
     archivos = generar_archivos(cant_archivos)
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
-                           nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), "IN", nombre_archivo)
     with open(ruta_in, "w") as f:
 
         f.write(f"# Capacidad de dicos en TB (= 1.000.000 MB)\n")
@@ -33,8 +32,7 @@ def leer_configuracion(nombre_archivo):
     nombres_archivos = []
     tamaños_archivos = []
 
-    ruta_in = os.path.join(os.path.dirname(__file__), ".", "IN",
-                           nombre_archivo)
+    ruta_in = os.path.join(os.path.dirname(__file__), "IN", nombre_archivo)
     with open(ruta_in, "r") as f:
         lineas = f.readlines()
         capacidad_disco = int(lineas[1].strip())

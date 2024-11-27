@@ -5,24 +5,20 @@ from pyscipopt import SCIP_PARAMSETTING
 
 # Model segunada parte
 # No usar esta función, es para la parte vieja
-def distribuir_archivos(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
-    # modelo = crear_modelo_2(d_t, F, s, I, time_limit)
-    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
-    # x, obj_x = obtener_solucion_primal_2(model)
-    # y, obj_y = obtener_solucion_dual_2(model)
-    try:
-        x, obj_x = obtener_solucion_primal_2(model)
-    except TypeError:
-        x, obj_x = None, None
+def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float]):
+    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, 10000)
+    # try:
+        # x, obj_x = obtener_solucion_primal_2(model)
+    # except TypeError:
+        # x, obj_x = None, None
 
-    sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
-    # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
+    # sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
 
     solution = model.getBestSol()
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debuggin] {model.getStatus()}: {model.getBestSol()}\n\n")
+        sys.stderr.write(f"[Debuggin] {status}: {solution}\n\n")
         return [F, model, fake_x, I, s]
     else:
         return None
@@ -52,8 +48,8 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] model_part_2 Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] model_part_2 Cantidad sols: {model.getNSols()}\n\n")
 
     return model, x
 
@@ -95,8 +91,8 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] model_part_2 Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] model_part_2 Cantidad sols: {model.getNSols()}\n\n")
 
     return model
 
@@ -105,7 +101,7 @@ def obtener_solucion_primal_2(model):
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
+        sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
 
         x = [v.getLPSol() for v in model.getVars(False)]
 

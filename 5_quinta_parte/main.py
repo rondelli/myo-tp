@@ -5,6 +5,7 @@ import sys
 from typing import Optional
 from configuracion_5 import *
 from generador_output_5 import * 
+from model_part_5 import *
 
 sys.path.insert(0, "../1_primera_parte")
 sys.path.insert(0, "../2_segunda_parte")
@@ -14,7 +15,7 @@ sys.path.insert(0, "../4_cuarta_parte")
 from model_part_1 import *
 from model_part_2 import *
 from model_part_3 import *
-from model_part_5 import *
+from model_part_4 import *
 
 import time
 
@@ -42,7 +43,7 @@ if sys.argv[1] == "-u":
 #     sys.exit(1)
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
-    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"./{archivo}")
+    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
 
     # PASO 1
     conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
@@ -64,7 +65,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
 
         # PASO 4
-        distribucion = distribuir_archivos(capacidad_disco, nombres_archivos, tamaños_archivos, y)
+        distribucion = distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y)
         solucion_modelo_2 = generar_output_modelo_2(distribucion)
 
         # PASO 5
