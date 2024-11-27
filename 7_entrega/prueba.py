@@ -17,7 +17,7 @@ import model_part_4
 import model_part_5
 from funciones import *
 
-import generador_output_1
+import output_1
 import generador_output_4
 import generador_output_5
 
@@ -26,12 +26,13 @@ configuraciones = leer_configuracion()
 sys.stderr.write(f"[Debugging] {configuraciones}\n")
 
 inPath = configuraciones.get('inPath')
-outPath = configuraciones.get('outPath')
+outPath = configuraciones.get('outPath')[:-1]
 threshold = int(configuraciones.get('threshold', 0))
 
 archivos = os.listdir(inPath)
 
 archivos = [f for f in archivos]
+
 
 sys.stderr.write(f"[Debugging] {archivos}\n")
 
@@ -43,7 +44,7 @@ for a in archivos:
     datos = model_part_1.distribuir_archivos_1(d_t, F, s, threshold*60)
     if datos is not None:
         cota_dual_1, mejor_1, var_1, tiempo_1 = datos_modelo(datos[1])
-        generador_output_1.generar_output(outPath, a + "_file.out", datos)
+        output_1.generar_output(outPath, a + "_file.out", datos)
     else:
         generador_output_1.generar_output_fallido(outPath, a + "_file.out")
 
