@@ -6,7 +6,6 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
-from configuracion_1 import leer_configuracion
 from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
 from model_part_2 import *
 from model_part_3 import *
@@ -42,7 +41,12 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
             conjuntos.append(set(solucion_modelo_2[0]))
         else:
             break
-    return modelo
+    conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+    return [conjuntos_seleccionados, modelo, conjuntos]
+
+def obtener_conjuntos_seleccionados(solucion):
+    conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
+    return conjuntos_seleccionados
 
 # Esta función supone que el model es `optimal`
 def es_optimo(model, solucion):

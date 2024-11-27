@@ -55,6 +55,6 @@ def datos_modelo(model):
         var = model.getNVars()
         tiempo = model.getSolvingTime()
         cota_dual = model.getDualbound()
-    except TypeError:
-        var, mejor, tiempo, cota_dual = None, None
+    except:
+        var, mejor, tiempo, cota_dual = None, None, None, None
     return cota_dual, mejor, var, tiempo
