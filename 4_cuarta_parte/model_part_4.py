@@ -16,12 +16,9 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
 
 # Para que no se rompa lo viejo
 # No usar esta función
-def distribuir_archivos(d_t, F, S, t, time_limit=420):
+def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model = Model("model_part_4")
     d = d_t * 10**6
-
-    if d < 0 or any(s_i < 0 for s_i in S):
-        return
 
     n = len(F)
     m = n  # no se puede tener más discos que archivos
@@ -33,7 +30,7 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
 
     # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
     x = {}
-    for i in range(m):
+    for i in range(n):
         for j in range(m):
             x[i, j] = model.addVar(f"x_{i}_{j}", vtype="BINARY")
 
