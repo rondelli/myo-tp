@@ -42,5 +42,5 @@ def generar_output_fallido(outPath, output_file_name):
     path_out = os.path.join(
         os.path.dirname(__file__), ".", outPath, "OUT1", output_file_name
     )
-    with open(outPath, "w") as f_out:
+    with open(path_out, "w") as f_out:
         f_out.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
