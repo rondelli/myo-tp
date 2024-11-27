@@ -7,11 +7,6 @@ from configuracion_5 import *
 from generador_output_5 import * 
 from model_part_5 import *
 
-from model_part_2 import *
-from model_part_3 import *
-
-import time
-
 #if len(sys.argv) != 4:
 if len(sys.argv) != 3:
     print(f"Uso: {sys.argv[0]} OPTION nombre_archivo minutos\n")

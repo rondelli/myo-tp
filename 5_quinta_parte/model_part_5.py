@@ -6,7 +6,6 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
-from configuracion_1 import leer_configuracion
 from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
 from model_part_2 import *
 from model_part_3 import *

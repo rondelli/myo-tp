@@ -1,8 +1,0 @@
-{
-    "python.analysis.extraPaths": [
-        "./1_primera_parte",
-        "./2_segunda_parte",
-        "./4_cuarta_parte",
-        "./3_tercera_parte"
-    ]
-}
