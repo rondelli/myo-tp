@@ -7,12 +7,12 @@ from itertools import product
 from math import floor, ceil
 
 from configuracion_1 import leer_configuracion
-from configuracion_5 import generar_conjuntos, generar_output_modelo_2
+from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
 from model_part_2 import *
 from model_part_3 import *
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
-    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
+    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
 
     # PASO 1
     conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
