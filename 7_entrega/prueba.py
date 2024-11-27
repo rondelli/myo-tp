@@ -3,12 +3,14 @@
 import sys
 import os
 
-sys.path.insert(0, "./1_primera_parte")
-sys.path.insert(0, "./4_cuarta_parte")
-sys.path.insert(0, "./5_quinta_parte")
-sys.path.insert(0, "./6_sexta_parte")
+sys.path.insert(0, "../1_primera_parte")
+sys.path.insert(0, "../3_tercera_parte")
+sys.path.insert(0, "../4_cuarta_parte")
+sys.path.insert(0, "../5_quinta_parte")
+# sys.path.insert(0, "../6_sexta_parte")
 
 import model_part_1
+import model_part_3
 import model_part_4
 import model_part_5
 #import model_part_6
