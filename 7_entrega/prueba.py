@@ -16,6 +16,8 @@ import model_part_3
 import model_part_4
 import model_part_5
 from funciones import *
+import generador_output_1
+import generador_output_4
 
 configuraciones = leer_configuracion()
 
@@ -35,8 +37,13 @@ sys.stderr.write(f"[Debugging] {archivos}\n")
 for a in archivos:
     sys.stderr.write(f"[Debugging] {a}\n")
     d_t, F, s = leer_archivo(a)
+
     datos = model_part_1.distribuir_archivos_1(d_t, F, s, threshold*60)
+    generador_output_1.generate_file_output(outPath, "file.out", datos)
+
     modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold*60)
+    generador_output_4.generate_file_output(outPath, "file.out", modelo_4)
+
     modelo_5  = model_part_5.obtener_conjuntos(a, threshold*60)
         
     caso = a
