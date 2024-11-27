@@ -24,4 +24,3 @@ if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
 datos = model_part_5.obtener_conjuntos(archivo, 7)
-print(datos[3])
