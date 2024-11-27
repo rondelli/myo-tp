@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "./2_segunda_parte",
+        "./3_tercera_parte",
+        "./1_primera_parte",
+        "./4_cuarta_parte",
+        "./5_quinta_parte"
+    ]
+}

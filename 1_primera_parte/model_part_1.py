@@ -59,13 +59,13 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    model.setParam("display/freq", 1)
+    #model.setParam("display/freq", 1)
 
-    # model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
-    model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
+    #model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
+    #model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
 
-    model.setEmphasis(SCIP_PARAMEMPHASIS.EASYCIP)
-    model.setParam("parallel/maxnthreads", 16)
+    #model.setEmphasis(SCIP_PARAMEMPHASIS.EASYCIP)
+    #model.setParam("parallel/maxnthreads", 16)
 
     # Parece no afectar
     # model.setParam("parallel/mode", 0) # 0: opportunistic or 1: deterministic. [1]

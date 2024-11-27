@@ -78,11 +78,11 @@ def crear_modelo_3(F: list, H: list):
     #
     ####################################################
 
-    # model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
-    # model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
+    #model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
+    #model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
 
-    model.setEmphasis(pyscipopt.SCIP_PARAMEMPHASIS.EASYCIP)
-    model.setParam("parallel/maxnthreads", 16)
+    #model.setEmphasis(pyscipopt.SCIP_PARAMEMPHASIS.EASYCIP)
+    #model.setParam("parallel/maxnthreads", 16)
 
     model.optimize()
     return model

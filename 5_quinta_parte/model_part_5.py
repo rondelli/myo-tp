@@ -6,9 +6,12 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
+sys.path.insert(0, "../2_segunda_parte")
+sys.path.insert(0, "../3_tercera_parte")
+
 from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
-from model_part_2 import *
-from model_part_3 import *
+import model_part_2
+import model_part_3
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
@@ -18,12 +21,13 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
 
     duracion = threshold * 60
     tiempo_inicio = time.time()
+    encontro = True
 
     while True:
-        modelo = crear_modelo_3(nombres_archivos, conjuntos)
+        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos)
         
-        x, obj_x = obtener_solucion_primal_3(modelo)
-        y, obj_y = obtener_solucion_dual_3(modelo)
+        x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
+        y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
 
         sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
         sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
@@ -32,16 +36,27 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
 
         # PASO 4
-        distribucion = distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y)
+        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y)
         solucion_modelo_2 = generar_output_modelo_2(distribucion)
 
         # PASO 5
         # copy_of_model = Model(sourceModel=modelo_3)
-        if sum(solucion_modelo_2[1]) > 1 and time.time() - tiempo_inicio <= duracion:
+        if time.time() - tiempo_inicio > duracion:
+            encontro = False
+            break
+        elif sum(solucion_modelo_2[1]) > 1:
             conjuntos.append(set(solucion_modelo_2[0]))
         else:
+            encontro = True
             break
-    conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+    
+    conjuntos_seleccionados = []
+    if encontro:
+        print(f"solucion optima encontrada en {time.time() - tiempo_inicio}")
+        conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+    else:
+        print("no se encontraron soluciones optimas")
+        
     return [conjuntos_seleccionados, modelo, conjuntos]
 
 def obtener_conjuntos_seleccionados(solucion):
