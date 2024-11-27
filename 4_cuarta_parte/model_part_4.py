@@ -124,9 +124,14 @@ def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
      # z{s, j} = 1 si ese tamaño está en el disco
      # aca decimos que si no esta el tamaño en el disco, la variable vale 0
      # pero creo que no dice que si el tamaño *si* está en el disco la variable *tiene* que ser 1
+    #for s in set(S):
+    #    for j in range(m):
+    #        model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+
+       # z{s, j} = 0 si ese tamaño no está en el disco, y 1 si si está en el disco
     for s in set(S):
         for j in range(m):
-            model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+            model.addCons(z[s, j] == min(1, quicksum(x[i, j] for i in range(n) if S[i] == s)))
 
     # Limitamos los tamaños únicos por disco
     for j in range(m):
