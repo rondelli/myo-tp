@@ -25,7 +25,7 @@ inPath = configuraciones.get('inPath')
 outPath = configuraciones.get('outPath')
 threshold = int(configuraciones.get('threshold', 0))
 
-archivos = os.listdir("../" + inPath)
+archivos = os.listdir(inPath)
 
 archivos = [f for f in archivos]
 
