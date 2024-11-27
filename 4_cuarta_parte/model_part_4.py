@@ -14,8 +14,6 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
     sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 """
 
-# Para que no se rompa lo viejo
-# No usar esta función
 def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model = Model("model_part_4")
     d = d_t * 10**6
