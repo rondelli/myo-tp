@@ -73,6 +73,7 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
 # Crea el modelo y lo devuelve optimizado
 def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
+    sys.stderr.write(f"[Debugging] [MODELO 1] Inicio\n\n")
     model = Model("model_part_1")
 
     d = d_t * 10**6
@@ -116,8 +117,8 @@ def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     # Esto es la clave para que obj(dual) = obj(primal)
     # según documentación de pyscipopt
     #
-    model.disablePropagation()
     model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()
     #
     ####################################################
 

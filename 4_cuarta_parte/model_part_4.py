@@ -15,6 +15,7 @@ def distribuir_archivos(d_t, F, S, t, time_limit=420):
 """
 
 def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
+    sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
     model = Model("model_part_4")
     d = d_t * 10**6
 
@@ -54,7 +55,10 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     # z{s, j} = 0 si ese tamaño no está en el disco, y 1 si si está en el disco
     for s in set(S):
         for j in range(m):
-            model.addCons(z[s, j] == min(1, quicksum(x[i, j] for i in range(n) if S[i] == s)))
+            model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+
+            #esto no me está andando :(
+            #model.addCons(z[s, j] == min(1, quicksum(x[i, j] for i in range(n) if S[i] == s)))
 
     # Limitamos los tamaños únicos por disco
     for j in range(m):
@@ -64,10 +68,22 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model.setParam("limits/time", time_limit)
     model.setParam("display/freq", 1)
 
+        # Desactivación temporal de presolve
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
+
+    ####################################################
+    # Esto es la clave para que obj(dual) = obj(primal)
+    # según documentación de pyscipopt
+    #
+    model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()
+    #
+    ####################################################
+
     model.optimize()
 
-    sys.stderr.write(f"[Debuggin] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debuggin] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
 
     sol = model.getBestSol()
 
@@ -78,7 +94,10 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     else:
         return None
 
+# NO SE USA
 def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
+    sys.stderr.write(f"[Debugging] [MODELO 4 RELAJADO] Inicio\n\n")
+
     model = Model("model_part_4")
     d = d_t * 10**6
 
@@ -117,9 +136,14 @@ def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
      # z{s, j} = 1 si ese tamaño está en el disco
      # aca decimos que si no esta el tamaño en el disco, la variable vale 0
      # pero creo que no dice que si el tamaño *si* está en el disco la variable *tiene* que ser 1
+    #for s in set(S):
+    #    for j in range(m):
+    #        model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+
+       # z{s, j} = 0 si ese tamaño no está en el disco, y 1 si si está en el disco
     for s in set(S):
         for j in range(m):
-            model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+            model.addCons(z[s, j] == min(1, quicksum(x[i, j] for i in range(n) if S[i] == s)))
 
     # Limitamos los tamaños únicos por disco
     for j in range(m):
@@ -136,15 +160,15 @@ def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
     # Esto es la clave para que obj(dual) = obj(primal)
     # según documentación de pyscipopt
     #
-    model.disablePropagation()
     model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    model.disablePropagation()
     #
     ####################################################
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4 RELAJADO] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(f"[Debugging] [MODELO 4 RELAJADO] Cantidad sols: {model.getNSols()}\n\n")
 
     return model
 
