@@ -505,6 +505,8 @@ tamaños de archivos.
 
 \noindent $z_{sj}$: binaria, toma el valor $1$ si el tamaño $s$ está en el disco $j$ al menos una vez, y $0$ en caso contrario, para $\forall s$ y $\forall j \in \{1, \ldots, m\}$, donde $z_{sj} \in \{0, 1\}$.
 
+\noindent $M_{si}$: constante, toma la cantidad de archivos de tamaño $s_{i}$ que entran en un disco de tamaño $d$. Nótese que esto es equivalente a $int(toMB(d) / s)$.
+
 \subsubsection{Modelo}
 
 \begin{alignat*}{2}
@@ -514,7 +516,7 @@ tamaños de archivos.
 	& \sum_{j = 1}^{m} x_{ij} = 1 \quad \forall i \in \{1, \ldots, n\},\ \text{(el archivo $i$ debe estar en un solo disco)}\\
 	& \sum_{i = 1}^{n} s_{i} x_{ij} \le d\cdot y_{j} \quad \forall j \in \{1, \ldots, m\} \text{(los archivos que entran en el disco $j$)}\\
     % esta restricción esta medio rara, creo que el "si S_i=s" sobra:
-        & z_{sj} \leq \sum_{i=1}^{n} x_{ij} \quad \text{si } S_i = s, \quad \forall s \in S, \, \forall j \in \{1, \ldots, m\} \text{(marcamos los tamaños que están en cada disco)} \\
+	& z_{sj} \cdot M_{si} \leq \sum_{i=1}^{n} x_{ij} \quad \text{si } S_i = s, \quad \forall s \in S, \, \forall j \in \{1, \ldots, m\}, \forall i \in \{1, \ldots, n\} \text{(marcamos los tamaños que están en cada disco)} \\
         & \sum_{s \in S} z_{sj} \leq t, \quad \forall j \in \{1, \ldots, m\} \text{(en cada disco no entran mas de t tamaños)} \\
 	& x_{ij} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \ \forall j \in \{1, \ldots, m\}\\
 	& y_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
@@ -595,13 +597,15 @@ FIN
 En esta sección, se explican mejoras al algoritmo de la Sección~\ref{quinta:parte}.
 
 \section{Resultados de script}
-
 \newpage
+
 \begin{turn}{90}
 \begin{minipage}{\textheight}
 \begin{verbatim}
-caso | cant | cota dual | mejor1 | var1 | tiempo1 | mejor4 | var4 | tiempo4 | mejor5 | var5 | tiempo5 | mejor6 | var6 | tiempo6
-  3  |  666 | 230       |  323   | 3    |  33     |  332   |  323 |  233    |  233   |  323 |  2323   |  23    | 23   |  233 
+caso     | cant | cota dual | mejor1 | var1 | tiempo1 | mejor4           | var4 | tiempo4 | mejor5            | var5 | tiempo5 | mejor6 | var6 | tiempo6
+f0015.in | 15   | 8.0       | 8.0    | 240  | 0.0     | 8.0              | 240  | 0.0     | 7.666666666666667 | 43   | 0.0     | 0      |0     | 0
+f0018.in | 18   | 10.0      | 8.0    | 240  | 0.0     | 9.999999544151857| 342  | 98.0    | 9.166666666666666 | 69   | 0.0     | 0      | 0    | 0
+f0032.in | 32   | 16.5      |8.0     |240   |0.0      | 9.999999544151857| 342  |98.0     | 16.5              | 285  | 0.0     | 0      | 0    | 0
 \end{verbatim}
 \end{minipage}
 \end{turn}

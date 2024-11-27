@@ -11,7 +11,7 @@ def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     try:
         x, obj_x = obtener_solucion_primal_1(model)
     except TypeError:
-        x, obj_x = None, None
+        x, obj_x =  None, None
 
     sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
 
