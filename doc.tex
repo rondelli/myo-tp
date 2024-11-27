@@ -540,13 +540,49 @@ importancia, se selecciona un subconjunto de archivos. Si la solución es
 mejorable, se actualiza $H$ y se repite el proceso, ajustando finalmente la
 solución para que sea entera.
 
-\subsection{Modelo Lineal}
+% \subsection{Modelo Lineal}
 
-\subsubsection{Definición de variables}
+% \subsubsection{Definición de variables}
 
-\subsubsection{Modelo}
+% \subsubsection{Modelo}
 
 \subsubsection{Pseudocódigo de alto nivel}
+\begin{lstlisting}[language=]
+INICIO obtener_conjuntos(archivo, threshold = infinito)
+    capacidad_disco, nombres_archivos, tamanos_archivos <- leer_configuracion(archivo)
+
+    // PASO 1: Generar los conjuntos iniciales
+    conjuntos <- generar_conjuntos(capacidad_disco * 10^6, nombres_archivos, tamanos_archivos)
+
+    duracion <- threshold * 60
+    tiempo_inicio <- tiempo_actual()
+
+    MIENTRAS VERDADERO
+        // PASO 2 y 3: Resolver el modelo y obtener soluciones primal y dual
+        modelo <- crear_modelo_3(nombres_archivos, conjuntos)
+
+        x, obj_x <- obtener_solucion_primal_3(modelo)
+        y, obj_y <- obtener_solucion_dual_3(modelo)
+
+        optimo <- es_optimo(modelo, x)
+
+        // PASO 4: Distribuir archivos y generar solucion
+        distribucion <- distribuir_archivos_2(capacidad_disco, nombres_archivos, tamanos_archivos, y)
+        solucion_modelo_2 <- generar_output_modelo_2(distribucion)
+
+        // PASO 5: Verificar y actualizar conjuntos
+        SI suma(solucion_modelo_2[1]) > 1 Y tiempo_actual() - tiempo_inicio <= duracion ENTONCES
+            AGREGAR conjunto(solucion_modelo_2[0]) a conjuntos
+        SINO
+            IMPRIMIR suma(solucion_modelo_2[1])
+            SALIR DEL BUCLE
+        FIN SI
+    FIN MIENTRAS
+
+    x_estrella_int <- obtener_solucion_entera(modelo, x)
+    RETORNAR modelo
+FIN
+\end{lstlisting}
 
 \newpage
 \section{Parte 6}
@@ -555,13 +591,7 @@ solución para que sea entera.
 
 En esta sección, se explican mejoras al algoritmo de la sección 5.
 
-\subsection{Modelo Lineal}
 
-\subsubsection{Definición de variables}
-
-\subsubsection{Modelo}
-
-\subsubsection{Pseudocódigo de alto nivel}
 
 \section{Resultados de script}
 
