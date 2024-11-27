@@ -7,8 +7,6 @@ from configuracion_5 import *
 from generador_output_5 import * 
 from model_part_5_2 import *
 
-sys.path.insert(0, "../2_segunda_parte")
-
 from model_part_2 import *
 from model_part_3 import *
 
