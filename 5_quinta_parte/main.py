@@ -77,6 +77,6 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
             print(sum(solucion_modelo_2[1]))
             break
     x_estrella_int = obtener_solucion_entera(modelo, x) 
-    return x_estrella_int
+    return modelo
 
 obtener_conjuntos(archivo, 7)

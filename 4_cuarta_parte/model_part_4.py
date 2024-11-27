@@ -4,7 +4,7 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 
 """
-def distribuir_archivos(d_t, F, S, t, time_limit=420):
+def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     model = crear_modelo_4(d_t, F, S, t, time_limit)
 
     x, obj_x = obtener_solucion_primal_4(model)
@@ -58,6 +58,7 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     for s in set(S):
         for j in range(m):
             model.addCons(z[s, j] <= quicksum(x[i, j] for i in range(n) if S[i] == s))
+            model.addCons(z[s, j] >= quicksum(x[i, j] for i in range(n) if S[i] == s))
 
             #esto no me está andando :(
             #model.addCons(z[s, j] == min(1, quicksum(x[i, j] for i in range(n) if S[i] == s)))
@@ -69,24 +70,19 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     # Configurar el límite de tiempo en el solver
     #model.setParam("display/freq", 1)
 
-        # Desactivación temporal de presolve
-    #model.setPresolve(SCIP_PARAMSETTING.OFF)
-
-    ####################################################
-    # Esto es la clave para que obj(dual) = obj(primal)
-    # según documentación de pyscipopt
-    #
-    #model.setHeuristics(SCIP_PARAMSETTING.OFF)
-    #model.disablePropagation()
-    #
-    ####################################################
-
     model.optimize()
 
     sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
     sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
 
-    return model
+    sol = model.getBestSol()
+    status = model.getStatus()
+
+    if sol is not None and status in ["optimal", "feasible"]:
+        #sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
+        return [F, model, y, x, S]
+    else:
+        return None
 
 # NO SE USA
 def crear_modelo_4(d_t: int, F: list[str], S: list[int], t, time_limit=420):
@@ -171,7 +167,7 @@ def obtener_solucion_primal_4(model):
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
+        #sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
 
         # El nombre de variable x, acá es missleading, es x porque es el primal.
         # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo seleccionado y las $y$: disco seleccionado
