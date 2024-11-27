@@ -18,8 +18,8 @@ import model_part_5
 from funciones import *
 
 import output_1
-import generador_output_4
-import generador_output_5
+import output_4
+import output_5
 
 configuraciones = leer_configuracion()
 
@@ -46,23 +46,23 @@ for a in archivos:
         cota_dual_1, mejor_1, var_1, tiempo_1 = datos_modelo(datos[1])
         output_1.generar_output(outPath, a + "_file.out", datos)
     else:
-        generador_output_1.generar_output_fallido(outPath, a + "_file.out")
+        output_1.generar_output_fallido(outPath, a + "_file.out")
 
     modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold*60)
     if modelo_4 is not None:
         cota_dual_4, mejor_4, var_4, tiempo_4 = datos_modelo(modelo_4[1])
-        generador_output_4.generar_output(outPath, a + "_file.out", modelo_4)
+        output_4.generar_output(outPath, a + "_file.out", modelo_4)
     else:
-        generador_output_4.generar_output_fallido(outPath, a + "_file.out")
+        output_4.generar_output_fallido(outPath, a + "_file.out")
 
-    data_5  = model_part_5.obtener_conjuntos(a, threshold*60)
+    data_5  = model_part_5.obtener_conjuntos(a, threshold)
     if data_5 is not None:
         conjuntos_seleccionados_5 = data_5[0]
         modelo_5 = data_5[1]
         conjuntos_5 = data_5[2]
-        generador_output_5.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_5, conjuntos_5)
+        output_5.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_5, conjuntos_5)
     else:
-        generador_output_5.generar_output_fallido(outPath, a + "_file.out")
+        output_5.generar_output_fallido(outPath, a + "_file.out")
 
     caso = a
     cant = len(F)
