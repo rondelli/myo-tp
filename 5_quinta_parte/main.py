@@ -5,7 +5,7 @@ import sys
 from typing import Optional
 from configuracion_5 import *
 from generador_output_5 import * 
-from model_part_5_2 import *
+from model_part_5 import *
 
 from model_part_2 import *
 from model_part_3 import *
