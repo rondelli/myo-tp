@@ -3,7 +3,7 @@ import os
 
 def generar_output(outPath, nombre_archivo, solucion, conjuntos):
     path_out = os.path.join(
-        os.path.dirname(__file__), "..", outPath, "OUT5", nombre_archivo
+        os.path.dirname(__file__), ".", outPath, "OUT5", nombre_archivo
     )
     with open(path_out, "w") as f:
         f.write(
@@ -15,7 +15,7 @@ def generar_output(outPath, nombre_archivo, solucion, conjuntos):
 
 def generar_output_fallido(outPath, nombre_archivo):
     path_out = os.path.join(
-        os.path.dirname(__file__), "..", outPath, "OUT5", nombre_archivo
+        os.path.dirname(__file__), ".", outPath, "OUT5", nombre_archivo
     )
     with open(path_out, "w") as f:
         f.write(

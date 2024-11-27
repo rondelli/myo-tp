@@ -1,0 +1,34 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {section}{\numberline {1}Introducción}{2}{section.1}%
+\contentsline {section}{\numberline {2}Parte 1}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Descripción}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Modelo Lineal}{2}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Definición de variables}{3}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Modelo}{3}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Restricción: que no se elijan discos vacíos}{3}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Modelo Zimpl}{5}{subsubsection.2.2.4}%
+\contentsline {subsubsection}{\numberline {2.2.5}Modelo PySCIPOpt}{6}{subsubsection.2.2.5}%
+\contentsline {section}{\numberline {3}Parte 2}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Descripción}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Modelo Lineal}{13}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Definición de variables}{13}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Modelo}{14}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Modelo Zimpl}{15}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}Modelo PySCIPOpt}{16}{subsubsection.3.2.4}%
+\contentsline {section}{\numberline {4}Parte 3}{23}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Descripción}{23}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Modelo Lineal}{23}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Definición de variables}{23}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Modelo}{23}{subsubsection.4.2.2}%
+\contentsline {section}{\numberline {5}Parte 4}{24}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Descripción}{24}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Modelo Lineal}{24}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Definición de variables}{24}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Modelo}{25}{subsubsection.5.2.2}%
+\contentsline {section}{\numberline {6}Parte 5}{25}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Descripción}{25}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Pseudocódigo de alto nivel}{26}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Parte 6}{27}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Descripción}{27}{subsection.7.1}%
+\contentsline {section}{\numberline {8}Resultados de script}{27}{section.8}%
+\contentsline {section}{\numberline {9}Conclusiones}{29}{section.9}%

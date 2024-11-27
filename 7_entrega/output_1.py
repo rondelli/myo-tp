@@ -14,7 +14,7 @@ def generar_output(outPath, nombre_archivo, solucion): # solucion = [F, model, y
     number_of_disks = cant_archivos
 
     path_out = os.path.join(
-        os.path.dirname(__file__), "..", outPath, "OUT1", nombre_archivo
+        os.path.dirname(__file__), ".", outPath, "OUT1", nombre_archivo
     )
     with open(path_out, "w") as f:
         f.write(
@@ -41,7 +41,7 @@ def generar_output(outPath, nombre_archivo, solucion): # solucion = [F, model, y
 
 def generar_output_fallido(outPath, nombre_archivo):
     path_out = os.path.join(
-        os.path.dirname(__file__), "..", outPath, "OUT1", nombre_archivo
+        os.path.dirname(__file__), ".", outPath, "OUT1", nombre_archivo
     )
     with open(path_out, "w") as f:
         f.write(
