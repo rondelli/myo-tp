@@ -1,6 +1,5 @@
 import os
 
-
 # solucion = F, model, x, I, s
 def generar_output(nombre_archivo, solucion):
     F = solucion[0]
@@ -18,7 +17,6 @@ def generar_output(nombre_archivo, solucion):
     ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
                             nombre_archivo)
     with open(ruta_out, "w") as f:
-
         f.write(
             f"Para la configuracion del archivo, se han elegido {cant_archivos_elegidos} archivos.\n"
         )
@@ -34,7 +32,6 @@ def generar_output(nombre_archivo, solucion):
         f.write(
             f"\nLa suma de sus indicadores de importancia da {importancia_total}."
         )
-
 
 def generar_output_fallido(nombre_archivo):
     with open(nombre_archivo, "w") as f:

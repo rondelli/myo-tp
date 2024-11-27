@@ -162,7 +162,7 @@
 
 \tableofcontents
 
-\newpage
+% \newpage
 \section{Introducción}
 
 Este trabajo práctico tiene como objetivo aplicar conceptos de modelado
@@ -180,7 +180,7 @@ como la capacidad limitada de los discos, la importancia de los archivos,
 y la estructura de conjuntos para maximizar la eficiencia del
 almacenamiento y la relevancia de los datos seleccionados.
 
-\newpage
+% \newpage
 \section{Parte 1}\label{primera:parte}
 
 \subsection{Descripción}
@@ -203,6 +203,7 @@ tamaños de los archivos de cada disco no superen la capacidad del disco.
 %y la tercera define que no se usen discos vacíos---sería equivalente a
 %la implicación $x_{ij} \Rightarrow y_i$.
 
+\newpage
 \subsubsection{Definición de variables}
 
 \noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
@@ -344,7 +345,7 @@ Utilizamos las siguientes funciones para generar el output.
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/generador_output_1.py}
 
-\newpage
+%\newpage
 \section{Parte 2}
 
 \subsection{Descripción}
@@ -525,8 +526,8 @@ tamaños de archivos.
         & t \geq  0, t \in \mathbb{Z}
 \end{alignat*}
 
-\newpage
-\section{Parte 5}
+% \newpage
+\section{Parte 5}\label{quinta:parte}
 
 \subsection{Descripción}
 
@@ -546,8 +547,10 @@ solución para que sea entera.
 
 % \subsubsection{Modelo}
 
-\subsubsection{Pseudocódigo de alto nivel}
-\begin{lstlisting}[language=]
+\newpage
+\subsection{Pseudocódigo de alto nivel}
+
+\begin{lstlisting}
 INICIO obtener_conjuntos(archivo, threshold = infinito)
     capacidad_disco, nombres_archivos, tamanos_archivos <- leer_configuracion(archivo)
 
@@ -589,9 +592,7 @@ FIN
 
 \subsection{Descripción}
 
-En esta sección, se explican mejoras al algoritmo de la sección 5.
-
-
+En esta sección, se explican mejoras al algoritmo de la Sección~\ref{quinta:parte}.
 
 \section{Resultados de script}
 
