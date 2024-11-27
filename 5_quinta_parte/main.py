@@ -78,4 +78,4 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     x_estrella_int = obtener_solucion_entera(modelo, x) 
     return x_estrella_int
 
-obtener_conjuntos(archivo, 420)
+obtener_conjuntos(archivo, 7)
