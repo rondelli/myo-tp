@@ -2,6 +2,7 @@ import sys
 from pyscipopt import Model
 from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
+from pyscipopt import *
 
 def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
@@ -48,6 +49,15 @@ def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
 
     # Configurar el límite de tiempo en el solver
     #model.setParam("display/freq", 1)
+
+    # model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
+    model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
+
+    model.setEmphasis(SCIP_PARAMEMPHASIS.EASYCIP)
+    model.setParam("parallel/maxnthreads", 16)
+
+    # Parece no afectar
+    # model.setParam("parallel/mode", 0) # 0: opportunistic or 1: deterministic. [1]
 
     model.optimize()
 
