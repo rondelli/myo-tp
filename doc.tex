@@ -594,19 +594,49 @@ FIN
 
 \subsection{Descripción}
 
-En esta sección, se explican mejoras al algoritmo de la Sección~\ref{quinta:parte}. \\
-Para agilizar el algoritmo, investigamos en la documentación de PySCIPOpt con el objetivo de identificar parámetros y configuraciones que permitan optimizar el tiempo de ejecución del código. PySCIPOpt, al estar basado en el solucionador SCIP, brinda muchas opciones para personalizar su comportamiento, como ajustes en las estrategias de búsqueda, límites en la exploración del árbol y técnicas específicas para encontrar soluciones factibles de manera más eficiente. Estas configuraciones permiten adaptar el rendimiento del solucionador a las características particulares del problema, maximizando su eficacia y reduciendo el tiempo computacional necesario. En nuestro caso, realizamos las siguientes mejoras al modelo:
+En esta sección, se explican mejoras al algoritmo de la
+Sección~\ref{quinta:parte}. Para agilizar el algoritmo, investigamos en la
+documentación de PySCIPOpt con el objetivo de identificar los parámetros y
+configuraciones que nos permitan optimizar el tiempo de ejecución del
+código.
+
+PySCIPOpt, al estar basado en SCIP, brinda muchas opciones para
+personalizar su comportamiento, como ajustes en las estrategias de
+búsqueda, límites en la exploración del árbol y técnicas específicas
+para encontrar soluciones factibles de manera más eficiente. Estas
+configuraciones permiten adaptar el rendimiento del solver a las
+características particulares del problema, maximizando su eficacia y
+reduciendo el tiempo computacional necesario. En nuestro caso,
+realizamos las siguientes mejoras al modelo:
+
+\begin{verbatim}
+# Reduce el tiempo empleado en la heurística
+model.setHeuristics(SCIP_PARAMSETTING.FAST)
+
+# Para resolver los problemas fáciles más rápidamente
+model.setEmphasis(SCIP_PARAMEMPHASIS.EASYCIP)
+
+# Máximo número de procesadores
+model.setParam("parallel/maxnthreads", 16)
+\end{verbatim}
+
+También, analizamos el setting \verb|model.setParam("parallel/mode", 0)|,
+con $0$ para \emph{opportunistic} ó $1$ para \emph{deterministic}.
+Pero no apreciamos cambios significativos en la performance.
 
 \section{Resultados de script}
+
+En esta sección, listamos los resultados obtenidos.
+
 \newpage
 
 \begin{turn}{90}
 \begin{minipage}{\textheight}
 \begin{verbatim}
-caso     | cant | cota dual | mejor1 | var1 | tiempo1 | mejor4           | var4 | tiempo4 | mejor5            | var5 | tiempo5 | mejor6 | var6 | tiempo6
-f0015.in | 15   | 8.0       | 8.0    | 240  | 0.0     | 8.0              | 240  | 0.0     | 7.666666666666667 | 43   | 0.0     | 0      |0     | 0
-f0018.in | 18   | 10.0      | 8.0    | 240  | 0.0     | 9.999999544151857| 342  | 98.0    | 9.166666666666666 | 69   | 0.0     | 0      | 0    | 0
-f0032.in | 32   | 16.5      |8.0     |240   |0.0      | 9.999999544151857| 342  |98.0     | 16.5              | 285  | 0.0     | 0      | 0    | 0
+Caso     | Cant | CotaDual | mejor1 | var1 | t1  | mejor4           | var4 | t4   | mejor5            | var5 | t5  | mejor6 | var6 | t6
+f0015.in |  15  |    8.0   |  8.0   | 240  | 0.0 | 8.0              | 240  |  0.0 | 7.666666666666667 | 43   | 0.0 | 0      | 0    | 0
+f0018.in |  18  |   10.0   |  8.0   | 240  | 0.0 | 9.999999544151857| 342  | 98.0 | 9.166666666666666 | 69   | 0.0 | 0      | 0    | 0
+f0032.in |  32  |   16.5   |  8.0   | 240  | 0.0 | 9.999999544151857| 342  | 98.0 | 16.5              | 285  | 0.0 | 0      | 0    | 0
 \end{verbatim}
 \end{minipage}
 \end{turn}
