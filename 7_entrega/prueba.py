@@ -4,12 +4,14 @@ import sys
 import os
 
 sys.path.insert(0, "../1_primera_parte")
+sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../3_tercera_parte")
 sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../4_cuarta_parte")
 sys.path.insert(0, "../5_quinta_parte")
 
 import model_part_1
+import model_part_2
 import model_part_3
 import model_part_4
 import model_part_5
@@ -23,7 +25,8 @@ inPath = configuraciones.get('inPath')
 outPath = configuraciones.get('outPath')
 threshold = int(configuraciones.get('threshold', 0))
 
-archivos = os.listdir(inPath)
+archivos = os.listdir("../" + inPath)
+
 archivos = [f for f in archivos]
 
 sys.stderr.write(f"[Debugging] {archivos}\n")
