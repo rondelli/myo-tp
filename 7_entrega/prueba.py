@@ -9,10 +9,10 @@ sys.path.insert(0, "./5_quinta_parte")
 sys.path.insert(0, "./6_sexta_parte")
 
 import model_part_1
+import model_part_2
+import model_part_3
 import model_part_4
 import model_part_5
-#import model_part_6
-
 from funciones import *
 
 # 1 - leer config
@@ -33,7 +33,7 @@ sys.stderr.write(f"[Debugging] {archivos}\n")
 for a in archivos:
     sys.stderr.write(f"[Debugging] {a}\n")
     d_t, F, s = leer_archivo(a)
-    modelo_1 = model_part_1.crear_modelo_1(d_t, F, s, threshold*60)
+    modelo_1 = model_part_1.distribuir_archivos_1(d_t, F, s, threshold*60)
     modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold*60)
     _, modelo_5, _, _, _  = model_part_5.obtener_conjuntos(a, threshold*60)
     #modelo_6 = model_part_4.crear_modelo_6(d_t, F, s, threshold*60)
