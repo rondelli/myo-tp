@@ -46,6 +46,12 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
     model.setParam("limits/time", time_limit)
     #model.setParam("display/freq", 1)
 
+    
+    model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
+
+    model.setEmphasis(SCIP_PARAMEMPHASIS.EASYCIP)
+    model.setParam("parallel/maxnthreads", 16)
+
     model.optimize()
 
     sys.stderr.write(f"[Debugging] model_part_2 Time: {model.getSolvingTime()}\n\n")
@@ -76,6 +82,18 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
     model.setParam("display/freq", 1)
+
+    # Desactivación temporal de presolve
+    model.setPresolve(SCIP_PARAMSETTING.OFF)
+
+    ####################################################
+    # Esto es la clave para que obj(dual) = obj(primal)
+    # según documentación de pyscipopt
+    #
+    model.disablePropagation()
+    model.setHeuristics(SCIP_PARAMSETTING.OFF)
+    #
+    ####################################################
 
     model.optimize()
 
