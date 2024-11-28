@@ -2,9 +2,9 @@
 
 import sys
 
-from configuracion_5 import *
-from generador_output_5 import * 
-import model_part_5
+from configuracion_6 import *
+from generador_output_6 import * 
+import model_part_6
 
 #if len(sys.argv) != 4:
 if len(sys.argv) != 3:
@@ -23,4 +23,4 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
-datos = model_part_5.obtener_conjuntos(archivo, 7)
+datos = model_part_6.obtener_conjuntos(archivo, 7)

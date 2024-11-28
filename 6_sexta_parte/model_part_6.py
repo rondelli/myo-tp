@@ -6,18 +6,15 @@ from pyscipopt import SCIP_PARAMSETTING
 from itertools import product
 from math import floor, ceil
 
-sys.path.insert(0, "../2_segunda_parte")
-sys.path.insert(0, "../3_tercera_parte")
-
-from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
+import configuracion_6
 import model_part_2
 import model_part_3
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
-    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
+    capacidad_disco, nombres_archivos, tamaños_archivos = configuracion_6.leer_configuracion(f"{archivo}")
 
     # PASO 1
-    conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+    conjuntos = configuracion_6.generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
     duracion = threshold * 60
     tiempo_inicio = time.time()
@@ -37,7 +34,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
 
         # PASO 4
         distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y)
-        solucion_modelo_2 = generar_output_modelo_2(distribucion)
+        solucion_modelo_2 = configuracion_6.generar_output_modelo_2(distribucion)
 
         # PASO 5
         # copy_of_model = Model(sourceModel=modelo_3)
