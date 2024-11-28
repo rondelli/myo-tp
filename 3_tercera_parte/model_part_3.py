@@ -78,12 +78,6 @@ def crear_modelo_3(F: list, H: list):
     #
     ####################################################
 
-    #model.setHeuristics(SCIP_PARAMSETTING.AGGRESSIVE)
-    #model.setHeuristics(SCIP_PARAMSETTING.FAST) # Parece más rápido
-
-    #model.setEmphasis(pyscipopt.SCIP_PARAMEMPHASIS.EASYCIP)
-    #model.setParam("parallel/maxnthreads", 16)
-
     model.optimize()
     return model
 
@@ -92,7 +86,7 @@ def crear_modelo_3(F: list, H: list):
 # archivos del input.
 def obtener_solucion_primal_3(model):
     # Activación de presolve
-    # model.setPresolve(SCIP_PARAMSETTING.DEFAULT) # esta línea no tiene efecto porque el model ya está optimize()
+    model.setPresolve(SCIP_PARAMSETTING.DEFAULT) # esta línea no tiene efecto porque el model ya está optimize()
 
     sol = model.getBestSol()
     
