@@ -9,17 +9,21 @@ sys.path.insert(0, "../3_tercera_parte")
 sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../4_cuarta_parte")
 sys.path.insert(0, "../5_quinta_parte")
+sys.path.insert(0, "../6_sexta_parte")
 
 import model_part_1
-import model_part_2
-import model_part_3
+# import model_part_2
+# import model_part_3
 import model_part_4
 import model_part_5
+import model_part_6
+
 from funciones import *
 
 import output_1
 import output_4
 import output_5
+import output_6
 
 configuraciones = leer_configuracion()
 
@@ -42,6 +46,7 @@ for a in archivos:
     cota_dual_1 = 98237428978
     cota_dual_4 = 98237428978
     cota_dual_5 = 98237428978
+    cota_dual_6 = 98237428978
 
     mejor_1 = "inf"
     var_1 = "variable1"
@@ -75,21 +80,30 @@ for a in archivos:
         conjuntos_seleccionados_5 = data_5[0]
         modelo_5 = data_5[1]
         conjuntos_5 = data_5[2]
+        cota_dual_5, mejor_5, var_5, tiempo_5 = datos_modelo(modelo_5)
         output_5.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_5, conjuntos_5)
     else:
         output_5.generar_output_fallido(outPath, a + "_file.out")
 
+    data_6  = model_part_6.obtener_conjuntos(a, threshold)
+    if data_6 is not None:
+        conjuntos_seleccionados_6 = data_6[0]
+        modelo_6 = data_6[1]
+        conjuntos_6 = data_6[2]
+        cota_dual_6, mejor_6, var_6, tiempo_6 = datos_modelo(modelo_6)
+        output_6.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_6, conjuntos_6)
+    else:
+        output_6.generar_output_fallido(outPath, a + "_file.out")
+
     caso = a
     cant = len(F)
-
-    cota_dual_5, mejor_5, var_5, tiempo_5 = datos_modelo(modelo_5)
 
     cotas = [cota_dual_1, cota_dual_4, cota_dual_5]
     cotas_validas = [c for c in cotas if c is not None]
 
     if cotas_validas:
-        cota_dual = max(cotas_validas)
+        cota_dual = min(cotas_validas) # aca no sería min en lugar de max?
     else:
         cota_dual = "inf"
-    print(mejor_5, var_5, tiempo_5)
+    
     guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])
