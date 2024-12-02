@@ -2,14 +2,17 @@ import random
 import os
 
 def generar_archivos(cant_archivos: int):
-    # Tamaños: 10, 13, ..., hasta 70
-    tamaños = [t * 10**6 for t in range(1, 100, 3)]
+    # Tamaños: 10, 13, ..., hasta 99
+    #tamaños = [t * 10**6 for t in range(1, 100, 3)]
 
-    tamaños_seleccionados = random.sample(tamaños, random.randint(10, 20))
+    #tamaños_seleccionados = random.sample(tamaños, random.randint(10, 20))
+
+    # 5, 10, 15, ..., 100
+    tamaños = [t * 10**6 for t in range(5, 105, 5)]
 
     archivos = {}
     for k in range(1, cant_archivos + 1):
-        archivos[f"archivo{k}"] = random.choice(tamaños_seleccionados)
+        archivos[f"archivo{k}"] = random.choice(tamaños)
     return archivos
 
 
