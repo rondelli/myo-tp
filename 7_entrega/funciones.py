@@ -1,5 +1,6 @@
 import csv
 import os
+import math
 
 def guardar_prueba(datos):
     headers = ["caso", "cant", "cota dual", "mejor1", "var1", "tiempo1", "mejor4", "var4", "tiempo4", "mejor5", "var5", "tiempo5", "mejor6", "var6", "tiempo6"]
@@ -51,10 +52,10 @@ def leer_archivo(nombre_archivo):
 def datos_modelo(model):
     try:
         #_, mejor = model_part_1.obtener_solucion_primal_1(model)
-        mejor = model.getObjVal() # esto es lo mimso que lo de arriba --> si no encuentra el optimo da 0 :c
-        var = model.getNVars()
+        mejor = math.ceil(model.getObjVal()) # esto es lo mimso que lo de arriba --> si no encuentra el optimo da 0 :c
+        var = math.ceil(model.getNVars())
         tiempo = model.getSolvingTime()
-        cota_dual = model.getDualbound()
+        cota_dual = math.ceil(model.getDualbound())
     except:
         var, mejor, tiempo, cota_dual = None, None, None, None
     return cota_dual, mejor, var, tiempo
