@@ -206,17 +206,17 @@ tamaños de los archivos de cada disco no superen la capacidad del disco.
 \newpage
 \subsubsection{Definición de variables}
 
-\noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
+%\noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
 
-\noindent $s_{i}$: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+\noindent $s_{i}$: constante, tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
-\noindent $n$: cantidad de archivos. \\
+\noindent $n$: constante, cantidad de archivos. \\
 
 \noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
 
-\noindent $D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
+%\noindent $D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
 
-\noindent $d$: tamaño del disco en TB. \\ 
+\noindent $d$: constante, tamaño del disco en TB. \\ 
 
 \noindent $x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
 
@@ -366,7 +366,7 @@ el tamaño del disco.
 
 \subsubsection{Definición de variables}
 
-\noindent $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
+%\noindent $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
 \noindent $s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
 
@@ -384,12 +384,12 @@ el tamaño del disco.
 	\maximize
 	& \sum_{i = 1}^{n} I_{i} \cdot x_{i}\\
 	\subjto
-	& \sum_{i = 1}^{n} s_{i} x_{i} \le d,\ \quad\text{(archivos que entran en el disco)}\\
+	& \sum_{i = 1}^{n} s_{i} x_{i} \le d\ \quad\text{(archivos que entran en el disco)}\\
 	& x_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\} \\
-        & s_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
-        & I_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
-        & n \geq 0\\
-        & d \geq 0\\
+        %& s_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
+        %& I_{i} \geq 0, \quad \forall i \in \{1, \ldots, n\} \\
+        %& n \geq 0\\
+        %& d \geq 0\\
 \end{alignat*}
 
 \newpage
@@ -443,14 +443,13 @@ $\mathcal{I}$.
 
 \subsubsection{Definición de variables}
 
-\noindent $n$: cantidad de archivos. \\
+\noindent $n$: constante, cantidad de archivos. \\
 
-\noindent $m$: cantidad de conjuntos $H$. \\
+\noindent $m$: constante, cantidad de conjuntos $H$. \\
+
+\noindent $y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$ contiene el archivo $i$. \\
 
 \noindent $x_{j}$ binaria: $1$ indica que el conjunto $H_{j}$ pertenece a $I$. \\
-
-\noindent $y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$
-contiene el archivo $i$.
 
 \subsubsection{Modelo}
 
@@ -459,9 +458,9 @@ contiene el archivo $i$.
     \subjto   & \sum_{j=1}^{m} y_{i,j} \cdot x_j \geq 1 \quad \forall i,\ \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
               %& \sum_{i=1}^{n} y_{i,j} \geq x_j \quad \forall j,\ \text{(todos los conjuntos elegidos deben tener al menos un archivo)}
               & x_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
-              & y_{i, j} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \quad \forall j \in \{1, \ldots, m\} \\
-              & n \geq 0, \quad \\
-              & m \geq 0, \quad
+              %& y_{i, j} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\}, \quad \forall j \in \{1, \ldots, m\} \\
+              %& n \geq 0, \quad \\
+              %& m \geq 0, \quad
 \end{alignat*}
 
 \newpage
