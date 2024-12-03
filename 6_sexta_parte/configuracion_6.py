@@ -71,6 +71,9 @@ def generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos):
 
 # solucion = F, model, x, I, s
 def generar_output_modelo_2(solucion):
+    if solucion is None:
+        return None
+
     F = solucion[0]
     model = solucion[1]
     x = solucion[2]
