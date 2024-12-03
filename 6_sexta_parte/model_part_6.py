@@ -28,9 +28,6 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         x, _ = model_part_3_6.obtener_solucion_primal_3(modelo)
         y, _ = model_part_3_6.obtener_solucion_dual_3(modelo)
 
-        optimo = es_optimo(modelo, x)
-        sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
-
         distribucion = model_part_2_6.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
         solucion_modelo_2 = configuracion_6.generar_output_modelo_2(distribucion)
 
@@ -54,7 +51,6 @@ def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
 
-# Esta función supone que el model es `optimal`
 def es_optimo(model, solucion):
     variables = model.getVars() 
 
@@ -66,25 +62,23 @@ def es_optimo(model, solucion):
     return model.checkSol(sol)
 
 def obtener_solucion_entera(model, solucion_continua):
-    print("CONTINUA:", solucion_continua)
     variables = model.getVars()
     sol = model.getBestSol()
     mejor_combinacion = None
     mejor_solucion = float('inf')
-    # model = Model()
 
     for i in range(1, 10):
         umbral = i/10
         redondeos = [1 if valor >= umbral else 0 for valor in solucion_continua]
+
         if es_optimo_rapido(model, variables, redondeos, sol):
-        # if es_optimo(model, redondeos):
             valor_objetivo = model.getSolObjVal(sol)
             model.hideOutput()
+
             if valor_objetivo < mejor_solucion:
                 mejor_solucion = valor_objetivo
                 mejor_combinacion = redondeos
-    print("ENTERA:", mejor_combinacion)
-    # print("SOL:", mejor_solucion)
+
     return mejor_combinacion
 
 def es_optimo_rapido(model, variables, solucion, sol):
