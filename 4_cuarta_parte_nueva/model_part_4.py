@@ -14,7 +14,7 @@ import random
 # c : matriz de los patrones
 def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list[int]], time_limit=420):
     # Tamaño del disco en MB
-    d = int(d_t * 10**6)
+    d = d_t * 10**6
 
     # Cantidad de archivos
     n = sum(S[key] for key in S)
@@ -42,13 +42,14 @@ def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list
     model.setObjective(quicksum(y), sense="minimize")
 
     # Cantidad archivos de tamaño $k$ que entran en el disco $j$
+    # Restricción A
     for j in range(m):
         for k in range(t):
             model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
 
-    # Restricción loca
+    # Restricción B
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == S[s[k]])
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]])
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -58,6 +59,9 @@ def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list
     solution = model.getBestSol()
     status = model.getStatus()
     objective_value = model.getObjVal()
+
+    sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
+    sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
         return [F, model, y, x, s]
@@ -77,28 +81,24 @@ print(f"Input file name to generate: {input_file_name}\n")
 
 generar_configuracion(input_file_name)
 
-disk_size, file_names, file_sizes = leer_configuracion(f"./{input_file_name}")
-
-#print(f"d: {disk_size}\nnames: {file_names}\nsizes: {file_sizes}")
-
-#solution = distribuir_archivos_4(disk_size, file_names, file_sizes)
+disk_size, file_names, file_sizes = leer_configuracion(f"{input_file_name}")
 
 """
-# disk in MB
-300 
+# disk in TB
+3
 
 # number of files to backup
 4
 
 # files: file_id, size (in MB)
-chocolate 135
-fan 108
-tuerca 93
-ensalada 42
+chocolate 1350000
+fan 1080000
+tuerca 930000
+ensalada 420000
 """
 
 F = [ "chocolate", "fan", "tuerca", "ensalada"]
-S = { 135: 1, 108: 1, 93: 1, 42: 1 }
+S = { 1350000: 1, 1080000: 1, 930000: 1, 420000: 1 }
 
 c = [[2, 0, 0, 0], # DELETEME
      [1, 1, 0, 1],
@@ -113,7 +113,7 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 1, 4],
      [0, 0, 0, 7]]
 
-solution = distribuir_archivos_4(0.0003, F, S, c, 420)
+solution = distribuir_archivos_4(3, F, S, c, 420)
 
 if solution is not None:
     generar_output(f"{input_file_name[:-3]}.out", solution)

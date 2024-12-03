@@ -17,8 +17,7 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
     # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
     number_of_disks = cant_archivos
 
-    ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
-                            nombre_archivo)
+    ruta_out = os.path.join(os.path.dirname(__file__), "OUT", nombre_archivo)
     with open(ruta_out, "w") as f:
         f.write(
             f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n"
@@ -31,8 +30,8 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
             espacio_ocupado = 0
 
             for i in range(cant_archivos):
-                if model.getVal(x[i, j]) == 0:
-                    continue
+                # if model.getVal(x[i, j]) == 0:
+                    # continue
                 archivos_en_disco.append(f"{F[i]}  {s[i]}")
                 espacio_ocupado = espacio_ocupado + s[i]
 
@@ -43,8 +42,7 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
 
 
 def generar_output_fallido(nombre_archivo):
-    ruta_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
-                            nombre_archivo)
+    ruta_out = os.path.join(os.path.dirname(__file__), "OUT", nombre_archivo)
     with open(ruta_out, "w") as f:
         f.write(
             f"No se ha encontrado solucion para la configuracion del archivo.\n"
