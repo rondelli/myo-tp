@@ -7,8 +7,8 @@ from itertools import product
 from math import floor, ceil
 
 import configuracion_6
-import model_part_2
-import model_part_3
+import model_part_2_6
+import model_part_3_6
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = configuracion_6.leer_configuracion(f"{archivo}")
@@ -26,10 +26,10 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
             encontro = False
             break
         
-        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
+        modelo = model_part_3_6.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
         
-        x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
-        y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
+        x, obj_x = model_part_3_6.obtener_solucion_primal_3(modelo)
+        y, obj_y = model_part_3_6.obtener_solucion_dual_3(modelo)
 
         # sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
         # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
@@ -38,7 +38,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
 
         # PASO 4
-        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
+        distribucion = model_part_2_6.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
         solucion_modelo_2 = configuracion_6.generar_output_modelo_2(distribucion)
 
         # PASO 5
@@ -54,6 +54,9 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     if encontro:
         print(f"solucion optima encontrada en {tiempo}")
         conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
+        # print(modelo.getObjVal())
+        # print(modelo.getNVars())
+        # conjuntos_seleccionados = obtener_conjuntos_seleccionados(obtener_solucion_entera(modelo, x))
     else:
         print("no se encontraron soluciones optimas")
         

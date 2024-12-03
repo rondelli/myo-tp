@@ -26,6 +26,7 @@ def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
 
 def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model = Model("model_part_1")
+    model.setParam("limits/time", time_limit)
 
     d = d_t * 10**6
 
@@ -58,7 +59,6 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
         model.addCons(quicksum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
     # Configurar el límite de tiempo en el solver
-    model.setParam("limits/time", time_limit)
     model.setParam("display/freq", 1)
 
     model.optimize()
@@ -72,6 +72,8 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     sys.stderr.write(f"[Debugging] [MODELO 1] Inicio\n\n")
     model = Model("model_part_1")
+    # Configurar el límite de tiempo en el solver
+    model.setParam("limits/time", time_limit)
 
     d = d_t * 10**6
 
@@ -103,8 +105,6 @@ def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     for j in range(m):
         model.addCons(quicksum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
-    # Configurar el límite de tiempo en el solver
-    model.setParam("limits/time", time_limit)
     # model.setParam("display/freq", 1)
 
     # Desactivación temporal de presolve
