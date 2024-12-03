@@ -17,11 +17,15 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
 
     # PASO 1
+    tiempo_inicio = time.time()
     conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
+    tiempo_restante = time.time() - tiempo_inicio
+
     # duracion = threshold * 60
-    tiempo_inicio = time.time()
+    
     encontro = True
+    modelo = None
 
     while True:
         inicio_ciclo = time.time()
@@ -31,6 +35,8 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         
         modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
         
+        print(modelo)
+
         x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
         y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
 
