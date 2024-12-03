@@ -23,7 +23,6 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     # duracion = threshold * 60
     
     encontro_solucion = True
-    modelo = None
 
     while True:
         inicio_ciclo = time.time()
@@ -32,8 +31,6 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
             break
         
         modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
-        
-        print(modelo)
 
         x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
         y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)

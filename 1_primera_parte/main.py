@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+
+import sys
+from configuracion_1 import *
+from generador_output_1 import *
+from model_part_1 import *
+
+if len(sys.argv) != 2:
+    print(f"Uso: {sys.argv[0]} nombre_archivo")
+    sys.exit(1)
+
+archivo = sys.argv[1]
+print(f"Utilizando {archivo}\n")
+
+# generar_configuracion(archivo)
+
+capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
+
+solucion = distribuir_archivos_1(capacidad_disco, nombres_archivos, tamaños_archivos, 420)
+sys.stderr.write(f"[Debugging] [MODELO 1] Time: {solucion[1].getSolvingTime()}\n\n")
+# sys.stderr.write(f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
+
+if solucion is not None:
+    generar_output(f"{archivo[:-3]}.out", solucion)
+else:
+    generar_output_fallido(f"{archivo[:-3]}.out")
