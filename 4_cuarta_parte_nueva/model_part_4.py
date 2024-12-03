@@ -8,56 +8,25 @@ import os
 import random
 
 
-"""
-# disk in MB
-300 
-
-# number of files to backup
-4
-
-# files: file_id, size (in MB)
-chocolate 135
-fan 108
-tuerca 93
-ensalada 42
-"""
-
-def distribuir_archivos_4(d_t: int, F: list[str], S: list[int], time_limit=420):
-
-    F = [ "chocolate", "fan", "tuerca", "ensalada"] # DELETEME
-    f = [ 1, 1, 1, 1 ] # DELETEME
-
+# d_t : tamaño del disco en TB
+# F : nombres de archivos, no se usa en realidad
+# S : cantidades de tamaños de archivos
+# c : matriz de los patrones
+def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list[int]], time_limit=420):
     # Tamaño del disco en MB
-    d = d_t * 10**6
-    d = 300 # DELETEME
+    d = int(d_t * 10**6)
 
     # Cantidad de archivos
-    n = len(F)
-    n = 4 # DELETEME
+    n = sum(S[key] for key in S)
 
     # Cantidad de tamaños de archivos
-    # S = list(dict.fromkeys(S))
-    # q = len(S)
+    s = list(dict.fromkeys(S))
+    t = len(s)
 
     # Cantidad de discos, a lo sumo, un disco por archivo
     m = n
 
-    s = [ 135, 108, 93, 42 ] # DELETEME
-    t = len(s)
-
-    c = [[2, 0, 0, 0], # DELETEME
-         [1, 1, 0, 1],
-         [1, 0, 1, 1],
-         [1, 0, 0, 3],
-         [0, 2, 0, 2],
-         [0, 1, 2, 0],
-         [0, 1, 1, 2],
-         [0, 1, 0, 4],
-         [0, 0, 3, 0],
-         [0, 0, 2, 2],
-         [0, 0, 1, 4],
-         [0, 0, 0, 7]]
-
+    # Cantidad de patrones
     q = len(c)
 
     # Define model
@@ -77,8 +46,9 @@ def distribuir_archivos_4(d_t: int, F: list[str], S: list[int], time_limit=420):
         for k in range(t):
             model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
 
+    # Restricción loca
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == f[k])
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == S[s[k]])
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -111,7 +81,39 @@ disk_size, file_names, file_sizes = leer_configuracion(f"./{input_file_name}")
 
 #print(f"d: {disk_size}\nnames: {file_names}\nsizes: {file_sizes}")
 
-solution = distribuir_archivos_4(disk_size, file_names, file_sizes)
+#solution = distribuir_archivos_4(disk_size, file_names, file_sizes)
+
+"""
+# disk in MB
+300 
+
+# number of files to backup
+4
+
+# files: file_id, size (in MB)
+chocolate 135
+fan 108
+tuerca 93
+ensalada 42
+"""
+
+F = [ "chocolate", "fan", "tuerca", "ensalada"]
+S = { 135: 1, 108: 1, 93: 1, 42: 1 }
+
+c = [[2, 0, 0, 0], # DELETEME
+     [1, 1, 0, 1],
+     [1, 0, 1, 1],
+     [1, 0, 0, 3],
+     [0, 2, 0, 2],
+     [0, 1, 2, 0],
+     [0, 1, 1, 2],
+     [0, 1, 0, 4],
+     [0, 0, 3, 0],
+     [0, 0, 2, 2],
+     [0, 0, 1, 4],
+     [0, 0, 0, 7]]
+
+solution = distribuir_archivos_4(0.0003, F, S, c, 420)
 
 if solution is not None:
     generar_output(f"{input_file_name[:-3]}.out", solution)
