@@ -9,12 +9,19 @@ import random
 
 
 # d_t : tamaño del disco en TB
-# F : nombres de archivos, no se usa en realidad acá
-# S : cantidades de tamaños de archivos
+# F : nombres de archivos
+# file_sizes: tamaños de archivos
 # c : matriz de los patrones
-def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list[int]], time_limit=420):
+def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list[list[int]], time_limit=420):
     # Tamaño del disco en MB
     d = d_t * 10**6
+
+    ordenamiento = sorted(list(zip(file_sizes, F)), reverse=True)
+    file_sizes, F = zip(*ordenamiento)
+    F = list(F)
+
+    S = {size: file_sizes.count(size) for size in set(file_sizes)}
+    S = dict(sorted(S.items(), reverse=True))
 
     # Cantidad de archivos
     n = sum(S[key] for key in S)
@@ -49,7 +56,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list
 
     # Restricción B
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]])
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -97,8 +104,9 @@ tuerca 930000
 ensalada 420000
 """
 
-F = [ "chocolate", "fan", "tuerca", "ensalada"]
-S = { 1350000: 1, 1080000: 1, 930000: 1, 420000: 1 }
+disk_size = 3
+file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
+file_sizes = [ 1350000, 1080000, 930000, 420000 ]
 
 c = [[2, 0, 0, 0], # DELETEME
      [1, 1, 0, 1],
@@ -113,7 +121,7 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 1, 4],
      [0, 0, 0, 7]]
 
-solution = distribuir_archivos_4(3, F, S, c, 420)
+solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 
 if solution is not None:
     generar_output(f"{input_file_name[:-3]}.out", solution)
