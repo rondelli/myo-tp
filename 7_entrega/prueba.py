@@ -35,7 +35,6 @@ threshold = int(configuraciones.get('threshold', 0))
 
 archivos = os.listdir(inPath)
 archivos = [f for f in archivos]
-
 sys.stderr.write(f"[Debugging] {archivos}\n")
 
 # prueba de modelos
@@ -107,5 +106,5 @@ for a in archivos:
         cota_dual = min(cotas_validas) # aca no sería min en lugar de max?
     else:
         cota_dual = "inf"
-    
+
     guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])

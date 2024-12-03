@@ -1,18 +1,11 @@
-Para la configuracion del archivo, se han elegido 16 de los 104 conjuntos de H:
+Para la configuracion del archivo, se han elegido 9 de los 83 conjuntos de H:
 
-Conjunto H_10: {'a0026', 'a0019', 'a0025'}.
-Conjunto H_11: {'a0032'}.
-Conjunto H_35: {'a0018'}.
-Conjunto H_45: {'a0007'}.
-Conjunto H_51: {'a0028'}.
-Conjunto H_52: {'a0022'}.
-Conjunto H_53: {'a0006', 'a0029', 'a0025'}.
-Conjunto H_55: {'a0015', 'a0005'}.
-Conjunto H_60: {'a0011', 'a0009'}.
-Conjunto H_62: {'a0010'}.
-Conjunto H_63: {'a0002'}.
-Conjunto H_66: {'a0014', 'a0021'}.
-Conjunto H_67: {'a0016'}.
-Conjunto H_71: {'a0013', 'a0017', 'a0027'}.
-Conjunto H_77: {'a0003'}.
-Conjunto H_85: {'a0023'}.
+Conjunto H_3: {'a0015'}.
+Conjunto H_9: {'a0003'}.
+Conjunto H_19: {'a0002'}.
+Conjunto H_22: {'a0026', 'a0019'}.
+Conjunto H_35: {'a0025', 'a0028'}.
+Conjunto H_41: {'a0010'}.
+Conjunto H_73: {'a0017', 'a0032'}.
+Conjunto H_76: {'a0022', 'a0011'}.
+Conjunto H_81: {'a0005', 'a0007'}.
