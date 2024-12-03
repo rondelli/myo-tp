@@ -1,52 +1,47 @@
 class Pattern:
+
     def __init__(self, capacidad_maxima, tamaños):
         self.capacidad_maxima = capacidad_maxima
         self.tamaños = tamaños
-        self.ultimo_patron = []
+        self.ultimo_patron = [0] * len(tamaños)
         self.disponible = capacidad_maxima
-        # self.patrones = []
-        for t in range(len(self.tamaños)):
-            self.ultimo_patron.append(0)
-    
+        self.indice_actual = 0
+
     def obtener_patrones(self):
         patrones = []
         patrones.append(self.obtener_primer_patron()[:])
-        # print("patron", patron)
+        print(patrones[0])
         while True:
             patron = self.obtener_siguiente_patron()
-            if patron is not None:
-                # print("patron", patron)
-                patrones.append(patron[:])
-                self.disponible = self.capacidad_maxima
-            else:
+            print(patron)
+            if patron is None:
                 break
+            patrones.append(patron[:])
         return patrones
 
     def obtener_siguiente_patron(self):
-        for t in range(len(self.tamaños)):
-            if self.ultimo_patron[t] > 0:
-                self.ultimo_patron[t] = self.ultimo_patron[t] - 1
-                self.disponible -= self.tamaños[t]
-                break
-        
-        if t < len(self.tamaños) - 1: # si no es el ultimo tamaño
-            self.actualizar_tamaños(t + 1)
-            return self.ultimo_patron
-        else:
-            return None
-    
-    def actualizar_tamaños(self, indice_tamaño):
-        if indice_tamaño == len(self.tamaños) or self.disponible <= 0:
-            return self.ultimo_patron
-        
-        tamaño = self.tamaños[indice_tamaño]
-        entran = self.disponible // tamaño
-        if entran > 0:
-            self.ultimo_patron[indice_tamaño] = entran
-            self.disponible -= entran * tamaño
+        for i in range(self.indice_actual, len(self.tamaños)):
+            if self.ultimo_patron[i] > 0:
+                self.ultimo_patron[i] -= 1
+                self.disponible += self.tamaños[i]
+                self.actualizar_tamaños(i + 1)
+                if self.ultimo_patron[i] == 0:
+                    self.indice_actual += 1
+                return self.ultimo_patron
+            
+            else:
+                self.disponible = self.capacidad_maxima
+                self.actualizar_tamaños(i)
+                return self.ultimo_patron
+        return None
 
-        self.actualizar_tamaños(indice_tamaño + 1)
-    
+    def actualizar_tamaños(self, indice_tamaño):
+        for i in range(indice_tamaño, len(self.tamaños)):
+            max_cantidad = self.disponible // self.tamaños[i]
+            if max_cantidad >= 0:
+                self.ultimo_patron[i] = max_cantidad
+                self.disponible -= max_cantidad * self.tamaños[i]
+
     def obtener_primer_patron(self):
-        self.actualizar_tamaños(indice_tamaño=0)
+        self.actualizar_tamaños(0)
         return self.ultimo_patron
