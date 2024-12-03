@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import time
 
 from configuracion_6 import *
 from generador_output_6 import * 
@@ -23,4 +24,13 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
+tiempo_inicio = time.time()
 datos = model_part_6.obtener_conjuntos(archivo, 7)
+tiempo_tardado = time.time() - tiempo_inicio
+
+if datos is not None:
+    print(f"Tiempo de ejecución: {datos[-1]} segundos")
+    print(f"Solución: {datos[0]}")
+else:
+    print("No se encontró solución")
+print(f"Tiempo de ejecución: {tiempo_tardado}")
