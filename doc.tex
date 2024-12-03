@@ -206,21 +206,18 @@ tamaños de los archivos de cada disco no superen la capacidad del disco.
 \newpage
 \subsubsection{Definición de variables}
 
-%\noindent $F$: conjunto de nombres de cada archivo $i$, con $i = 1, \ldots, n$. \\
+\noindent $n$: Constante, cantidad de archivos. \\
 
-\noindent $s_{i}$: constante, tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+\noindent $s_{i}$: Constante, tamaño del archivo $i$ en $\text{MB}$, $\forall i \in \{1, \ldots, n\}$. \\
 
-\noindent $n$: constante, cantidad de archivos. \\
+\noindent $m$: Cantidad de discos disponibles; a lo sumo, un archivo por disco, con $m = n$. \\
 
-\noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
+\noindent $d$: Constante, tamaño del disco en $\text{TB}$. \\ 
 
-%\noindent $D$: conjunto de $j$ discos de tamaño $d$, con $j = 1, \ldots, m$. \\
+\noindent $x_{ij}$: Variable binaria, donde $x_{ij} = 1$ indica que el archivo $i$ está en el disco $j$, $\forall i \in \{1, \ldots, n\},\ \forall j \in \{1, \ldots, m\}$, con $x_{ij} \in \{0, 1\}$. \\
 
-\noindent $d$: constante, tamaño del disco en TB. \\ 
+\noindent $y_{j}$: Variable binaria, donde $y_{j} = 1$ indica que se está usando el disco $j$, $\forall j \in \{1, \ldots, m\}$, con $y_{j} \in \{0, 1\}$. \\
 
-\noindent $x_{ij}$ binaria: $1$ indica si el archivo $i$ está en el disco $j$, $\forall i = \{1, \ldots, n\},\ \forall j = \{1, \ldots, m\}$, donde $x_{ij} \in \{0, 1\}$, $0$ en el caso de que no esté\\
-
-\noindent $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
 \subsubsection{Modelo}
 
@@ -368,15 +365,16 @@ el tamaño del disco.
 
 %\noindent $F$: conjunto de nombres de $i$ archivos, con $i = 1, \ldots, n$. \\
 
-\noindent $s_{i}$ constante: tamaño del archivo $i$ en MB, con $i = 1, \ldots, n$. \\
+\noindent $n$: Constante, cantidad de archivos. \\
 
-\noindent $I_i$ constante: indicador de importancia para el archivo $i$, con $i = 1, \ldots, n$. \\
+\noindent $s_{i}$: Constante, tamaño del archivo $i$ en $\text{MB}$, con $i \in \{1, \ldots, n\}$. \\
 
-\noindent $n$ constante: cantidad de archivos. \\
+\noindent $I_{i}$: Constante, indicador de importancia para el archivo $i$, con $i \in \{1, \ldots, n\}$. \\
 
-\noindent $d$ constante: tamaño del disco en TB. \\
+\noindent $d$: Constante, tamaño del disco en $\text{TB}$. \\
 
-\noindent $x_{i}$ binaria: $1$ indica si el archivo $i$ está en el disco, $\forall i = \{1, \ldots, n\}$, donde $x_{i} \in \{0, 1\}$, $0$ en el caso de que no esté
+\noindent $x_{i}$: Variable binaria, donde $x_{i} = 1$ indica que el archivo $i$ está en el disco y $x_{i} = 0$ en caso contrario, con $x_{i} \in \{0, 1\}$, $\forall i \in \{1, \ldots, n\}$. \\
+
 
 \subsubsection{Modelo}
 
@@ -443,13 +441,14 @@ $\mathcal{I}$.
 
 \subsubsection{Definición de variables}
 
-\noindent $n$: constante, cantidad de archivos. \\
+\noindent $n$: Constante, cantidad de archivos. \\
 
-\noindent $m$: constante, cantidad de conjuntos $H$. \\
+\noindent $m$: Constante, cantidad de conjuntos $H$. \\
 
-\noindent $y_{ij}$ \textbf{constante} binaria: $1$ indica que el conjunto $H_{j}$ contiene el archivo $i$. \\
+\noindent $y_{ij}$: Constante binaria, donde $y_{ij} = 1$ indica que el conjunto $H_{j}$ contiene el archivo $i$, con $y_{ij} \in \{0, 1\}$, $\forall i \in \{1, \ldots, n\}$, $\forall j \in \{1, \ldots, m\}$. \\
 
-\noindent $x_{j}$ binaria: $1$ indica que el conjunto $H_{j}$ pertenece a $I$. \\
+\noindent $x_{j}$: Variable binaria, donde $x_{j} = 1$ indica que el conjunto $H_{j}$ pertenece a $I$, con $x_{j} \in \{0, 1\}$, $\forall j \in \{1, \ldots, m\}$. \\
+
 
 \subsubsection{Modelo}
 
