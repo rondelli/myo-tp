@@ -9,7 +9,7 @@ import random
 
 
 # d_t : tamaño del disco en TB
-# F : nombres de archivos, no se usa en realidad
+# F : nombres de archivos, no se usa en realidad acá
 # S : cantidades de tamaños de archivos
 # c : matriz de los patrones
 def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list[int]], time_limit=420):
@@ -64,7 +64,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], S: dict[int:int], c: list[list
     sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
-        return [F, model, y, x, s]
+        return [F, model, y, x, [key * S[key] for key in S]]
     else:
         return None
 
