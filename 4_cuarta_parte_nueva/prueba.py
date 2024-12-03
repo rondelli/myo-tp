@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 from configuracion_4 import *
 import Pattern
@@ -9,7 +11,11 @@ import Pattern
 
 # archivo = sys.argv[1]
 archivo = "f0032.in"
+
 print(f"Utilizando {archivo}\n")
+
 capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
+
 patrones = Pattern.Pattern(capacidad_disco * 10**6, tamaños_archivos)
+
 print(patrones.obtener_patrones())
