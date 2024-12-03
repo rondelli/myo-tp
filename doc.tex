@@ -502,7 +502,7 @@ tamaños de archivos.
 
 \begin{alignat*}{2}
 	\minimize
-	& \sum_{j = 1}^{m} y_{k}\\
+	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
 	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{p} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
 	& \sum_{p = 1}^{q} c_{kp} \cdot x_{p} = f_{k} \\
