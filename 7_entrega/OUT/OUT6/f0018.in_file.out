@@ -1,6 +1,8 @@
-Para la configuracion del archivo, se han elegido 4 de los 73 conjuntos de H:
+Para la configuracion del archivo, se han elegido 6 de los 101 conjuntos de H:
 
-Conjunto H_6: {'a0003'}.
-Conjunto H_43: {'a0002'}.
-Conjunto H_44: {'a0015'}.
-Conjunto H_47: {'a0010'}.
+Conjunto H_64: {'a0011', 'a0007'}.
+Conjunto H_73: {'a0002'}.
+Conjunto H_80: {'a0015'}.
+Conjunto H_81: {'a0003'}.
+Conjunto H_84: {'a0010'}.
+Conjunto H_85: {'a0017', 'a0018'}.

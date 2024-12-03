@@ -1,6 +1,9 @@
 import os
 import random
 
+########################################################################
+# Este archivo es igual a configuración_1.py
+########################################################################
 
 def generar_archivos(cant_archivos):
     archivos = {}
