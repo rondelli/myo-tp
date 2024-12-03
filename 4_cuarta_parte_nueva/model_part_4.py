@@ -39,8 +39,14 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     # Define model
     model = Model("model_part_4")
 
-    # x[p] entera: cantidad de veces que se usa el patrón p, con p ∈ {1,…,q}, donde x_{p} ≥ 0
-    x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
+    # x[j][p] binary: 1 si se usa el patrón p en el disco j, con p ∈ {1,…,q}, donde x_{p} in {0, 1}
+    # x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
+
+    # x_{j, p} binary: 1 si se usa el patrón p en el disco j, con p ∈ {1,…,q}, donde x_{p} in {0, 1}
+    x = {}
+    for j in range(m):
+        for p in range(q):
+            x[j, p] = model.addVar(name = f"x_{j}_{p}", vtype="BINARY")
 
     # y[j] binary: 1 si se usa el disco $j$, 0 en caso contrario
     y = [model.addVar(vtype='B', name=f"y_{j}") for j in range(m)]
@@ -52,11 +58,12 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     # Restricción A
     for j in range(m):
         for k in range(t):
-            model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
+            model.addCons(quicksum(s[k] * c[p][k] * x[j, p] for p in range(q)) <= d * y[j])
 
     # Restricción B
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
+        for j in range(m):
+            model.addCons(quicksum(c[p][k] * x[j, p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -65,12 +72,11 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     solution = model.getBestSol()
     status = model.getStatus()
-    objective_value = model.getObjVal()
-
-    sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
-    sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
+    
 
     if solution is not None and status in ["optimal", "feasible"]:
+        objective_value = model.getObjVal()
+        sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
         return [F, model, y, x, [key * S[key] for key in S]]
     else:
         return None
@@ -86,7 +92,7 @@ if len(sys.argv) != 2:
 input_file_name = sys.argv[1]
 print(f"Input file name to generate: {input_file_name}\n")
 
-generar_configuracion(input_file_name)
+# generar_configuracion(input_file_name)
 
 disk_size, file_names, file_sizes = leer_configuracion(f"{input_file_name}")
 
