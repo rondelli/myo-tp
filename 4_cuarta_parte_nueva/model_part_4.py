@@ -108,6 +108,7 @@ disk_size = 3
 file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
 file_sizes = [ 1350000, 1080000, 930000, 420000 ]
 
+# Patrón Marcelo
 c = [[2, 0, 0, 0], # DELETEME
      [1, 1, 0, 1],
      [1, 0, 1, 1],
@@ -120,6 +121,9 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 2, 2],
      [0, 0, 1, 4],
      [0, 0, 0, 7]]
+
+# Patrón Lucía
+c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
 
 solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 
