@@ -10,8 +10,8 @@ if len(sys.argv) != 2:
 
 archivo = sys.argv[1]
 
-# archivo = sys.argv[1]
-archivo = "f0032.in"
+archivo = sys.argv[1]
+# archivo = "f0018.in"
 
 print(f"Utilizando {archivo}\n")
 

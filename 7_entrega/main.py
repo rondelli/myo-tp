@@ -39,7 +39,6 @@ sys.stderr.write(f"[Debugging] {archivos}\n")
 
 # prueba de modelos
 for a in archivos:
-# a = archivos[0]
     sys.stderr.write(f"[Debugging] {a}\n")
     d_t, F, s = leer_archivo(a)
 
