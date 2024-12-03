@@ -1,310 +1,306 @@
-Para la configuracion del archivo, se han elegido 308 de los 2502 conjuntos de H:
+Para la configuracion del archivo, se han elegido 304 de los 3081 conjuntos de H:
 
-Conjunto H_1: {'a0270', 'a0331'}.
-Conjunto H_5: {'a0172', 'a0417', 'a0500'}.
-Conjunto H_8: {'a0136', 'a0502', 'a0071'}.
-Conjunto H_18: {'a0401', 'a0023'}.
-Conjunto H_26: {'a0181', 'a0436', 'a0143'}.
-Conjunto H_29: {'a0195', 'a0133'}.
-Conjunto H_54: {'a0248', 'a0223'}.
-Conjunto H_56: {'a0197', 'a0422'}.
-Conjunto H_67: {'a0086'}.
-Conjunto H_83: {'a0220'}.
-Conjunto H_104: {'a0273', 'a0268'}.
-Conjunto H_106: {'a0152', 'a0012'}.
-Conjunto H_108: {'a0144', 'a0187'}.
-Conjunto H_115: {'a0036', 'a0053'}.
-Conjunto H_117: {'a0428', 'a0400'}.
-Conjunto H_123: {'a0214'}.
-Conjunto H_141: {'a0250', 'a0427'}.
-Conjunto H_143: {'a0047', 'a0396'}.
-Conjunto H_157: {'a0080', 'a0325'}.
-Conjunto H_165: {'a0312', 'a0474'}.
-Conjunto H_166: {'a0209'}.
-Conjunto H_170: {'a0399', 'a0331'}.
-Conjunto H_173: {'a0506', 'a0193'}.
-Conjunto H_194: {'a0276', 'a0150', 'a0237'}.
-Conjunto H_211: {'a0463', 'a0485'}.
-Conjunto H_262: {'a0231', 'a0434'}.
-Conjunto H_292: {'a0119', 'a0309'}.
-Conjunto H_297: {'a0171', 'a0472'}.
-Conjunto H_304: {'a0392', 'a0468'}.
-Conjunto H_306: {'a0440', 'a0461'}.
-Conjunto H_366: {'a0377', 'a0238'}.
-Conjunto H_376: {'a0076', 'a0078', 'a0375'}.
-Conjunto H_379: {'a0252', 'a0201'}.
-Conjunto H_382: {'a0486', 'a0278'}.
-Conjunto H_390: {'a0140'}.
-Conjunto H_393: {'a0072', 'a0275'}.
-Conjunto H_395: {'a0473', 'a0228'}.
-Conjunto H_397: {'a0331', 'a0154'}.
-Conjunto H_408: {'a0305', 'a0045'}.
-Conjunto H_427: {'a0320', 'a0111'}.
-Conjunto H_433: {'a0338', 'a0481'}.
-Conjunto H_435: {'a0311', 'a0012'}.
-Conjunto H_439: {'a0336', 'a0395'}.
-Conjunto H_449: {'a0426', 'a0288'}.
-Conjunto H_459: {'a0445', 'a0289'}.
-Conjunto H_479: {'a0138', 'a0229'}.
-Conjunto H_498: {'a0497', 'a0100'}.
-Conjunto H_502: {'a0167', 'a0456'}.
-Conjunto H_505: {'a0024', 'a0159'}.
-Conjunto H_549: {'a0385', 'a0062'}.
-Conjunto H_551: {'a0142', 'a0366', 'a0434', 'a0029'}.
-Conjunto H_565: {'a0316', 'a0256'}.
-Conjunto H_566: {'a0033', 'a0195', 'a0089'}.
-Conjunto H_581: {'a0184', 'a0340', 'a0389'}.
-Conjunto H_588: {'a0505'}.
-Conjunto H_605: {'a0374', 'a0052'}.
-Conjunto H_606: {'a0386', 'a0180'}.
-Conjunto H_615: {'a0367', 'a0283'}.
-Conjunto H_626: {'a0293', 'a0344'}.
-Conjunto H_648: {'a0277', 'a0379'}.
-Conjunto H_657: {'a0393', 'a0175'}.
-Conjunto H_658: {'a0019', 'a0455'}.
-Conjunto H_665: {'a0454'}.
-Conjunto H_667: {'a0162'}.
-Conjunto H_684: {'a0064', 'a0265', 'a0266', 'a0216'}.
-Conjunto H_690: {'a0190', 'a0409'}.
-Conjunto H_696: {'a0189', 'a0094'}.
-Conjunto H_698: {'a0147', 'a0011'}.
-Conjunto H_713: {'a0037', 'a0085'}.
-Conjunto H_720: {'a0101'}.
-Conjunto H_743: {'a0087'}.
-Conjunto H_747: {'a0184', 'a0205', 'a0344'}.
-Conjunto H_751: {'a0166', 'a0495'}.
-Conjunto H_790: {'a0139', 'a0103'}.
-Conjunto H_801: {'a0418', 'a0112', 'a0512'}.
-Conjunto H_805: {'a0178', 'a0371'}.
-Conjunto H_810: {'a0182', 'a0097'}.
-Conjunto H_816: {'a0150', 'a0196'}.
-Conjunto H_830: {'a0509', 'a0074', 'a0079'}.
-Conjunto H_834: {'a0235', 'a0414'}.
-Conjunto H_843: {'a0132', 'a0327'}.
-Conjunto H_850: {'a0498', 'a0479'}.
-Conjunto H_854: {'a0310', 'a0391'}.
-Conjunto H_859: {'a0459', 'a0462', 'a0208'}.
-Conjunto H_861: {'a0507', 'a0222'}.
-Conjunto H_864: {'a0351', 'a0041'}.
-Conjunto H_874: {'a0342', 'a0137', 'a0394'}.
-Conjunto H_885: {'a0297', 'a0383'}.
-Conjunto H_887: {'a0108', 'a0466'}.
-Conjunto H_919: {'a0353', 'a0038'}.
-Conjunto H_925: {'a0039', 'a0255'}.
-Conjunto H_935: {'a0421', 'a0465'}.
-Conjunto H_955: {'a0332', 'a0102'}.
-Conjunto H_962: {'a0112', 'a0291'}.
-Conjunto H_1001: {'a0125', 'a0450'}.
-Conjunto H_1039: {'a0271', 'a0244', 'a0285'}.
-Conjunto H_1048: {'a0169', 'a0368'}.
-Conjunto H_1063: {'a0075', 'a0341'}.
-Conjunto H_1068: {'a0017', 'a0318'}.
-Conjunto H_1082: {'a0298'}.
-Conjunto H_1088: {'a0339', 'a0360'}.
-Conjunto H_1090: {'a0255', 'a0003'}.
-Conjunto H_1095: {'a0150', 'a0128', 'a0115', 'a0030'}.
-Conjunto H_1096: {'a0105', 'a0148'}.
-Conjunto H_1107: {'a0194'}.
-Conjunto H_1108: {'a0488', 'a0280', 'a0257', 'a0083'}.
-Conjunto H_1110: {'a0249', 'a0118'}.
-Conjunto H_1127: {'a0013', 'a0350'}.
-Conjunto H_1130: {'a0326', 'a0258', 'a0229'}.
-Conjunto H_1132: {'a0021', 'a0419'}.
-Conjunto H_1134: {'a0076', 'a0022'}.
-Conjunto H_1138: {'a0031', 'a0361'}.
-Conjunto H_1155: {'a0330', 'a0315'}.
-Conjunto H_1164: {'a0106', 'a0358', 'a0034', 'a0004'}.
-Conjunto H_1171: {'a0372', 'a0176'}.
-Conjunto H_1173: {'a0099', 'a0458'}.
-Conjunto H_1180: {'a0221', 'a0063'}.
-Conjunto H_1189: {'a0135', 'a0252'}.
-Conjunto H_1194: {'a0345', 'a0405'}.
-Conjunto H_1195: {'a0171', 'a0081'}.
-Conjunto H_1213: {'a0207', 'a0280'}.
-Conjunto H_1269: {'a0314', 'a0503', 'a0295'}.
-Conjunto H_1291: {'a0492'}.
-Conjunto H_1308: {'a0151'}.
-Conjunto H_1315: {'a0161', 'a0247'}.
-Conjunto H_1340: {'a0260', 'a0274'}.
-Conjunto H_1349: {'a0263'}.
-Conjunto H_1384: {'a0084', 'a0331'}.
-Conjunto H_1389: {'a0346', 'a0483'}.
-Conjunto H_1390: {'a0380', 'a0076', 'a0020'}.
-Conjunto H_1394: {'a0500', 'a0240', 'a0331'}.
-Conjunto H_1401: {'a0475', 'a0232', 'a0412'}.
-Conjunto H_1420: {'a0236'}.
-Conjunto H_1421: {'a0170', 'a0068'}.
-Conjunto H_1423: {'a0109', 'a0083'}.
-Conjunto H_1425: {'a0026'}.
-Conjunto H_1426: {'a0294', 'a0245'}.
-Conjunto H_1428: {'a0420', 'a0195', 'a0104'}.
-Conjunto H_1446: {'a0019', 'a0177'}.
-Conjunto H_1477: {'a0413', 'a0195'}.
-Conjunto H_1501: {'a0292'}.
-Conjunto H_1502: {'a0491', 'a0475', 'a0514'}.
-Conjunto H_1510: {'a0284', 'a0467'}.
-Conjunto H_1511: {'a0044', 'a0262'}.
-Conjunto H_1521: {'a0149', 'a0025'}.
-Conjunto H_1526: {'a0076', 'a0337'}.
-Conjunto H_1537: {'a0219'}.
-Conjunto H_1569: {'a0233', 'a0192', 'a0158'}.
-Conjunto H_1576: {'a0073', 'a0351'}.
-Conjunto H_1581: {'a0478', 'a0142'}.
-Conjunto H_1585: {'a0126', 'a0328'}.
-Conjunto H_1599: {'a0295', 'a0286'}.
-Conjunto H_1601: {'a0059', 'a0489'}.
-Conjunto H_1605: {'a0018', 'a0407'}.
-Conjunto H_1607: {'a0179', 'a0408'}.
-Conjunto H_1614: {'a0342', 'a0054'}.
-Conjunto H_1632: {'a0077', 'a0487'}.
-Conjunto H_1633: {'a0444'}.
-Conjunto H_1634: {'a0106', 'a0508'}.
-Conjunto H_1664: {'a0452', 'a0093'}.
-Conjunto H_1667: {'a0365'}.
-Conjunto H_1668: {'a0057', 'a0457'}.
-Conjunto H_1679: {'a0092', 'a0467', 'a0510'}.
-Conjunto H_1682: {'a0304', 'a0210'}.
-Conjunto H_1689: {'a0482'}.
-Conjunto H_1694: {'a0096', 'a0218'}.
-Conjunto H_1701: {'a0442', 'a0439'}.
-Conjunto H_1707: {'a0302'}.
-Conjunto H_1711: {'a0416'}.
-Conjunto H_1719: {'a0280', 'a0153', 'a0091', 'a0124', 'a0255'}.
-Conjunto H_1728: {'a0019', 'a0305', 'a0035', 'a0034'}.
-Conjunto H_1731: {'a0217', 'a0321'}.
-Conjunto H_1733: {'a0241', 'a0246'}.
-Conjunto H_1734: {'a0040', 'a0243'}.
-Conjunto H_1739: {'a0197', 'a0070'}.
-Conjunto H_1741: {'a0242', 'a0268'}.
-Conjunto H_1748: {'a0128', 'a0113', 'a0131'}.
-Conjunto H_1753: {'a0509', 'a0173'}.
-Conjunto H_1756: {'a0121', 'a0051'}.
-Conjunto H_1768: {'a0059', 'a0168'}.
-Conjunto H_1777: {'a0469', 'a0348'}.
-Conjunto H_1786: {'a0019', 'a0232', 'a0470'}.
-Conjunto H_1794: {'a0356'}.
-Conjunto H_1795: {'a0308', 'a0430'}.
-Conjunto H_1806: {'a0234', 'a0406', 'a0161'}.
-Conjunto H_1815: {'a0141', 'a0357'}.
-Conjunto H_1816: {'a0193', 'a0429'}.
-Conjunto H_1817: {'a0493', 'a0368', 'a0381', 'a0117'}.
-Conjunto H_1820: {'a0513', 'a0069'}.
-Conjunto H_1827: {'a0343', 'a0215'}.
-Conjunto H_1829: {'a0431', 'a0134', 'a0191'}.
-Conjunto H_1836: {'a0280', 'a0303'}.
-Conjunto H_1837: {'a0329', 'a0006'}.
-Conjunto H_1842: {'a0155', 'a0390'}.
-Conjunto H_1847: {'a0002'}.
-Conjunto H_1857: {'a0460', 'a0122'}.
-Conjunto H_1884: {'a0397', 'a0001'}.
-Conjunto H_1891: {'a0333', 'a0494', 'a0046'}.
-Conjunto H_1897: {'a0477'}.
-Conjunto H_1899: {'a0067', 'a0230'}.
-Conjunto H_1908: {'a0423', 'a0213'}.
-Conjunto H_1912: {'a0410'}.
-Conjunto H_1916: {'a0448', 'a0349'}.
-Conjunto H_1919: {'a0488', 'a0060'}.
-Conjunto H_1922: {'a0496'}.
-Conjunto H_1936: {'a0046', 'a0323'}.
-Conjunto H_1938: {'a0279'}.
-Conjunto H_1950: {'a0376', 'a0199'}.
-Conjunto H_1964: {'a0265', 'a0425', 'a0229', 'a0107'}.
-Conjunto H_1965: {'a0267'}.
-Conjunto H_1968: {'a0458', 'a0254'}.
-Conjunto H_1981: {'a0129', 'a0071'}.
-Conjunto H_1985: {'a0202'}.
-Conjunto H_1991: {'a0382'}.
-Conjunto H_1998: {'a0007', 'a0005'}.
-Conjunto H_2000: {'a0362'}.
-Conjunto H_2009: {'a0334', 'a0005'}.
-Conjunto H_2037: {'a0128', 'a0269'}.
-Conjunto H_2042: {'a0174'}.
-Conjunto H_2054: {'a0433', 'a0065'}.
-Conjunto H_2059: {'a0373'}.
-Conjunto H_2066: {'a0431', 'a0319', 'a0255'}.
-Conjunto H_2084: {'a0184', 'a0265', 'a0387'}.
-Conjunto H_2093: {'a0088', 'a0009'}.
-Conjunto H_2097: {'a0424'}.
-Conjunto H_2102: {'a0322'}.
-Conjunto H_2105: {'a0130'}.
-Conjunto H_2110: {'a0160', 'a0255'}.
-Conjunto H_2111: {'a0197', 'a0464'}.
-Conjunto H_2112: {'a0164'}.
-Conjunto H_2116: {'a0095', 'a0376'}.
-Conjunto H_2117: {'a0186', 'a0192'}.
-Conjunto H_2127: {'a0203', 'a0185', 'a0161'}.
-Conjunto H_2139: {'a0226', 'a0058', 'a0314'}.
-Conjunto H_2140: {'a0290'}.
-Conjunto H_2144: {'a0090'}.
-Conjunto H_2145: {'a0388', 'a0224'}.
-Conjunto H_2157: {'a0127', 'a0216'}.
-Conjunto H_2159: {'a0059', 'a0296', 'a0501'}.
-Conjunto H_2172: {'a0272', 'a0042'}.
-Conjunto H_2186: {'a0299', 'a0344'}.
-Conjunto H_2190: {'a0197', 'a0476'}.
-Conjunto H_2192: {'a0446', 'a0114'}.
-Conjunto H_2194: {'a0352'}.
-Conjunto H_2202: {'a0198', 'a0066'}.
-Conjunto H_2205: {'a0435'}.
-Conjunto H_2207: {'a0020', 'a0063', 'a0211'}.
-Conjunto H_2210: {'a0028'}.
-Conjunto H_2211: {'a0076', 'a0157', 'a0398'}.
-Conjunto H_2220: {'a0484', 'a0197', 'a0146'}.
-Conjunto H_2240: {'a0381', 'a0511'}.
-Conjunto H_2247: {'a0449'}.
-Conjunto H_2252: {'a0480', 'a0259'}.
-Conjunto H_2269: {'a0499'}.
-Conjunto H_2270: {'a0370'}.
-Conjunto H_2283: {'a0261'}.
-Conjunto H_2286: {'a0264', 'a0347'}.
-Conjunto H_2287: {'a0300'}.
-Conjunto H_2289: {'a0324'}.
-Conjunto H_2292: {'a0355'}.
-Conjunto H_2297: {'a0447'}.
-Conjunto H_2300: {'a0369', 'a0139'}.
-Conjunto H_2302: {'a0113', 'a0504', 'a0089'}.
-Conjunto H_2304: {'a0056', 'a0443'}.
-Conjunto H_2306: {'a0163'}.
-Conjunto H_2309: {'a0123'}.
-Conjunto H_2313: {'a0251'}.
-Conjunto H_2316: {'a0317', 'a0229'}.
-Conjunto H_2329: {'a0120'}.
-Conjunto H_2330: {'a0016', 'a0359'}.
-Conjunto H_2346: {'a0015', 'a0085'}.
-Conjunto H_2350: {'a0010'}.
-Conjunto H_2353: {'a0111', 'a0451'}.
-Conjunto H_2354: {'a0423', 'a0043', 'a0020'}.
-Conjunto H_2355: {'a0027', 'a0437'}.
-Conjunto H_2362: {'a0014', 'a0188'}.
-Conjunto H_2370: {'a0364', 'a0055', 'a0229', 'a0405'}.
-Conjunto H_2375: {'a0225', 'a0411'}.
-Conjunto H_2376: {'a0404', 'a0313'}.
-Conjunto H_2380: {'a0110', 'a0098'}.
-Conjunto H_2383: {'a0402'}.
-Conjunto H_2386: {'a0381', 'a0063', 'a0183', 'a0502', 'a0434'}.
-Conjunto H_2394: {'a0197', 'a0363'}.
-Conjunto H_2398: {'a0287', 'a0490'}.
-Conjunto H_2404: {'a0431', 'a0415', 'a0282'}.
-Conjunto H_2411: {'a0145'}.
-Conjunto H_2413: {'a0116'}.
-Conjunto H_2423: {'a0471'}.
-Conjunto H_2435: {'a0239', 'a0340'}.
-Conjunto H_2439: {'a0438'}.
-Conjunto H_2440: {'a0403'}.
-Conjunto H_2443: {'a0354'}.
-Conjunto H_2447: {'a0306'}.
-Conjunto H_2449: {'a0204', 'a0441'}.
-Conjunto H_2453: {'a0340', 'a0050'}.
-Conjunto H_2454: {'a0227'}.
-Conjunto H_2458: {'a0252', 'a0212'}.
-Conjunto H_2460: {'a0432'}.
-Conjunto H_2464: {'a0049'}.
-Conjunto H_2465: {'a0301'}.
-Conjunto H_2467: {'a0005', 'a0032'}.
-Conjunto H_2472: {'a0200', 'a0150'}.
-Conjunto H_2475: {'a0008', 'a0384', 'a0335'}.
-Conjunto H_2476: {'a0048', 'a0156'}.
-Conjunto H_2490: {'a0253', 'a0206'}.
-Conjunto H_2494: {'a0453', 'a0378'}.
-Conjunto H_2497: {'a0082'}.
-Conjunto H_2501: {'a0061'}.
+Conjunto H_22: {'a0314', 'a0032'}.
+Conjunto H_45: {'a0110', 'a0311'}.
+Conjunto H_73: {'a0298', 'a0314'}.
+Conjunto H_79: {'a0241', 'a0320'}.
+Conjunto H_87: {'a0325', 'a0201', 'a0172'}.
+Conjunto H_91: {'a0309', 'a0012', 'a0514'}.
+Conjunto H_121: {'a0411', 'a0260'}.
+Conjunto H_123: {'a0104', 'a0156'}.
+Conjunto H_139: {'a0224', 'a0362'}.
+Conjunto H_154: {'a0213', 'a0128'}.
+Conjunto H_156: {'a0328'}.
+Conjunto H_158: {'a0357', 'a0301'}.
+Conjunto H_180: {'a0286', 'a0331', 'a0115'}.
+Conjunto H_181: {'a0191', 'a0218'}.
+Conjunto H_190: {'a0179', 'a0204'}.
+Conjunto H_216: {'a0268', 'a0449'}.
+Conjunto H_246: {'a0275', 'a0062'}.
+Conjunto H_264: {'a0144', 'a0437'}.
+Conjunto H_276: {'a0330', 'a0067'}.
+Conjunto H_279: {'a0338', 'a0273'}.
+Conjunto H_285: {'a0182', 'a0209'}.
+Conjunto H_293: {'a0154', 'a0295'}.
+Conjunto H_307: {'a0489', 'a0006'}.
+Conjunto H_309: {'a0371', 'a0178'}.
+Conjunto H_340: {'a0333', 'a0417'}.
+Conjunto H_377: {'a0169'}.
+Conjunto H_395: {'a0222', 'a0018'}.
+Conjunto H_424: {'a0112', 'a0397', 'a0315'}.
+Conjunto H_436: {'a0046', 'a0127'}.
+Conjunto H_440: {'a0409', 'a0479'}.
+Conjunto H_457: {'a0381', 'a0460', 'a0175'}.
+Conjunto H_466: {'a0013', 'a0474'}.
+Conjunto H_482: {'a0345'}.
+Conjunto H_496: {'a0341', 'a0020'}.
+Conjunto H_526: {'a0387', 'a0011'}.
+Conjunto H_527: {'a0208', 'a0467'}.
+Conjunto H_538: {'a0502', 'a0512', 'a0091'}.
+Conjunto H_558: {'a0244', 'a0245', 'a0475'}.
+Conjunto H_559: {'a0360', 'a0339', 'a0158'}.
+Conjunto H_602: {'a0293', 'a0031'}.
+Conjunto H_608: {'a0381', 'a0303'}.
+Conjunto H_632: {'a0373', 'a0172', 'a0502'}.
+Conjunto H_645: {'a0369', 'a0071'}.
+Conjunto H_650: {'a0336', 'a0441'}.
+Conjunto H_667: {'a0300', 'a0238'}.
+Conjunto H_692: {'a0270', 'a0053'}.
+Conjunto H_702: {'a0181', 'a0287'}.
+Conjunto H_714: {'a0382', 'a0461'}.
+Conjunto H_732: {'a0219'}.
+Conjunto H_740: {'a0393', 'a0487'}.
+Conjunto H_751: {'a0034', 'a0503'}.
+Conjunto H_758: {'a0386', 'a0271'}.
+Conjunto H_769: {'a0426', 'a0009'}.
+Conjunto H_774: {'a0078', 'a0105'}.
+Conjunto H_775: {'a0206', 'a0272'}.
+Conjunto H_777: {'a0343', 'a0151'}.
+Conjunto H_784: {'a0361'}.
+Conjunto H_788: {'a0126', 'a0211'}.
+Conjunto H_801: {'a0514', 'a0231'}.
+Conjunto H_804: {'a0294', 'a0088'}.
+Conjunto H_812: {'a0450', 'a0254'}.
+Conjunto H_823: {'a0034', 'a0109'}.
+Conjunto H_838: {'a0429', 'a0113'}.
+Conjunto H_859: {'a0225', 'a0033'}.
+Conjunto H_871: {'a0215', 'a0495'}.
+Conjunto H_877: {'a0443'}.
+Conjunto H_878: {'a0120', 'a0092'}.
+Conjunto H_895: {'a0133', 'a0150'}.
+Conjunto H_917: {'a0365', 'a0144'}.
+Conjunto H_938: {'a0291', 'a0325'}.
+Conjunto H_968: {'a0257', 'a0249'}.
+Conjunto H_986: {'a0125', 'a0185', 'a0314'}.
+Conjunto H_991: {'a0039'}.
+Conjunto H_994: {'a0459', 'a0392', 'a0457'}.
+Conjunto H_1001: {'a0333', 'a0214'}.
+Conjunto H_1003: {'a0193', 'a0121'}.
+Conjunto H_1015: {'a0498', 'a0281'}.
+Conjunto H_1029: {'a0347', 'a0064'}.
+Conjunto H_1042: {'a0264', 'a0274'}.
+Conjunto H_1048: {'a0374', 'a0239'}.
+Conjunto H_1054: {'a0381', 'a0468'}.
+Conjunto H_1055: {'a0137', 'a0122'}.
+Conjunto H_1059: {'a0432'}.
+Conjunto H_1069: {'a0132', 'a0401'}.
+Conjunto H_1072: {'a0140', 'a0510'}.
+Conjunto H_1107: {'a0085', 'a0307', 'a0073'}.
+Conjunto H_1108: {'a0203', 'a0436'}.
+Conjunto H_1110: {'a0216', 'a0149'}.
+Conjunto H_1114: {'a0500', 'a0147'}.
+Conjunto H_1127: {'a0402', 'a0376'}.
+Conjunto H_1138: {'a0146', 'a0269'}.
+Conjunto H_1144: {'a0304', 'a0494'}.
+Conjunto H_1162: {'a0093', 'a0141'}.
+Conjunto H_1169: {'a0095'}.
+Conjunto H_1180: {'a0098', 'a0465'}.
+Conjunto H_1187: {'a0114', 'a0028'}.
+Conjunto H_1188: {'a0112', 'a0383'}.
+Conjunto H_1206: {'a0471'}.
+Conjunto H_1208: {'a0408', 'a0499'}.
+Conjunto H_1216: {'a0462', 'a0401', 'a0385'}.
+Conjunto H_1230: {'a0252', 'a0440'}.
+Conjunto H_1233: {'a0019', 'a0246'}.
+Conjunto H_1236: {'a0375', 'a0282'}.
+Conjunto H_1247: {'a0335', 'a0038'}.
+Conjunto H_1253: {'a0107', 'a0323'}.
+Conjunto H_1254: {'a0065', 'a0412'}.
+Conjunto H_1291: {'a0100', 'a0069'}.
+Conjunto H_1299: {'a0313', 'a0138', 'a0056'}.
+Conjunto H_1302: {'a0035', 'a0139'}.
+Conjunto H_1326: {'a0381', 'a0511'}.
+Conjunto H_1348: {'a0062', 'a0418'}.
+Conjunto H_1376: {'a0227', 'a0349'}.
+Conjunto H_1386: {'a0490', 'a0334'}.
+Conjunto H_1393: {'a0159', 'a0089'}.
+Conjunto H_1432: {'a0506', 'a0237'}.
+Conjunto H_1439: {'a0194'}.
+Conjunto H_1453: {'a0462', 'a0158', 'a0337', 'a0265'}.
+Conjunto H_1460: {'a0184', 'a0096', 'a0185'}.
+Conjunto H_1469: {'a0116', 'a0117'}.
+Conjunto H_1544: {'a0251', 'a0157'}.
+Conjunto H_1555: {'a0005', 'a0324'}.
+Conjunto H_1568: {'a0472', 'a0025', 'a0326'}.
+Conjunto H_1571: {'a0344', 'a0492'}.
+Conjunto H_1574: {'a0085', 'a0434', 'a0233'}.
+Conjunto H_1586: {'a0290'}.
+Conjunto H_1595: {'a0454', 'a0342'}.
+Conjunto H_1606: {'a0367', 'a0398'}.
+Conjunto H_1634: {'a0262', 'a0376', 'a0234'}.
+Conjunto H_1636: {'a0404'}.
+Conjunto H_1649: {'a0378', 'a0074'}.
+Conjunto H_1654: {'a0424', 'a0501'}.
+Conjunto H_1661: {'a0484'}.
+Conjunto H_1666: {'a0085', 'a0123'}.
+Conjunto H_1717: {'a0119', 'a0139'}.
+Conjunto H_1743: {'a0055', 'a0052'}.
+Conjunto H_1749: {'a0155', 'a0076', 'a0488'}.
+Conjunto H_1761: {'a0405', 'a0196'}.
+Conjunto H_1762: {'a0083', 'a0048'}.
+Conjunto H_1779: {'a0210', 'a0421'}.
+Conjunto H_1780: {'a0043', 'a0124'}.
+Conjunto H_1781: {'a0019', 'a0377'}.
+Conjunto H_1785: {'a0197', 'a0072', 'a0103'}.
+Conjunto H_1799: {'a0016', 'a0445'}.
+Conjunto H_1812: {'a0134', 'a0379'}.
+Conjunto H_1825: {'a0085', 'a0391', 'a0061'}.
+Conjunto H_1847: {'a0458', 'a0051'}.
+Conjunto H_1851: {'a0081', 'a0025', 'a0353'}.
+Conjunto H_1857: {'a0150', 'a0255', 'a0189'}.
+Conjunto H_1860: {'a0265', 'a0355'}.
+Conjunto H_1861: {'a0012', 'a0317'}.
+Conjunto H_1867: {'a0170'}.
+Conjunto H_1879: {'a0430'}.
+Conjunto H_1885: {'a0197', 'a0236'}.
+Conjunto H_1888: {'a0344', 'a0356'}.
+Conjunto H_1894: {'a0359', 'a0075', 'a0475', 'a0350'}.
+Conjunto H_1896: {'a0130'}.
+Conjunto H_1913: {'a0327', 'a0439'}.
+Conjunto H_1917: {'a0002'}.
+Conjunto H_1926: {'a0462', 'a0212', 'a0394'}.
+Conjunto H_1954: {'a0044', 'a0480'}.
+Conjunto H_1956: {'a0220', 'a0108'}.
+Conjunto H_1961: {'a0075', 'a0446'}.
+Conjunto H_1965: {'a0469'}.
+Conjunto H_1970: {'a0283'}.
+Conjunto H_1977: {'a0351', 'a0021'}.
+Conjunto H_1983: {'a0042', 'a0410'}.
+Conjunto H_1987: {'a0509', 'a0513'}.
+Conjunto H_1996: {'a0447'}.
+Conjunto H_2006: {'a0131', 'a0077'}.
+Conjunto H_2018: {'a0070', 'a0076'}.
+Conjunto H_2026: {'a0391', 'a0496'}.
+Conjunto H_2036: {'a0163'}.
+Conjunto H_2046: {'a0463', 'a0221'}.
+Conjunto H_2055: {'a0192', 'a0363'}.
+Conjunto H_2078: {'a0470', 'a0288'}.
+Conjunto H_2080: {'a0086', 'a0368'}.
+Conjunto H_2099: {'a0381', 'a0422'}.
+Conjunto H_2128: {'a0199', 'a0167'}.
+Conjunto H_2129: {'a0168', 'a0325'}.
+Conjunto H_2131: {'a0195', 'a0428', 'a0171'}.
+Conjunto H_2149: {'a0508'}.
+Conjunto H_2153: {'a0322', 'a0020', 'a0514'}.
+Conjunto H_2156: {'a0456', 'a0277'}.
+Conjunto H_2163: {'a0352'}.
+Conjunto H_2168: {'a0509', 'a0090'}.
+Conjunto H_2180: {'a0240', 'a0124', 'a0076'}.
+Conjunto H_2217: {'a0364', 'a0027'}.
+Conjunto H_2219: {'a0015', 'a0340'}.
+Conjunto H_2222: {'a0381', 'a0136', 'a0450'}.
+Conjunto H_2225: {'a0431', 'a0226', 'a0475', 'a0502'}.
+Conjunto H_2237: {'a0200', 'a0390'}.
+Conjunto H_2244: {'a0153', 'a0319'}.
+Conjunto H_2248: {'a0056', 'a0413'}.
+Conjunto H_2256: {'a0420', 'a0242'}.
+Conjunto H_2257: {'a0036'}.
+Conjunto H_2264: {'a0229', 'a0207'}.
+Conjunto H_2266: {'a0265', 'a0066', 'a0128'}.
+Conjunto H_2273: {'a0280', 'a0451'}.
+Conjunto H_2274: {'a0164'}.
+Conjunto H_2296: {'a0145'}.
+Conjunto H_2298: {'a0263'}.
+Conjunto H_2307: {'a0152', 'a0459'}.
+Conjunto H_2321: {'a0310'}.
+Conjunto H_2325: {'a0084', 'a0305', 'a0020'}.
+Conjunto H_2335: {'a0146', 'a0101'}.
+Conjunto H_2359: {'a0040'}.
+Conjunto H_2381: {'a0344', 'a0222', 'a0250'}.
+Conjunto H_2390: {'a0344', 'a0247', 'a0297'}.
+Conjunto H_2405: {'a0054', 'a0427'}.
+Conjunto H_2406: {'a0158', 'a0415', 'a0106'}.
+Conjunto H_2410: {'a0491', 'a0308'}.
+Conjunto H_2414: {'a0485', 'a0063'}.
+Conjunto H_2444: {'a0388'}.
+Conjunto H_2452: {'a0188', 'a0376', 'a0111'}.
+Conjunto H_2460: {'a0299', 'a0358'}.
+Conjunto H_2493: {'a0438'}.
+Conjunto H_2496: {'a0087'}.
+Conjunto H_2498: {'a0232', 'a0118'}.
+Conjunto H_2501: {'a0030', 'a0332'}.
+Conjunto H_2504: {'a0306'}.
+Conjunto H_2510: {'a0466'}.
+Conjunto H_2517: {'a0316', 'a0419'}.
+Conjunto H_2524: {'a0055', 'a0166'}.
+Conjunto H_2527: {'a0399'}.
+Conjunto H_2528: {'a0400', 'a0102'}.
+Conjunto H_2556: {'a0230', 'a0407'}.
+Conjunto H_2564: {'a0174'}.
+Conjunto H_2570: {'a0186'}.
+Conjunto H_2571: {'a0416'}.
+Conjunto H_2576: {'a0384', 'a0493', 'a0381'}.
+Conjunto H_2588: {'a0003'}.
+Conjunto H_2599: {'a0060', 'a0197'}.
+Conjunto H_2610: {'a0507'}.
+Conjunto H_2613: {'a0050', 'a0405'}.
+Conjunto H_2617: {'a0482'}.
+Conjunto H_2634: {'a0261'}.
+Conjunto H_2639: {'a0057', 'a0380', 'a0076', 'a0502'}.
+Conjunto H_2644: {'a0094', 'a0187'}.
+Conjunto H_2658: {'a0160'}.
+Conjunto H_2672: {'a0037'}.
+Conjunto H_2678: {'a0162'}.
+Conjunto H_2679: {'a0366', 'a0321'}.
+Conjunto H_2680: {'a0395', 'a0433'}.
+Conjunto H_2681: {'a0278', 'a0165'}.
+Conjunto H_2699: {'a0183', 'a0423', 'a0158'}.
+Conjunto H_2701: {'a0023', 'a0068', 'a0161'}.
+Conjunto H_2708: {'a0476'}.
+Conjunto H_2709: {'a0497', 'a0041'}.
+Conjunto H_2713: {'a0478', 'a0229', 'a0195'}.
+Conjunto H_2715: {'a0279', 'a0502'}.
+Conjunto H_2725: {'a0197', 'a0389'}.
+Conjunto H_2730: {'a0302'}.
+Conjunto H_2736: {'a0348', 'a0481'}.
+Conjunto H_2737: {'a0243', 'a0329'}.
+Conjunto H_2761: {'a0267'}.
+Conjunto H_2762: {'a0059', 'a0435'}.
+Conjunto H_2773: {'a0444'}.
+Conjunto H_2783: {'a0258', 'a0148'}.
+Conjunto H_2795: {'a0177'}.
+Conjunto H_2803: {'a0434', 'a0464', 'a0144'}.
+Conjunto H_2815: {'a0135'}.
+Conjunto H_2830: {'a0292'}.
+Conjunto H_2839: {'a0022'}.
+Conjunto H_2841: {'a0045', 'a0025', 'a0017'}.
+Conjunto H_2861: {'a0455'}.
+Conjunto H_2862: {'a0370'}.
+Conjunto H_2870: {'a0026'}.
+Conjunto H_2872: {'a0223', 'a0312'}.
+Conjunto H_2884: {'a0004', 'a0024'}.
+Conjunto H_2890: {'a0403'}.
+Conjunto H_2898: {'a0284'}.
+Conjunto H_2913: {'a0080'}.
+Conjunto H_2919: {'a0049'}.
+Conjunto H_2920: {'a0477'}.
+Conjunto H_2924: {'a0505'}.
+Conjunto H_2929: {'a0142', 'a0205'}.
+Conjunto H_2945: {'a0010'}.
+Conjunto H_2948: {'a0202'}.
+Conjunto H_2949: {'a0331', 'a0354', 'a0076'}.
+Conjunto H_2952: {'a0082'}.
+Conjunto H_2955: {'a0007'}.
+Conjunto H_2971: {'a0173'}.
+Conjunto H_2978: {'a0473', 'a0235'}.
+Conjunto H_2983: {'a0190', 'a0318'}.
+Conjunto H_2992: {'a0276', 'a0346', 'a0008'}.
+Conjunto H_3004: {'a0228', 'a0289', 'a0372'}.
+Conjunto H_3005: {'a0176', 'a0143'}.
+Conjunto H_3010: {'a0198', 'a0001', 'a0414'}.
+Conjunto H_3013: {'a0285', 'a0259', 'a0008'}.
+Conjunto H_3018: {'a0285', 'a0217', 'a0276'}.
+Conjunto H_3019: {'a0453', 'a0259', 'a0346'}.
+Conjunto H_3021: {'a0014', 'a0442', 'a0256'}.
+Conjunto H_3029: {'a0129', 'a0180'}.
+Conjunto H_3036: {'a0058', 'a0099'}.
+Conjunto H_3037: {'a0296', 'a0504'}.
+Conjunto H_3040: {'a0486', 'a0253'}.
+Conjunto H_3048: {'a0029', 'a0425'}.
+Conjunto H_3049: {'a0079', 'a0483'}.
+Conjunto H_3054: {'a0396', 'a0047'}.
+Conjunto H_3056: {'a0452', 'a0448'}.
+Conjunto H_3064: {'a0014', 'a0266', 'a0248'}.
+Conjunto H_3075: {'a0097', 'a0406'}.
+Conjunto H_3079: {'a0442', 'a0256', 'a0248'}.
+Conjunto H_3080: {'a0029', 'a0425'}.

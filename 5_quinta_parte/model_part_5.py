@@ -58,9 +58,9 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     tiempo = time.time() - tiempo_inicio
 
     if encontro_solucion:
-        conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
-        
-    return [conjuntos_seleccionados, modelo, conjuntos, tiempo]
+        conjuntos_seleccionados = obtener_conjuntos_seleccionados(obtener_solucion_entera(modelo, x))
+        return [conjuntos_seleccionados, modelo, conjuntos, tiempo]
+    return None
 
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
