@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
 import sys
+import time
 
 from configuracion_5 import *
 from generador_output_5 import * 
 import model_part_5
-import time
 
-#if len(sys.argv) != 4:
 if len(sys.argv) != 3:
     print(f"Uso: {sys.argv[0]} OPTION nombre_archivo minutos\n")
     print(f"      OPTIONS: -g | -u")
@@ -25,10 +24,9 @@ if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
 tiempo_inicio = time.time()
-
 datos = model_part_5.obtener_conjuntos(archivo, 60)
-
 tiempo_tardado = time.time() - tiempo_inicio
+
 if datos is not None:
     print(f"Tiempo de ejecución: {datos[-1]} segundos")
     print(f"Solución: {datos[0]}")
