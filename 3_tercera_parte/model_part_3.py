@@ -97,7 +97,6 @@ def obtener_solucion_primal_3(model):
 # Esta función supone que el model es `optimal`
 def obtener_solucion_dual_3(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
-
     return y, quicksum(y)
 
 def obtener_conjuntos_seleccionados(solucion):
