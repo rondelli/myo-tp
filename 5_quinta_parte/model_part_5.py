@@ -32,8 +32,8 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         
         modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
 
-        x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
-        y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
+        x, _ = model_part_3.obtener_solucion_primal_3(modelo)
+        y, _ = model_part_3.obtener_solucion_dual_3(modelo)
 
         # sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
         # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
@@ -48,7 +48,10 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         # PASO 5
         # copy_of_model = Model(sourceModel=modelo_3)
         
-        if sum(solucion_modelo_2[1]) > 1:
+        if solucion_modelo_2 is None:
+            encontro_solucion = True
+            break
+        elif sum(solucion_modelo_2[1]) > 1:
             conjuntos.append(set(solucion_modelo_2[0]))
         else:
             encontro_solucion = True
