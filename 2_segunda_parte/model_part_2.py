@@ -5,8 +5,8 @@ from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
 # Model segunada parte
-def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float]):
-    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, 420)
+def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+    model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
     try:
         x, obj_x = obtener_solucion_primal_2(model)
     except TypeError:
@@ -18,7 +18,7 @@ def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float]):
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debuggin] {status}: {solution}\n\n")
+        # sys.stderr.write(f"[Debuggin] {status}: {solution}\n\n")
         return [F, model, fake_x, I, s]
     else:
         return None
@@ -75,7 +75,7 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    model.setParam("display/freq", 1)
+    # model.setParam("display/freq", 1)
 
     model.optimize()
 
@@ -89,11 +89,11 @@ def obtener_solucion_primal_2(model):
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
+        # sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
 
         x = [v.getLPSol() for v in model.getVars(False)]
 
-        sys.stderr.write(f"[Debugging]: {x}\n\n")
+        # sys.stderr.write(f"[Debugging]: {x}\n\n")
         return x, model.getObjVal()
     else:
         return None

@@ -59,7 +59,7 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    #model.setParam("display/freq", 1)
+    model.setParam("display/freq", 1)
 
     model.optimize()
 
@@ -105,7 +105,7 @@ def crear_modelo_1(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    model.setParam("display/freq", 1)
+    # model.setParam("display/freq", 1)
 
     # Desactivación temporal de presolve
     model.setPresolve(SCIP_PARAMSETTING.OFF)
@@ -131,7 +131,7 @@ def obtener_solucion_primal_1(model):
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
+        # sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
 
         # El nombre de variable x, acá es missleading, es x porque es el primal.
         # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo seleccionado y las $y$: disco seleccionado

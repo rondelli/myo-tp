@@ -16,45 +16,48 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     # PASO 1
     conjuntos = configuracion_6.generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
-    duracion = threshold * 60
+    # duracion = threshold * 60
     tiempo_inicio = time.time()
     encontro = True
 
     while True:
-        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos)
+        inicio_ciclo = time.time()
+        if inicio_ciclo - tiempo_inicio >= threshold:
+            encontro = False
+            break
+        
+        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
         
         x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
         y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
 
-        sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
-        sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
+        # sys.stderr.write(f"[Debugging] obj x {obj_x}\n")
+        # sys.stderr.write(f"[Debugging] obj y {obj_y}\n")
 
         optimo = es_optimo(modelo, x)
         sys.stderr.write(f"[Debugging] es óptimo: {optimo}")
 
         # PASO 4
-        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y)
+        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
         solucion_modelo_2 = configuracion_6.generar_output_modelo_2(distribucion)
 
         # PASO 5
         # copy_of_model = Model(sourceModel=modelo_3)
-        if time.time() - tiempo_inicio > duracion:
-            encontro = False
-            break
-        elif sum(solucion_modelo_2[1]) > 1:
+        if sum(solucion_modelo_2[1]) > 1:
             conjuntos.append(set(solucion_modelo_2[0]))
         else:
             encontro = True
             break
     
     conjuntos_seleccionados = []
+    tiempo = time.time() - tiempo_inicio
     if encontro:
-        print(f"solucion optima encontrada en {time.time() - tiempo_inicio}")
+        print(f"solucion optima encontrada en {tiempo}")
         conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
     else:
         print("no se encontraron soluciones optimas")
         
-    return [conjuntos_seleccionados, modelo, conjuntos]
+    return [conjuntos_seleccionados, modelo, conjuntos, tiempo]
 
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]

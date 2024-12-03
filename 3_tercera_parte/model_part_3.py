@@ -6,8 +6,10 @@ from math import floor, ceil
 
 import pyscipopt
 
-def elegir_conjuntos(F: list, H: list):
+def elegir_conjuntos(F: list, H: list, time_limit=420):
     model = Model("model_part_3")
+    model.setParam("limits/time", time_limit)
+
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
 
@@ -41,8 +43,9 @@ def elegir_conjuntos(F: list, H: list):
         return None
 
 # Crea el modelo relajado y lo devuelve optimizado
-def crear_modelo_3(F: list, H: list):
+def crear_modelo_3(F: list, H: list, time_limit=420):
     model = Model("model_part_3")
+    model.setParam("limits/time", time_limit)
     
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos

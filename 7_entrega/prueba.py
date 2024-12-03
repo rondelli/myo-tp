@@ -61,36 +61,38 @@ for a in archivos:
     var_6 = 480
     tiempo_6 = 480
 
-    datos = model_part_1.distribuir_archivos_1(d_t, F, s, threshold*60)
+    datos = model_part_1.distribuir_archivos_1(d_t, F, s, threshold * 60)
     if datos is not None:
         cota_dual_1, mejor_1, var_1, tiempo_1 = datos_modelo(datos[1])
         output_1.generar_output(outPath, a + "_file.out", datos)
     else:
         output_1.generar_output_fallido(outPath, a + "_file.out")
 
-    modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold*60)
+    modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold * 60)
     if modelo_4 is not None:
         cota_dual_4, mejor_4, var_4, tiempo_4 = datos_modelo(modelo_4[1])
         output_4.generar_output(outPath, a + "_file.out", modelo_4)
     else:
         output_4.generar_output_fallido(outPath, a + "_file.out")
 
-    data_5  = model_part_5.obtener_conjuntos(a, threshold)
+    data_5  = model_part_5.obtener_conjuntos(a, threshold * 60)
     if data_5 is not None:
         conjuntos_seleccionados_5 = data_5[0]
         modelo_5 = data_5[1]
         conjuntos_5 = data_5[2]
-        cota_dual_5, mejor_5, var_5, tiempo_5 = datos_modelo(modelo_5)
+        cota_dual_5, mejor_5, var_5, _ = datos_modelo(modelo_5)
+        tiempo_5 = data_5[3]
         output_5.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_5, conjuntos_5)
     else:
         output_5.generar_output_fallido(outPath, a + "_file.out")
 
-    data_6  = model_part_6.obtener_conjuntos(a, threshold)
+    data_6  = model_part_6.obtener_conjuntos(a, threshold * 60)
     if data_6 is not None:
         conjuntos_seleccionados_6 = data_6[0]
         modelo_6 = data_6[1]
         conjuntos_6 = data_6[2]
-        cota_dual_6, mejor_6, var_6, tiempo_6 = datos_modelo(modelo_6)
+        cota_dual_6, mejor_6, var_6, _ = datos_modelo(modelo_6)
+        tiempo_6 = data_6[3]
         output_6.generar_output(outPath, a + "_file.out", conjuntos_seleccionados_6, conjuntos_6)
     else:
         output_6.generar_output_fallido(outPath, a + "_file.out")
@@ -98,7 +100,7 @@ for a in archivos:
     caso = a
     cant = len(F)
 
-    cotas = [cota_dual_1, cota_dual_4, cota_dual_5]
+    cotas = [cota_dual_1, cota_dual_4, cota_dual_5, cota_dual_6]
     cotas_validas = [c for c in cotas if c is not None]
 
     if cotas_validas:
