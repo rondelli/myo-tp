@@ -23,4 +23,6 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
-datos = model_part_5.obtener_conjuntos(archivo, 7)
+datos = model_part_5.obtener_conjuntos(archivo, 60)
+print(f"Tiempo de ejecución: {datos[-1]} segundos")
+print(f"Solución: {datos[0]}")

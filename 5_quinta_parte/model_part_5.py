@@ -17,20 +17,24 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
 
     # PASO 1
+    tiempo_inicio = time.time()
     conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
 
     # duracion = threshold * 60
-    tiempo_inicio = time.time()
-    encontro = True
+    
+    encontro_solucion = True
+    modelo = None
 
     while True:
         inicio_ciclo = time.time()
         if inicio_ciclo - tiempo_inicio >= threshold:
-            encontro = False
+            encontro_solucion = False
             break
         
         modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
         
+        print(modelo)
+
         x, obj_x = model_part_3.obtener_solucion_primal_3(modelo)
         y, obj_y = model_part_3.obtener_solucion_dual_3(modelo)
 
@@ -50,16 +54,14 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         if sum(solucion_modelo_2[1]) > 1:
             conjuntos.append(set(solucion_modelo_2[0]))
         else:
-            encontro = True
+            encontro_solucion = True
             break
     
     conjuntos_seleccionados = []
     tiempo = time.time() - tiempo_inicio
-    if encontro:
-        print(f"solucion optima encontrada en {tiempo}")
+
+    if encontro_solucion:
         conjuntos_seleccionados = obtener_conjuntos_seleccionados(x)
-    else:
-        print("no se encontraron soluciones optimas")
         
     return [conjuntos_seleccionados, modelo, conjuntos, tiempo]
 
