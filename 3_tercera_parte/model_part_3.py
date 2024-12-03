@@ -102,6 +102,7 @@ def obtener_solucion_primal_3(model):
         x = [v.getLPSol() for v in model.getVars()]
 
         return x, model.getObjVal()
+    return None, None
 
 # Esta función supone que el model es `optimal`
 def obtener_solucion_dual_3(model):
