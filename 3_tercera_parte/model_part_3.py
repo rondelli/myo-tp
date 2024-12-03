@@ -73,8 +73,6 @@ def crear_modelo_3(F: list, H: list, time_limit=420):
     model.setPresolve(SCIP_PARAMSETTING.OFF)
 
     ####################################################
-    # Esto es la clave para que obj(dual) = obj(primal)
-    # según documentación de pyscipopt
     #
     model.disablePropagation()
     model.setHeuristics(pyscipopt.SCIP_PARAMSETTING.OFF)
@@ -84,32 +82,20 @@ def crear_modelo_3(F: list, H: list, time_limit=420):
     model.optimize()
     return model
 
-# La cantidad de constraints coinciden con la cantidad de archivos, por
-# ende, la cantidad de variables del dual coinciden con la cantidad de
-# archivos del input.
+
 def obtener_solucion_primal_3(model):
     # Activación de presolve
-    model.setPresolve(SCIP_PARAMSETTING.DEFAULT) # esta línea no tiene efecto porque el model ya está optimize()
-
+    model.setPresolve(SCIP_PARAMSETTING.DEFAULT)
     sol = model.getBestSol()
-    
-    # esto no debería necesitarse si el modelo ya viene optimizado con el presolving off
-    # model.setPresolve(SCIP_PARAMSETTING.OFF)
-
     status = model.getStatus()
-    if sol is not None and status in ["optimal", "feasible"]:
-        # Ya no devuelve un array de posiciones, devuelve la solución obtenida por scip
-        x = [v.getLPSol() for v in model.getVars()]
 
+    if sol is not None and status in ["optimal", "feasible"]:
+        x = [v.getLPSol() for v in model.getVars()]
         return x, model.getObjVal()
+    return None, None
 
 # Esta función supone que el model es `optimal`
 def obtener_solucion_dual_3(model):
-    # No debería ser necesario si el modelo ya viene optimizado con el presolving off
-    # Aseguarse de apagar el presolving
-    # model.setPresolve(SCIP_PARAMSETTING.OFF)
-
-    # La longitud de y coincide con la cantidad de archivos del input
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
 
     return y, quicksum(y)

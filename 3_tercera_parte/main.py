@@ -5,16 +5,22 @@ from configuracion_3 import *
 from generador_output_3 import *
 from model_part_3 import *
 
-if len(sys.argv) != 2:
-    print(f"Uso: {sys.argv[0]} nombre_archivo")
+if len(sys.argv) != 3:
+    print(f"Uso: {sys.argv[0]} OPTION nombre_archivo")
+    print(f"      OPTIONS: -g | -u")
+    print(f"      -g generar archivo")
+    print(f"      -u usar archivo ya generado")
     sys.exit(1)
 
-archivo = sys.argv[1]
-#num_archivos = int(sys.argv[2])
-#num_conjuntos = int(sys.argv[3])
-print(f"Utilizando {archivo}\n")
+archivo = sys.argv[2]
 
-generar_configuracion(archivo)
+if sys.argv[1] == "-g":
+    print(f"Generando {archivo}\n")
+    generar_configuracion(archivo)
+
+if sys.argv[1] == "-u":
+    print(f"Usando {archivo}\n")
+    
 archivos, conjuntos = leer_configuracion(f"./{archivo}")
 
 solucion = elegir_conjuntos(archivos, conjuntos)
