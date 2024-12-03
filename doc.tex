@@ -491,7 +491,7 @@ tamaños de archivos.
 
 \noindent $f_{k}$, constante: cantidad de archivos de tamaño $k$ en MB, con $k \in \{1, \ldots, t\}$. \\
 
-\noindent $x_{p}$, entera: cantidad de veces que se usa el patrón $p$, con $p \in \{1, \ldots, q\}$, donde $x_{p} \ge 0$. \\
+\noindent $x_{jp}$, binaria: 1 indica que se usa el patrón $p$ en el disco $j$, con $p \in \{1, \ldots, q\}$, donde $x_{jp} \in \{0, 1\}$, y $j \in \{1, \ldots, m\}$. \\
 
 \noindent $c_{kp}$, constante entera: cantidad de archivos de tamaño $k$ que entran en el patrón $p$, con $k \in \{1, \ldots, t\}$ y $p \in \{1, \ldots, q\}$.
 
@@ -503,7 +503,7 @@ tamaños de archivos.
 	\minimize
 	& \sum_{j = 1}^{m} y_{j}\\
 	\subjto
-	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{p} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
+	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{jp} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
 	& \sum_{p = 1}^{q} c_{kp} \cdot x_{p} = f_{k} \\
 	& y_{k} \ge 0, \quad \forall k \in \{1, \ldots, t\} \\
 	& x_{p} \ge 0, \quad \forall p \in \{1, \ldots, q\}
