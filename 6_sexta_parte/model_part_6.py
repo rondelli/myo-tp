@@ -31,7 +31,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         distribucion = model_part_2_6.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
         solucion_modelo_2 = configuracion_6.generar_output_modelo_2(distribucion)
 
-        if solucion_modelo_2 is None:
+        if solucion_modelo_2 is None or x is None:
             encontro_solucion = False
             break
         elif sum(solucion_modelo_2[1]) > 1:

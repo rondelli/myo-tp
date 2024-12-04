@@ -35,7 +35,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         solucion_modelo_2 = generar_output_modelo_2(distribucion)
 
         
-        if solucion_modelo_2 is None:
+        if solucion_modelo_2 is None or x is None:
             encontro_solucion = False
             break
         elif sum(solucion_modelo_2[1]) > 1:
