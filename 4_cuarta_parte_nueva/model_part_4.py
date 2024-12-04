@@ -71,7 +71,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
-        return [F, model, y, x, [key * S[key] for key in S]]
+        return [F, model, y, x, [key * S[key] for key in S], ordenamiento, c]
     else:
         return None
 
@@ -103,7 +103,7 @@ fan 1080000
 tuerca 930000
 ensalada 420000
 """
-
+""" 
 disk_size = 3
 file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
 file_sizes = [ 1350000, 1080000, 930000, 420000 ]
@@ -123,11 +123,11 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 0, 7]]
 
 # Patrón Lucía
-# c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
+#c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
 
 solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 
 if solution is not None:
     generar_output(f"{input_file_name[:-3]}.out", solution)
 else:
-    generar_output_fallido(f"{input_file_name[:-3]}.out")
+    generar_output_fallido(f"{input_file_name[:-3]}.out") """

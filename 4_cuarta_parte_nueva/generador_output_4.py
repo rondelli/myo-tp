@@ -4,11 +4,19 @@ import os
 # Este archivo es igual a generador_output_1.py
 ########################################################################
 
-def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
+# [F, model, y, x, s, q]
+# nombres, model, discos_elegidos, 
+
+def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s, q] 
     F = solucion[0]
     model = solucion[1]
-    x = solucion[2]
-    s = solucion[3]
+    y = solucion[2]
+    x = solucion[3]
+    s = solucion[4]
+    ordenamiento = solucion[5]
+    c = solucion[6]
+
+    file_sizes, F = zip(*ordenamiento)
 
     cant_archivos = len(F)
     cant_discos = round(float(model.getObjVal()))
@@ -19,18 +27,23 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
     ruta_out = os.path.join(os.path.dirname(__file__), "OUT", nombre_archivo)
     with open(ruta_out, "w") as f:
         f.write(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
-        for j in range(number_of_disks):
+        
+        for j in range(len(c)):
             if model.getVal(x[j]) == 0:
                 continue
 
             archivos_en_disco = []
             espacio_ocupado = 0
 
-            for i in range(cant_archivos):
-                # if model.getVal(x[i, j]) == 0:
-                    # continue
-                archivos_en_disco.append(f"{F[i]}  {s[i]}")
-                espacio_ocupado = espacio_ocupado + s[i]
+            print("PATRÓN:", j)
+
+            for i in range(len(file_sizes)):
+                tamaño_archivo = file_sizes[i]
+                indice = s.index(tamaño_archivo)
+
+                if c[j][indice] > 0:
+                    archivos_en_disco.append(f"{F[i]}  {tamaño_archivo}")
+                    espacio_ocupado = espacio_ocupado + tamaño_archivo
 
             f.write(f"\nDisco {j+1}: {espacio_ocupado} MB\n")
 
