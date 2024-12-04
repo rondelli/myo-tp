@@ -28,6 +28,8 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     # Cantidad de tamaños de archivos
     s = list(dict.fromkeys(S))
+    print("S:", S)
+    print("s:", s)
     t = len(s)
 
     # Cantidad de discos, a lo sumo, un disco por archivo
@@ -39,31 +41,17 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     # Define model
     model = Model("model_part_4")
 
-    # x[j][p] binary: 1 si se usa el patrón p en el disco j, con p ∈ {1,…,q}, donde x_{p} in {0, 1}
-    # x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
+    # x_{p} integer: cant de veces que se usa el patrón p
+    x = []
+    for p in range(q):
+        x.append(model.addVar(name=f"x_{p}", vtype="INTEGER"))
 
-    # x_{j, p} binary: 1 si se usa el patrón p en el disco j, con p ∈ {1,…,q}, donde x_{p} in {0, 1}
-    x = {}
-    for j in range(m):
-        for p in range(q):
-            x[j, p] = model.addVar(name = f"x_{j}_{p}", vtype="BINARY")
-
-    # y[j] binary: 1 si se usa el disco $j$, 0 en caso contrario
-    y = [model.addVar(vtype='B', name=f"y_{j}") for j in range(m)]
-
-    # minimize disks:
-    model.setObjective(quicksum(y), sense="minimize")
-
-    # Cantidad archivos de tamaño $k$ que entran en el disco $j$
-    # Restricción A
-    for j in range(m):
-        for k in range(t):
-            model.addCons(quicksum(s[k] * c[p][k] * x[j, p] for p in range(q)) <= d * y[j])
+    # Minimizar la suma de las variables x[p]
+    model.setObjective(quicksum(x), sense="minimize")
 
     # Restricción B
     for k in range(t):
-        for j in range(m):
-            model.addCons(quicksum(c[p][k] * x[j, p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -73,11 +61,10 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     solution = model.getBestSol()
     status = model.getStatus()
     
-
     if solution is not None and status in ["optimal", "feasible"]:
         objective_value = model.getObjVal()
         sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
-        return [F, model, y, x, [key * S[key] for key in S]]
+        return [F, model, x, [key * S[key] for key in S]]
     else:
         return None
 
