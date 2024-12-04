@@ -60,7 +60,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-
     model.optimize()
 
     solution = model.getBestSol()

@@ -10,10 +10,10 @@ class Pattern:
     def obtener_patrones(self):
         patrones = []
         patrones.append(self.obtener_primer_patron()[:])
-        print(patrones[0])
+   
         while True:
             patron = self.obtener_siguiente_patron()
-            print(patron)
+
             if patron is None:
                 break
             patrones.append(patron[:])
