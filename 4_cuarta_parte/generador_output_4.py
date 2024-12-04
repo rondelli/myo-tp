@@ -1,43 +1,57 @@
 import os
 
-def generar_output(output_file_name, solution):
-    F = solution[0]
-    model = solution[1]
-    y = solution[2]
-    c = solution[3]
-    S = solution[4]
+########################################################################
+# Este archivo es igual a generador_output_1.py
+########################################################################
 
-    number_of_files = len(F)
-    number_of_disks = number_of_files  # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
-    number_of_used_disks = round(float(model.getObjVal()))
+# [F, model, y, x, s, q]
+# nombres, model, discos_elegidos, 
 
-    path_out = os.path.join(os.path.dirname(__file__), ".", "OUT",
-                            output_file_name)
-    with open(path_out, "w") as f_out:
-        f_out.write(
-            f"Para la configuracion del archivo, {number_of_used_disks} discos son suficientes.\n"
-        )
-        for j in range(number_of_disks):
-            if model.getVal(y[j]) == 0:
+def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s, q] 
+    F = solucion[0]
+    model = solucion[1]
+    y = solucion[2]
+    x = solucion[3]
+    s = solucion[4]
+    ordenamiento = solucion[5]
+    c = solucion[6]
+
+    file_sizes, F = zip(*ordenamiento)
+
+    cant_archivos = len(F)
+    cant_discos = round(float(model.getObjVal()))
+
+    # La cantidad de discos disponibles es a lo sumo la cantidad de archivos
+    number_of_disks = cant_archivos
+
+    ruta_out = os.path.join(os.path.dirname(__file__), "OUT", nombre_archivo)
+    with open(ruta_out, "w") as f:
+        f.write(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
+        
+        for j in range(len(c)):
+            if model.getVal(x[j]) == 0:
                 continue
 
             archivos_en_disco = []
-            used_space = 0
+            espacio_ocupado = 0
 
-            for i in range(number_of_files):
-                if (i, j) in c:
-                    if model.getVal(c[i, j]) == 0:
-                        continue
-                    archivos_en_disco.append(f"{F[i]}  {S[i]}")
-                    used_space += S[i]
+            print("PATRÓN:", j)
 
-            f_out.write(f"\nDisco {j+1}: {used_space} MB\n")
+            for i in range(len(file_sizes)):
+                tamaño_archivo = file_sizes[i]
+                indice = s.index(tamaño_archivo)
 
-            for f in archivos_en_disco:
-                f_out.write(f + "\n")
+                if c[j][indice] > 0:
+                    archivos_en_disco.append(f"{F[i]}  {tamaño_archivo}")
+                    espacio_ocupado = espacio_ocupado + tamaño_archivo
+
+            f.write(f"\nDisco {j+1}: {espacio_ocupado} MB\n")
+
+            for archivo in archivos_en_disco:
+                f.write(archivo + "\n")
 
 
-def generar_output_fallido(output_file_name):
-    path_out = os.path.join(os.path.dirname(__file__), ".", "OUT", output_file_name)
-    with open(path_out, "w") as f_out:
-        f_out.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
+def generar_output_fallido(nombre_archivo):
+    ruta_out = os.path.join(os.path.dirname(__file__), "OUT", nombre_archivo)
+    with open(ruta_out, "w") as f:
+        f.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
