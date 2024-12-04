@@ -103,7 +103,7 @@ fan 1080000
 tuerca 930000
 ensalada 420000
 """
-
+""" 
 disk_size = 3
 file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
 file_sizes = [ 1350000, 1080000, 930000, 420000 ]
@@ -130,4 +130,4 @@ solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 if solution is not None:
     generar_output(f"{input_file_name[:-3]}.out", solution)
 else:
-    generar_output_fallido(f"{input_file_name[:-3]}.out")
+    generar_output_fallido(f"{input_file_name[:-3]}.out") """
