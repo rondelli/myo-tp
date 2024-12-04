@@ -7,9 +7,8 @@ import os
 def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
     F = solucion[0]
     model = solucion[1]
-    y = solucion[2]
-    x = solucion[3]
-    s = solucion[4]
+    x = solucion[2]
+    s = solucion[3]
 
     cant_archivos = len(F)
     cant_discos = round(float(model.getObjVal()))
@@ -21,7 +20,7 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
     with open(ruta_out, "w") as f:
         f.write(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
         for j in range(number_of_disks):
-            if model.getVal(y[j]) == 0:
+            if model.getVal(x[j]) == 0:
                 continue
 
             archivos_en_disco = []

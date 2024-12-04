@@ -6,7 +6,7 @@
 \usepackage{verbatim}
 
 \usepackage[hscale=0.75, vscale=0.70, vmarginratio=1:1,verbose]{geometry}
-
+%\usepackage[left=0.5cm]{geometry}
 \usepackage[utf8]{inputenc}
 % \usepackage[latin1]{inputenc}
 \usepackage{lmodern}
@@ -26,6 +26,7 @@
 \usepackage{colortbl}
 
 \usepackage{rotating}
+\usepackage{lscape}
 
 \usepackage{tikz} % no tiene opciones
 	\usetikzlibrary{calc}
@@ -490,7 +491,7 @@ tamaños de archivos.
 
 \noindent $f_{k}$, constante: cantidad de archivos de tamaño $k$ en MB, con $k \in \{1, \ldots, t\}$. \\
 
-\noindent $x_{jp}$, binaria: 1 indica que se usa el patrón $p$ en el disco $j$, con $p \in \{1, \ldots, q\}$, donde $x_{jp} \in \{0, 1\}$, y $j \in \{1, \ldots, m\}$. \\
+\noindent $x_{p}$, entera: cantidad de veces que se usa el patrón $p$, con $p \in \{1, \ldots, q\}$, donde $x_{p} \ge 0$. \\
 
 \noindent $c_{kp}$, constante entera: cantidad de archivos de tamaño $k$ que entran en el patrón $p$, con $k \in \{1, \ldots, t\}$ y $p \in \{1, \ldots, q\}$.
 
@@ -504,6 +505,8 @@ tamaños de archivos.
 	\subjto
 	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{jp} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
 	& \sum_{j=1}^{m} c_{kp} \cdot x_{jp} = 1 \qquad \forall k \in \{1, \ldots, t\}, p \in \{1, \ldots, q\} \\
+	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{p} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
+	& \sum_{p = 1}^{q} c_{kp} \cdot x_{p} = f_{k} \\
 	& y_{k} \ge 0, \quad \forall k \in \{1, \ldots, t\} \\
 	& x_{p} \ge 0, \quad \forall p \in \{1, \ldots, q\}
 \end{alignat*}
@@ -604,9 +607,33 @@ También, analizamos el setting \verb|model.setParam("parallel/mode", 0)|,
 con $0$ para \emph{opportunistic} ó $1$ para \emph{deterministic}.
 Pero no apreciamos cambios significativos en la performance.
 
+\newpage
+
 \section{Resultados de script}
 
 En esta sección, listamos los resultados obtenidos.
+
+\newpage
+\begin{landscape}
+\begin{table}[ht]
+\centering
+\scalebox{0.8}{ %
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Caso} & \textbf{Cant} & \textbf{CotaDual} & \textbf{mejor1} & \textbf{var1} & \textbf{t1} & \textbf{mejor4} & \textbf{var4} & \textbf{t4} & \textbf{mejor5} & \textbf{var5} & \textbf{t5} & \textbf{mejor6} & \textbf{var6} & \textbf{t6} \\
+\hline
+f0017.in&17&9&9&306&0.0 \\ % COMPLETAR
+f0032.in&32&17&inf&variable1&480&inf&variable4&480&18&100&13.813863277435303&19&4&0.020533323287963867 \\
+f0512.in&512&288&inf&variable1&480&inf&variable4&480&inf&480&480&308&0&1.6591098308563232  \\
+f0685.in&685&406&inf&variable1&480&inf&variable4&480&inf&480&480&406&17&12.655526876449585 \\
+f2048.in&2048&1118&inf&variable1&480&inf&variable4&480&inf&480&480&inf&480&480 \\
+
+\hline
+\end{tabular}%
+}
+\caption{Resultados del Script}
+\end{table}
+\end{landscape}
 
 \newpage
 
