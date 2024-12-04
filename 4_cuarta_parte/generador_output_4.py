@@ -10,11 +10,10 @@ import os
 def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s, q] 
     F = solucion[0]
     model = solucion[1]
-    y = solucion[2]
-    x = solucion[3]
-    s = solucion[4]
-    ordenamiento = solucion[5]
-    c = solucion[6]
+    x = solucion[2]
+    s = solucion[3]
+    ordenamiento = solucion[4]
+    c = solucion[5]
 
     file_sizes, F = zip(*ordenamiento)
 
