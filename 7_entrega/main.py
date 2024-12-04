@@ -68,11 +68,12 @@ for a in archivos:
         output_1.generar_output_fallido(outPath, a + "_file.out")
 
     # modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, 11, threshold * 60)
-    # if modelo_4 is not None:
-    #     cota_dual_4, mejor_4, var_4, tiempo_4 = datos_modelo(modelo_4[1])
-    #     output_4.generar_output(outPath, a + "_file.out", modelo_4)
-    # else:
-    #     output_4.generar_output_fallido(outPath, a + "_file.out")
+    modelo_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60)
+    if modelo_4 is not None:
+        cota_dual_4, mejor_4, var_4, tiempo_4 = datos_modelo(modelo_4[0])
+        output_4.generar_output(outPath, a + "_file.out", modelo_4)
+    else:
+        output_4.generar_output_fallido(outPath, a + "_file.out")
 
     data_5  = model_part_5.obtener_conjuntos(a, threshold * 60)
     if data_5 is not None:

@@ -1,52 +1,40 @@
-Para la configuración del archivo, 15 discos son suficientes.
+Para la configuración del archivo, 13 discos/patrones son suficientes.
+Patrón 4 (usado 1 veces):
+Archivos cubiertos: a0017, a0006
 
-Disco 1: 9769300 MB
-a0002  9769300
+Patrón 6 (usado 1 veces):
+Archivos cubiertos: a0016, a0001
 
-Disco 2: 9045337 MB
-a0003  9045337
+Patrón 7 (usado 1 veces):
+Archivos cubiertos: a0004, a0005
 
-Disco 3: 9931162 MB
-a0015  8954025
-a0005  977137
+Patrón 10 (usado 1 veces):
+Archivos cubiertos: a0007, a0005
 
-Disco 4: 8586796 MB
-a0010  8586796
+Patrón 12 (usado 1 veces):
+Archivos cubiertos: a0008, a0006, a0005
 
-Disco 5: 8181573 MB
-a0007  8181573
+Patrón 15 (usado 1 veces):
+Archivos cubiertos: a0015, a0005
 
-Disco 6: 8920490 MB
-a0018  7423573
-a0011  1496917
+Patrón 16 (usado 1 veces):
+Archivos cubiertos: a0010
 
-Disco 7: 7273586 MB
-a0016  6296449
-a0005  977137
+Patrón 24 (usado 1 veces):
+Archivos cubiertos: a0013, a0005
 
-Disco 8: 6547704 MB
-a0004  5050787
-a0011  1496917
+Patrón 32 (usado 1 veces):
+Archivos cubiertos: a0012, a0011
 
-Disco 9: 5031514 MB
-a0014  3228314
-a0017  1803200
+Patrón 34 (usado 1 veces):
+Archivos cubiertos: a0002
 
-Disco 10: 3207580 MB
-a0009  3207580
+Patrón 35 (usado 1 veces):
+Archivos cubiertos: a0018, a0011
 
-Disco 11: 3170852 MB
-a0001  3170852
+Patrón 42 (usado 1 veces):
+Archivos cubiertos: a0003
 
-Disco 12: 2908868 MB
-a0008  2908868
+Patrón 45 (usado 1 veces):
+Archivos cubiertos: a0014, a0009
 
-Disco 13: 2721071 MB
-a0013  2721071
-
-Disco 14: 2407122 MB
-a0012  2407122
-
-Disco 15: 2912318 MB
-a0006  1935181
-a0005  977137
