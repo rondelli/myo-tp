@@ -1,12 +1,5 @@
 import os
 
-########################################################################
-# Este archivo es igual a generador_output_1.py
-########################################################################
-
-# [F, model, y, x, s, q]
-# nombres, model, discos_elegidos, 
-
 def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s, q] 
     F = solucion[0]
     model = solucion[1]
