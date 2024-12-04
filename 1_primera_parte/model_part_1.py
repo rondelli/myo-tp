@@ -77,7 +77,8 @@ def obtener_solucion_primal_1(model):
 
     if sol is not None and status in ["optimal", "feasible"]:
         # El nombre de variable x, acá es missleading, es x porque es el primal.
-        # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo seleccionado y las $y$: disco seleccionado
+        # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo
+        # seleccionado y las $y$: disco seleccionado
         x = [v.getLPSol() for v in model.getVars(False)]
         return x, model.getObjVal()
     else:

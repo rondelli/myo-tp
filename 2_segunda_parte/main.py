@@ -21,10 +21,13 @@ if sys.argv[1] == "-g":
 if sys.argv[1] == "-u":
     print(f"Usando {archivo}\n")
 
-capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(f"{archivo}")
+capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = leer_configuracion(
+    f"{archivo}")
 
-solucion = distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos)
-sys.stderr.write(f"[Debugging] [MODELO 2] Time: {solucion[1].getSolvingTime()}\n\n")
+solucion = distribuir_archivos_2(capacidad_disco, nombres_archivos,
+                                 tamaños_archivos, importancia_archivos)
+sys.stderr.write(
+    f"[Debugging] [MODELO 2] Time: {solucion[1].getSolvingTime()}\n\n")
 
 if solucion is not None:
     generar_output(f"{archivo[:-3]}.out", solucion)
