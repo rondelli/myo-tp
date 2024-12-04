@@ -1,91 +1,132 @@
+#!/usr/bin/env python3
+
+from pyscipopt import Model, quicksum
+from configuracion_4 import *
+from generador_output_4 import *
 import sys
-from pyscipopt import Model
-from pyscipopt import quicksum
-from pyscipopt import SCIP_PARAMSETTING
-from pyscipopt import *
+import os
+import random
 
-def distribuir_archivos_4(d_t, F, S, t, time_limit=420):
-    sys.stderr.write(f"[Debugging] [MODELO 4] Inicio\n\n")
-    model = Model("model_part_4")
-    model.setParam("limits/time", time_limit)
 
+# d_t : tamaño del disco en TB
+# F : nombres de archivos
+# file_sizes: tamaños de archivos
+# c : matriz de los patrones
+def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list[list[int]], time_limit=420):
+    # Tamaño del disco en MB
     d = d_t * 10**6
 
-    n = len(F)
-    m = n  # no se puede tener más discos que archivos
+    ordenamiento = sorted(list(zip(file_sizes, F)), reverse=True)
+    file_sizes, F = zip(*ordenamiento)
+    F = list(F)
 
-    # y_{j} = 1 si se elige el disco j, 0 si no
-    y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
+    S = {size: file_sizes.count(size) for size in set(file_sizes)}
+    S = dict(sorted(S.items(), reverse=True))
 
-    model.setObjective(quicksum(y), sense="minimize")
+    # Cantidad de archivos
+    n = sum(S[key] for key in S)
 
-    # x_{i, j} = 1 si se elige el archivo i para el disco j, 0 si no
-    x = {}
-    for i in range(n):
-        for j in range(m):
-            x[i, j] = model.addVar(f"x_{i}_{j}", vtype="BINARY")
+    # Cantidad de tamaños de archivos
+    s = list(dict.fromkeys(S))
+    t = len(s)
 
-    # z{s, j} = 1 si el tamaño size está en el disco j, 0 si no
-    z = {}
-    for s in set(S):
-        for j in range(m):
-            z[s, j] = model.addVar(f"t_{s}_{j}", vtype="BINARY")
+    # Cantidad de discos, a lo sumo, un disco por archivo
+    m = n
 
-    # Cada archivo se elige solo para un disco
-    for i in range(n):
-        model.addCons(quicksum(x[i, j] for j in range(m)) == 1)
+    # Cantidad de patrones
+    q = len(c)
 
-    # Los archivos no superan de capacidad los discos
+    # Define model
+    model = Model("model_part_4")
+
+    # x[p] entera: cantidad de veces que se usa el patrón p, con p ∈ {1,…,q}, donde x_{p} ≥ 0
+    x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
+
+    # y[j] binary: 1 si se usa el disco $j$, 0 en caso contrario
+    y = [model.addVar(vtype='B', name=f"y_{j}") for j in range(m)]
+
+    # minimize disks:
+    model.setObjective(quicksum(x), sense="minimize")
+
+    # Cantidad archivos de tamaño $k$ que entran en el disco $j$
+    # Restricción A
     for j in range(m):
-        model.addCons(quicksum(x[i, j] * S[i] for i in range(n)) <= d * y[j])
+        for k in range(t):
+            model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
 
-    for s in set(S):
-        for j in range(m):
-            model.addCons(z[s, j] * int(d / s) <= quicksum(x[i, j] for i in range(n) if S[i] == s))
-
-    # Limitamos los tamaños únicos por disco
-    for j in range(m):
-        model.addCons(quicksum(z[s, j] for s in set(S)) <= t)
+    # Restricción B
+    for k in range(t):
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     # Configurar el límite de tiempo en el solver
-    #model.setParam("display/freq", 1)
-
+    model.setParam("limits/time", time_limit)
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] [MODELO 4] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] [MODELO 4] Cantidad sols: {model.getNSols()}\n\n")
-
-    sol = model.getBestSol()
+    solution = model.getBestSol()
     status = model.getStatus()
+    objective_value = model.getObjVal()
 
-    if sol is not None and status in ["optimal", "feasible"]:
-        #sys.stderr.write(f"[Debugging] {status}: {sol}\n\n")
-        return [F, model, y, x, S]
+    sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
+    sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
+
+    if solution is not None and status in ["optimal", "feasible"]:
+        return [F, model, y, x, [key * S[key] for key in S], ordenamiento, c]
     else:
         return None
 
-def obtener_solucion_primal_4(model):
-    sol = model.getBestSol()
-    status = model.getStatus()
 
-    if sol is not None and status in ["optimal", "feasible"]:
-        #sys.stderr.write(f"[Debugging] {model.getStatus()}: {model.getBestSol()}\n\n")
+# Main
+# ----
 
-        # El nombre de variable x, acá es missleading, es x porque es el primal.
-        # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo seleccionado y las $y$: disco seleccionado
-        x = [v.getLPSol() for v in model.getVars(False)]
+if len(sys.argv) != 2:
+    print(f"Usage: {sys.argv[0]} input_file_name_to_generate")
+    sys.exit(1)
 
-        sys.stderr.write(f"[Debugging]: todas las variables del primal model_part_1 {x}\n\n")
-        return x, model.getObjVal()
-    else:
-        return None
+input_file_name = sys.argv[1]
+print(f"Input file name to generate: {input_file_name}\n")
 
-def obtener_solucion_dual_4(model):
-    # No debería ser necesario si el modelo ya viene optimizado con el presolving off
-    # Aseguarse de apagar el presolving
-    # model.setPresolve(SCIP_PARAMSETTING.OFF)
+generar_configuracion(input_file_name)
 
-    # La longitud de y coincide con la cantidad de archivos del input
-    y = [model.getDualSolVal(c) for c in model.getConss(False)]
+disk_size, file_names, file_sizes = leer_configuracion(f"{input_file_name}")
 
-    return y, quicksum(y)
+"""
+# disk in TB
+3
+
+# number of files to backup
+4
+
+# files: file_id, size (in MB)
+chocolate 1350000
+fan 1080000
+tuerca 930000
+ensalada 420000
+"""
+""" 
+disk_size = 3
+file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
+file_sizes = [ 1350000, 1080000, 930000, 420000 ]
+
+# Patrón Marcelo
+c = [[2, 0, 0, 0], # DELETEME
+     [1, 1, 0, 1],
+     [1, 0, 1, 1],
+     [1, 0, 0, 3],
+     [0, 2, 0, 2],
+     [0, 1, 2, 0],
+     [0, 1, 1, 2],
+     [0, 1, 0, 4],
+     [0, 0, 3, 0],
+     [0, 0, 2, 2],
+     [0, 0, 1, 4],
+     [0, 0, 0, 7]]
+
+# Patrón Lucía
+#c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
+
+solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
+
+if solution is not None:
+    generar_output(f"{input_file_name[:-3]}.out", solution)
+else:
+    generar_output_fallido(f"{input_file_name[:-3]}.out") """
