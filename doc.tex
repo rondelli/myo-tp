@@ -311,7 +311,7 @@ A continuación presentamos el modelo Zimpl, con los comentarios
 correspondientes que indican la relación con el modelo lineal de la sección
 anterior.
 
-\lstinputlisting[inputencoding=utf8/latin1]{1_primera_parte/big_data.zpl}
+\lstinputlisting[inputencoding=utf8/latin1]{1_primera_parte/model_part_1.zpl}
 
 \newpage
 \subsubsection{Modelo PySCIPOpt}
@@ -335,7 +335,7 @@ La solución incluye un script ejecutable que recibe como parámetro el nombre d
 archivo a generar, genera el archivo y calcula el resultado del modelo. Luego, 
 genera el output correspondiente.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/big_data_main.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/main.py}
 
 \newpage
 
@@ -396,7 +396,7 @@ el tamaño del disco.
 
 A continuación presentamos el modelo Zimpl, con los comentarios correspondientes que indican la relación con el modelo lineal de la sección anterior.
 
-\lstinputlisting[inputencoding=utf8/latin1]{2_segunda_parte/importance.zpl}
+\lstinputlisting[inputencoding=utf8/latin1]{2_segunda_parte/model_part_2.zpl}
 
 \newpage
 \subsubsection{Modelo PySCIPOpt}
@@ -418,7 +418,7 @@ Los archivos de configuración se generan de manera similar al modelo previo.
 El script ejecutable realiza los mismos pasos que el del modelo anterior, pero, considerando 
 la importancia de cada archivo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/importance-main.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/main.py}
 
 \newpage
 
@@ -483,7 +483,7 @@ tamaños de archivos.
 
 \noindent $n$, constante: cantidad de archivos. \\
 
-\noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
+% \noindent $m$: cantidad de discos disponibles, a lo sumo, un archivo por disco, $m = n$. \\
 
 \noindent $t$, constante: cantidad de tamaños distintos de archivos. \\
 
@@ -495,19 +495,19 @@ tamaños de archivos.
 
 \noindent $c_{kp}$, constante entera: cantidad de archivos de tamaño $k$ que entran en el patrón $p$, con $k \in \{1, \ldots, t\}$ y $p \in \{1, \ldots, q\}$.
 
-\noindent $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
+% \noindent $y_{j}$ binaria: $1$ indica que se está usando el disco $j$.
 
 \subsubsection{Modelo}
 
 \begin{alignat*}{2}
 	\minimize
-	& \sum_{j = 1}^{m} y_{j}\\
+	& \sum_{p = 1}^{q} x_{p}\\
 	\subjto
-	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{jp} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
-	& \sum_{j=1}^{m} c_{kp} \cdot x_{jp} = 1 \qquad \forall k \in \{1, \ldots, t\}, p \in \{1, \ldots, q\} \\
-	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{p} \le d\cdot y_{j} \qquad \forall j \in \{1, \ldots, m\}\ \text{(tamaño $k$ que entran por disco $y_{j}$)}\\
-	& \sum_{p = 1}^{q} c_{kp} \cdot x_{p} = f_{k} \\
-	& y_{k} \ge 0, \quad \forall k \in \{1, \ldots, t\} \\
+	& \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{jp} \le d \qquad \text{(tamaño $k$ que entran por disco $d$)}\\
+	% & \sum_{j=1}^{m} c_{kp} \cdot x_{jp} \ge 1 \qquad \forall k \in \{1, \ldots, t\}, p \in \{1, \ldots, q\} \\
+	% & \sum_{k=1}^{t} \sum_{p = 1}^{q}\ s_{k} \cdot c_{kp} \cdot x_{p} \le d \qquad \text{(tamaño $k$ que entran por disco $d$)}\\
+	& \sum_{p = 1}^{q} c_{kp} \cdot x_{p} \ge f_{k} \\
+	%& y_{k} \ge 0, \quad \forall k \in \{1, \ldots, t\} \\
 	& x_{p} \ge 0, \quad \forall p \in \{1, \ldots, q\}
 \end{alignat*}
 
