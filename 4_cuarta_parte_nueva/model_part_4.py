@@ -71,7 +71,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
-        return [F, model, y, x, [key * S[key] for key in S]]
+        return [F, model, y, x, [key * S[key] for key in S], ordenamiento, c]
     else:
         return None
 
@@ -123,7 +123,7 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 0, 7]]
 
 # Patrón Lucía
-# c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
+#c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
 
 solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 
