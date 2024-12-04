@@ -28,8 +28,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     # Cantidad de tamaños de archivos
     s = list(dict.fromkeys(S))
-    print("S:", S)
-    print("s:", s)
     t = len(s)
 
     # Cantidad de discos, a lo sumo, un disco por archivo
@@ -41,17 +39,24 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
     # Define model
     model = Model("model_part_4")
 
-    # x_{p} integer: cant de veces que se usa el patrón p
-    x = []
-    for p in range(q):
-        x.append(model.addVar(name=f"x_{p}", vtype="INTEGER"))
+    # x[p] entera: cantidad de veces que se usa el patrón p, con p ∈ {1,…,q}, donde x_{p} ≥ 0
+    x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
 
-    # Minimizar la suma de las variables x[p]
+    # y[j] binary: 1 si se usa el disco $j$, 0 en caso contrario
+    y = [model.addVar(vtype='B', name=f"y_{j}") for j in range(m)]
+
+    # minimize disks:
     model.setObjective(quicksum(x), sense="minimize")
+
+    # Cantidad archivos de tamaño $k$ que entran en el disco $j$
+    # Restricción A
+    for j in range(m):
+        for k in range(t):
+            model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
 
     # Restricción B
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
@@ -60,11 +65,13 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     solution = model.getBestSol()
     status = model.getStatus()
-    
+    objective_value = model.getObjVal()
+
+    sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
+    sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
+
     if solution is not None and status in ["optimal", "feasible"]:
-        objective_value = model.getObjVal()
-        sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
-        return [F, model, x, [key * S[key] for key in S]]
+        return [F, model, y, x, [key * S[key] for key in S]]
     else:
         return None
 
@@ -79,7 +86,7 @@ if len(sys.argv) != 2:
 input_file_name = sys.argv[1]
 print(f"Input file name to generate: {input_file_name}\n")
 
-# generar_configuracion(input_file_name)
+generar_configuracion(input_file_name)
 
 disk_size, file_names, file_sizes = leer_configuracion(f"{input_file_name}")
 
@@ -116,7 +123,7 @@ c = [[2, 0, 0, 0], # DELETEME
      [0, 0, 0, 7]]
 
 # Patrón Lucía
-c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
+# c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
 
 solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
 
