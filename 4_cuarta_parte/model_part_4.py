@@ -64,10 +64,8 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     solution = model.getBestSol()
     status = model.getStatus()
-    objective_value = model.getObjVal()
-
+    
     sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
-    sys.stderr.write(f"[Debugging] ObjVal: {objective_value}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
         return [F, model, y, x, [key * S[key] for key in S], ordenamiento, c]
