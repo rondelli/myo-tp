@@ -4,7 +4,12 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
-def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+
+def distribuir_archivos_2(d_t: int,
+                          F: list[str],
+                          s: list[int],
+                          I: list[float],
+                          time_limit=420):
     model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
 
     solution = model.getBestSol()
@@ -15,7 +20,12 @@ def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], 
     else:
         return None
 
-def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+
+def resolver_modelo_binario_2(d_t: int,
+                              F: list[str],
+                              s: list[int],
+                              I: list[float],
+                              time_limit=420):
     model = Model("model_part_2")
 
     d = d_t * 10**6
@@ -29,7 +39,8 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
     ########################################################################
 
     # maximize importance:
-    model.setObjective(quicksum(x[i] * I[i] for i in range(n)), sense="maximize")
+    model.setObjective(quicksum(x[i] * I[i] for i in range(n)),
+                       sense="maximize")
 
     # los archivos elegidos deben entrar en el disco
     model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
@@ -41,8 +52,13 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
     model.optimize()
     return model, x
 
+
 # Crea el modelo relajado y lo devuelve optimizado
-def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
+def crear_modelo_2(d_t: int,
+                   F: list[str],
+                   s: list[int],
+                   I: list[float],
+                   time_limit=420):
     model = Model("model_part_2")
 
     d = d_t * 10**6
@@ -52,11 +68,15 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
     ########################################################################
     # CONTINUOUS
     # x_{i} = 1 si se elige el archivo i, 0 si no
-    x = [model.addVar(f"y_{i}", lb=0, ub=1, vtype="CONTINUOUS") for i in range(n)]
+    x = [
+        model.addVar(f"y_{i}", lb=0, ub=1, vtype="CONTINUOUS")
+        for i in range(n)
+    ]
     ########################################################################
 
     # maximize importance:
-    model.setObjective(quicksum(x[i] * I[i] for i in range(n)), sense="maximize")
+    model.setObjective(quicksum(x[i] * I[i] for i in range(n)),
+                       sense="maximize")
 
     # los archivos elegidos deben entrar en el disco
     model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
@@ -67,6 +87,7 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
     model.optimize()
     return model
 
+
 def obtener_solucion_primal_2(model):
     sol = model.getBestSol()
     status = model.getStatus()
@@ -76,6 +97,7 @@ def obtener_solucion_primal_2(model):
         return x, model.getObjVal()
     else:
         return None
+
 
 def obtener_solucion_dual_2(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
