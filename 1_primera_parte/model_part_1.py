@@ -5,7 +5,11 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
-def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
+
+def distribuir_archivos_1(d_t: int,
+                          F: list[str],
+                          s: list[int],
+                          time_limit=420):
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
 
     solution = model.getBestSol()
@@ -16,7 +20,11 @@ def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     else:
         return None
 
-def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=420):
+
+def resolver_modelo_binario_1(d_t: int,
+                              F: list[str],
+                              s: list[int],
+                              time_limit=420):
     model = Model("model_part_1")
     model.setParam("limits/time", time_limit)
 
@@ -32,7 +40,7 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
     x = {}
     for i in range(n):
         for j in range(m):
-            x[i, j] = model.addVar(name = f"x_{i}_{j}", vtype="BINARY")
+            x[i, j] = model.addVar(name=f"x_{i}_{j}", vtype="BINARY")
 
     # y_{j} = 1 si se elige el disco j, 0 si no
     y = [model.addVar(f"y_{j}", vtype="BINARY") for j in range(m)]
@@ -55,10 +63,13 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     model.optimize()
 
-    sys.stderr.write(f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
+    sys.stderr.write(
+        f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
+    sys.stderr.write(
+        f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
 
     return model, y, x
+
 
 def obtener_solucion_primal_1(model):
     sol = model.getBestSol()
@@ -71,6 +82,7 @@ def obtener_solucion_primal_1(model):
         return x, model.getObjVal()
     else:
         return None
+
 
 def obtener_solucion_dual_1(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]

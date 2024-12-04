@@ -1,6 +1,7 @@
 import os
 
-def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s]
+
+def generar_output(nombre_archivo, solucion):  # solucion = [F, model, y, x, s]
     F = solucion[0]
     model = solucion[1]
     y = solucion[2]
