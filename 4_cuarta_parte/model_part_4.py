@@ -50,9 +50,9 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
 
     # Cantidad archivos de tamaño $k$ que entran en el disco $j$
     # Restricción A
-    for j in range(m):
-        for k in range(t):
-            model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
+    # for j in range(m):
+    #     for k in range(t):
+    #         model.addCons(quicksum(s[k] * c[p][k] * x[p] for p in range(q)) <= d * y[j])
 
     # Restricción B
     for k in range(t):
@@ -73,60 +73,3 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], c: list
         return [F, model, y, x, [key * S[key] for key in S], ordenamiento, c]
     else:
         return None
-
-
-# Main
-# ----
-
-if len(sys.argv) != 2:
-    print(f"Usage: {sys.argv[0]} input_file_name_to_generate")
-    sys.exit(1)
-
-input_file_name = sys.argv[1]
-print(f"Input file name to generate: {input_file_name}\n")
-
-generar_configuracion(input_file_name)
-
-disk_size, file_names, file_sizes = leer_configuracion(f"{input_file_name}")
-
-"""
-# disk in TB
-3
-
-# number of files to backup
-4
-
-# files: file_id, size (in MB)
-chocolate 1350000
-fan 1080000
-tuerca 930000
-ensalada 420000
-"""
-""" 
-disk_size = 3
-file_names = [ "chocolate", "fan", "tuerca", "ensalada"]
-file_sizes = [ 1350000, 1080000, 930000, 420000 ]
-
-# Patrón Marcelo
-c = [[2, 0, 0, 0], # DELETEME
-     [1, 1, 0, 1],
-     [1, 0, 1, 1],
-     [1, 0, 0, 3],
-     [0, 2, 0, 2],
-     [0, 1, 2, 0],
-     [0, 1, 1, 2],
-     [0, 1, 0, 4],
-     [0, 0, 3, 0],
-     [0, 0, 2, 2],
-     [0, 0, 1, 4],
-     [0, 0, 0, 7]]
-
-# Patrón Lucía
-#c = [[2, 0, 0, 0], [1, 0, 0, 0], [0, 1, 0, 1], [0, 0, 2, 1], [0, 0, 1, 4], [0, 0, 0, 4]]
-
-solution = distribuir_archivos_4(disk_size, file_names, file_sizes, c, 420)
-
-if solution is not None:
-    generar_output(f"{input_file_name[:-3]}.out", solution)
-else:
-    generar_output_fallido(f"{input_file_name[:-3]}.out") """

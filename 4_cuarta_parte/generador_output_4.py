@@ -35,7 +35,7 @@ def generar_output(nombre_archivo, solucion): # solucion = [F, model, y, x, s, q
             archivos_en_disco = []
             espacio_ocupado = 0
 
-            print("PATRÓN:", j)
+            # print("PATRÓN:", j)
 
             for i in range(len(file_sizes)):
                 tamaño_archivo = file_sizes[i]
