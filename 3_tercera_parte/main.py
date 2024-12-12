@@ -2,9 +2,13 @@
 
 import os
 import sys
-import configuracion_3
-# from generador_output_3 import *
-from model_part_3 import *
+
+sys.path.insert(0, "../utils")
+
+import inputs
+import configs
+import outputs
+import model_part_3
 
 if len(sys.argv) != 3:
     print(f'Uso: {sys.argv[0]} OPTION archivo')
@@ -21,7 +25,7 @@ out_path = 'OUT'
 
 if sys.argv[1] == '-g':
     print(f'Generando {archivo}\n')
-    configuracion_3.generar_input(os.path.dirname(__file__) + '/IN/' + archivo)
+    inputs.generar_input_3(os.path.dirname(__file__) + '/IN/' + archivo)
     archivos.append(archivo)
     
 elif sys.argv[1] == '-u':
@@ -30,8 +34,7 @@ elif sys.argv[1] == '-u':
     
 elif sys.argv[1] == '-c':
     print(f'Leyendo configuración {archivo}\n')
-    configuraciones = configuracion_3.leer_configuracion(os.path.join(os.path.dirname(__file__), archivo))
-
+    configuraciones = configs.leer_configuracion(os.path.join(os.path.dirname(__file__), archivo))
     out_path = configuraciones.get('outPath')[:-1]
     threshold = int(configuraciones.get('threshold', 0))
     archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
@@ -39,12 +42,12 @@ elif sys.argv[1] == '-c':
     
 
 for archivo in archivos:
-    archivos, conjuntos = configuracion_3.leer_input(os.path.dirname(__file__) + '/IN/' + archivo)
-    solucion = elegir_conjuntos(archivos, conjuntos, threshold * 60)
+    archivos, conjuntos = inputs.leer_input_3(os.path.dirname(__file__) + '/IN/' + archivo)
+    solucion = model_part_3.elegir_conjuntos(archivos, conjuntos, threshold * 60)
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     
     if solucion is not None:
-        configuracion_3.generar_output(archivo_out, solucion, conjuntos)
+        outputs.generar_output_3(archivo_out, solucion, conjuntos)
     else:
-        configuracion_3.generar_output_fallido(archivo_out)
+        outputs.generar_output_fallido(archivo_out)

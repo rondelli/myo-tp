@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
-
+import os
 import sys
-import configuracion_2
-from model_part_2 import *
+
+sys.path.insert(0, "../utils")
+
+import inputs
+import configs
+import outputs
+import model_part_2
 
 if len(sys.argv) != 3:
     print(f'Uso: {sys.argv[0]} OPTION archivo')
@@ -19,7 +24,7 @@ out_path = 'OUT'
 
 if sys.argv[1] == '-g':
     print(f'Generando {archivo}\n')
-    configuracion_2.generar_input(os.path.dirname(__file__) + '/IN/' + archivo)
+    inputs.generar_input_2(os.path.dirname(__file__) + '/IN/' + archivo)
     archivos.append(archivo)
     
 elif sys.argv[1] == '-u':
@@ -28,8 +33,7 @@ elif sys.argv[1] == '-u':
     
 elif sys.argv[1] == '-c':
     print(f'Leyendo configuración {archivo}\n')
-    configuraciones = configuracion_2.leer_configuracion(os.path.join(os.path.dirname(__file__), archivo))
-
+    configuraciones = configs.leer_configuracion(os.path.join(os.path.dirname(__file__), archivo))
     out_path = configuraciones.get('outPath')[:-1]
     threshold = int(configuraciones.get('threshold', 0))
     archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
@@ -37,12 +41,12 @@ elif sys.argv[1] == '-c':
 
 
 for archivo in archivos:
-    capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = configuracion_2.leer_input(os.path.dirname(__file__) + '/IN/' + archivo)
-    solucion = distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos, threshold * 60)
+    capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos = inputs.leer_input_2(os.path.dirname(__file__) + '/IN/' + archivo)
+    solucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, importancia_archivos, threshold * 60)
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     
     if solucion is not None:
-        configuracion_2.generar_output(archivo_out, solucion)
+        outputs.generar_output_2(archivo_out, solucion)
     else:
-        configuracion_2.generar_output_fallido(archivo_out)
+        outputs.generar_output_fallido(archivo_out)

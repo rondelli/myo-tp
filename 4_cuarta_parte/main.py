@@ -1,27 +1,58 @@
 #!/usr/bin/env python3
 
 import sys
-from configuracion_4 import *
-import model_part_4
-import Pattern
-from generador_output_4 import *
+import os
 
-if len(sys.argv) != 2:
-    print(f"Uso: {sys.argv[0]} nombre_archivo")
+sys.path.insert(0, "../utils")
+
+import inputs
+import configs
+import outputs
+import model_part_4
+
+if len(sys.argv) != 3:
+    print(f'Uso: {sys.argv[0]} OPTION archivo')
+    print(f'      OPTIONS: -g | -u | -c')
+    print(f'      -g generar archivo')
+    print(f'      -u usar archivo ya generado')
+    print(f'      -c usar configuración')
     sys.exit(1)
 
-archivo = sys.argv[1]
+archivo = sys.argv[2]
+archivos = []
+threshold = 7
+out_path = 'OUT'
 
-print(f"Utilizando {archivo}\n")
+if sys.argv[1] == '-g':
+    print(f'Generando {archivo}\n')
+    inputs.generar_input_4(os.path.dirname(__file__) + '/IN/' + archivo)
+    archivos.append(archivo)
+    
+elif sys.argv[1] == '-u':
+    print(f'Usando {archivo}\n')
+    archivos.append(archivo)
+    
+elif sys.argv[1] == '-c':
+    print(f'Leyendo configuración {archivo}\n')
+    configuraciones = configs.leer_configuracion(os.path.join(os.path.dirname(__file__), archivo))
+    out_path = configuraciones.get('outPath')[:-1]
+    threshold = int(configuraciones.get('threshold', 0))
+    archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
+    archivos.remove('.gitkeep')
 
-capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion(f"{archivo}")
 
-ordenamiento = sorted(list(zip(tamaños_archivos, nombres_archivos)), reverse=True)
-tamaños_archivos, nombres_archivos = zip(*ordenamiento)
+for archivo in archivos:
+    capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_4(os.path.dirname(__file__) + '/IN/' + archivo)
+    
+    ordenamiento = sorted(list(zip(tamaños_archivos, nombres_archivos)), reverse=True)
+    tamaños_archivos, nombres_archivos = zip(*ordenamiento)
+    solucion = model_part_4.distribuir_archivos_4(capacidad_disco, list(nombres_archivos), list(tamaños_archivos), threshold * 60)
 
-solution = model_part_4.distribuir_archivos_4(capacidad_disco, list(nombres_archivos), list(tamaños_archivos), 1)
-
-if solution is not None:
-    generar_output(f"{archivo[:-3]}.out", solution)
-else:
-    generar_output_fallido(f"{archivo[:-3]}.out")
+    archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
+    
+    if solucion is not None:
+        outputs.generar_output_4(archivo_out, solucion)
+        patrones_out = os.path.join(os.path.dirname(__file__), 'patrones', f'{archivo[:-3]}.out')
+        outputs.generar_output_patrones(patrones_out, solucion[4], tamaños_archivos) # en solucion[4] estan los patrones generados
+    else:
+        outputs.generar_output_fallido(f"{archivo[:-3]}.out")

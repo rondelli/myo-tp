@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 from pyscipopt import Model, quicksum
-from configuracion_4 import *
-from generador_output_4 import *
 import Pattern
 import sys
 import time

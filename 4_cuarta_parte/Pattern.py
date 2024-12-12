@@ -1,4 +1,3 @@
-import generador_output_patrones
 class Pattern:
 
     def __init__(self, capacidad_maxima, tamaños):
@@ -18,7 +17,6 @@ class Pattern:
             if patron is None:
                 break
             patrones.append(patron[:])
-        generador_output_patrones.generar_output_patrones("patrones.out", patrones, self.tamaños)
         return patrones
 
     def obtener_siguiente_patron(self):
