@@ -5,6 +5,14 @@ from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
 
+########################################################################
+    # d_t: capacidad del discoen TB,
+    # F: nombres de los archivos,
+    # s: tamaños de los archvios,
+    # I: importancia de los archivos,
+    # time_limit: threshold en segundos
+########################################################################
+
 def distribuir_archivos_2(d_t: int,
                           F: list[str],
                           s: list[int],
@@ -50,6 +58,10 @@ def resolver_modelo_binario_2(d_t: int,
     #model.setParam("display/freq", 1)
 
     model.optimize()
+
+    sys.stderr.write(
+    f"[Debugging] [MODELO 2] Time: {model.getSolvingTime()}\n\n")
+
     return model, x
 
 
