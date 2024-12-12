@@ -1,10 +1,14 @@
 from pyscipopt import Model
 from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
-from itertools import product
-from math import floor, ceil
-
 import pyscipopt
+
+
+########################################################################
+    # F: nombres de los archivos,
+    # H: conjuntos (es una lista de conjuntos de archivos)
+    # time_limit: threshold en segundos
+########################################################################
 
 def elegir_conjuntos(F: list, H: list, time_limit=420):
     model = Model("model_part_3")
