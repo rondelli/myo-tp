@@ -15,7 +15,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], time_li
 
     tiempo_inicio = time.time()
     c = Pattern.Pattern(d_t * 10**6, list(set(file_sizes))).obtener_patrones()
-
+    
     S = {size: file_sizes.count(size) for size in set(file_sizes)}
     S = dict(sorted(S.items(), reverse=True))
 

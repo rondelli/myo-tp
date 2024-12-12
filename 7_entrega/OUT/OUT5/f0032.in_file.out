@@ -1,20 +1,21 @@
-Para la configuracion del archivo, se han elegido 18 de los 100 conjuntos de H:
+Para la configuracion del archivo, se han elegido 19 de los 87 conjuntos de H:
 
 Conjunto H_0: {'a0026'}.
-Conjunto H_3: {'a0028'}.
-Conjunto H_5: {'a0002'}.
-Conjunto H_17: {'a0021', 'a0001'}.
-Conjunto H_21: {'a0004', 'a0024'}.
-Conjunto H_28: {'a0015'}.
-Conjunto H_40: {'a0011', 'a0022'}.
-Conjunto H_46: {'a0003'}.
-Conjunto H_51: {'a0014', 'a0023'}.
-Conjunto H_54: {'a0010'}.
-Conjunto H_67: {'a0029', 'a0027'}.
-Conjunto H_68: {'a0012', 'a0008', 'a0031', 'a0006'}.
-Conjunto H_70: {'a0025', 'a0016', 'a0020', 'a0008'}.
-Conjunto H_74: {'a0016', 'a0009'}.
-Conjunto H_80: {'a0030', 'a0013', 'a0009'}.
-Conjunto H_87: {'a0031', 'a0018'}.
-Conjunto H_90: {'a0017', 'a0007'}.
-Conjunto H_91: {'a0005', 'a0019', 'a0032'}.
+Conjunto H_6: {'a0010'}.
+Conjunto H_11: {'a0029', 'a0027'}.
+Conjunto H_12: {'a0022'}.
+Conjunto H_13: {'a0002'}.
+Conjunto H_14: {'a0028'}.
+Conjunto H_22: {'a0015'}.
+Conjunto H_44: {'a0003', 'a0019'}.
+Conjunto H_61: {'a0021', 'a0014'}.
+Conjunto H_67: {'a0005', 'a0016', 'a0013'}.
+Conjunto H_68: {'a0031', 'a0018'}.
+Conjunto H_71: {'a0032', 'a0017'}.
+Conjunto H_72: {'a0023', 'a0025', 'a0009'}.
+Conjunto H_73: {'a0011', 'a0020', 'a0007'}.
+Conjunto H_75: {'a0024', 'a0004'}.
+Conjunto H_76: {'a0018', 'a0012'}.
+Conjunto H_81: {'a0031', 'a0029', 'a0012'}.
+Conjunto H_82: {'a0006', 'a0027', 'a0001'}.
+Conjunto H_86: {'a0008', 'a0001', 'a0030'}.

@@ -35,6 +35,7 @@ threshold = int(configuraciones.get('threshold', 0))
 
 archivos = os.listdir(inPath)
 archivos = [f for f in archivos]
+# archivos = ["f0017.in"]
 sys.stderr.write(f"[Debugging] {archivos}\n")
 
 # prueba de modelos
