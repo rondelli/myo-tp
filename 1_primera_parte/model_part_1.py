@@ -5,6 +5,12 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
+########################################################################
+    # d_t: capacidad del discoen TB,
+    # F: nombres de los archivos,
+    # s: tamaños de los archvios,
+    # time_limit: threshold en segundos
+########################################################################
 
 def distribuir_archivos_1(d_t: int,
                           F: list[str],
@@ -31,7 +37,7 @@ def resolver_modelo_binario_1(d_t: int,
     d = d_t * 10**6
 
     n = len(F)
-    m = n  # no se puede tener más discos que archivos
+    m = n
 
     ########################################################################
     # BINARY
@@ -47,7 +53,7 @@ def resolver_modelo_binario_1(d_t: int,
     #
     ########################################################################
 
-    # minimize disks:
+    # Minimizar la cantidad de discos
     model.setObjective(quicksum(y), sense="minimize")
 
     # Que los archivos se elijan solo para un disco
@@ -58,15 +64,14 @@ def resolver_modelo_binario_1(d_t: int,
     for j in range(m):
         model.addCons(quicksum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
-    # Configurar el límite de tiempo en el solver
     model.setParam("display/freq", 1)
 
     model.optimize()
 
     sys.stderr.write(
         f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
-    sys.stderr.write(
-        f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
+    # sys.stderr.write(
+    #     f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
 
     return model, y, x
 
