@@ -55,4 +55,4 @@ for archivo in archivos:
         patrones_out = os.path.join(os.path.dirname(__file__), 'patrones', f'{archivo[:-3]}.out')
         outputs.generar_output_patrones(patrones_out, solucion[4], tamaños_archivos) # en solucion[4] estan los patrones generados
     else:
-        outputs.generar_output_fallido(f"{archivo[:-3]}.out")
+        outputs.generar_output_fallido(archivo_out)
