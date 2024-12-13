@@ -1,23 +1,24 @@
+import os
 import sys
 import time
-from pyscipopt import Model
-from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
-from itertools import product
-from math import floor, ceil
 
 sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../3_tercera_parte")
+sys.path.insert(0, "../utils")
 
-from configuracion_5 import generar_conjuntos, generar_output_modelo_2, leer_configuracion as leer_configuracion_5
+from configuracion_5 import generar_conjuntos
+import inputs
+import outputs
 import model_part_2
 import model_part_3
 
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
-    capacidad_disco, nombres_archivos, tamaños_archivos = leer_configuracion_5(f"{archivo}")
+    capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_5(os.path.dirname(__file__) + '/IN/' + archivo)
 
     tiempo_inicio = time.time()
-    conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+    # FIXME aca esta el random!!!
+    conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos) 
     encontro_solucion = True
 
     while True:
@@ -32,9 +33,8 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         y, _ = model_part_3.obtener_solucion_dual_3(modelo)
 
         distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
-        solucion_modelo_2 = generar_output_modelo_2(distribucion)
+        solucion_modelo_2 = outputs.obtener_solucion_2(distribucion)
 
-        
         if solucion_modelo_2 is None or x is None:
             encontro_solucion = False
             break
@@ -56,16 +56,6 @@ def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
 
-def es_optimo(model, solucion):
-    variables = model.getVars() 
-
-    sol = model.getBestSol()
-
-    for var, val in zip(variables, solucion):
-        model.setSolVal(sol, var, val)
-
-    return model.checkSol(sol)
-
 def obtener_solucion_entera(model, solucion_continua):
     variables = model.getVars()
     sol = model.getBestSol()
@@ -76,7 +66,7 @@ def obtener_solucion_entera(model, solucion_continua):
         umbral = i/10
         redondeos = [1 if valor >= umbral else 0 for valor in solucion_continua]
 
-        if es_optimo_rapido(model, variables, redondeos, sol):
+        if es_optimo(model, variables, redondeos, sol):
             valor_objetivo = model.getSolObjVal(sol)
             model.hideOutput()
 
@@ -86,7 +76,7 @@ def obtener_solucion_entera(model, solucion_continua):
 
     return mejor_combinacion
 
-def es_optimo_rapido(model, variables, solucion, sol):
+def es_optimo(model, variables, solucion, sol):
     for var, val in zip(variables, solucion):
         model.setSolVal(sol, var, val)
     

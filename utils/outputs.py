@@ -66,8 +66,30 @@ def generar_output_2(nombre_archivo, solucion):
 
         f.write(f"\nLa suma de sus indicadores de importancia da {importancia_total}.")
 
+
+def obtener_solucion_2(solucion):
+    # solucion = F, model, x, I, s
+    if solucion is None:
+        return None
+
+    F = solucion[0]
+    model = solucion[1]
+    x = solucion[2]
+    I = solucion[3]
+
+    cant_archivos = len(F)
+    archivos_elegidos = []
+    importancia_archivos = []
+
+    for i in range(cant_archivos):
+        if model.getVal(x[i]) > 0.5:
+            archivos_elegidos.append(F[i])
+            importancia_archivos.append(I[i])
+    
+    return archivos_elegidos, importancia_archivos
+
 ######################################################################
-# Generar output 3
+# Generar outputs 3 y 5
 ######################################################################
 
 def generar_output_3(nombre_archivo, solucion, conjuntos):
@@ -77,6 +99,10 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
         f.write(f"Para la configuracion del archivo, se han elegido {len(solucion)} de {len(conjuntos)} conjuntos de H:\n\n")
         for i in range(len(solucion)):
             f.write(f"Conjunto H_{solucion[i]}: {conjuntos[solucion[i]]}.\n")
+
+def generar_output_5(nombre_archivo, solucion):
+    # solucion = [conjuntos_seleccionados, modelo, conjuntos, tiempo]
+    generar_output_3(nombre_archivo, solucion[0], solucion[2])
 
 ######################################################################
 # Generar output 4
