@@ -7,32 +7,40 @@ sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../3_tercera_parte")
 sys.path.insert(0, "../utils")
 
-from configuracion_5 import generar_conjuntos
+import model_aux
 import inputs
 import outputs
 import model_part_2
 import model_part_3
 
+########################################################################
+#   El threshold es en segundos
+########################################################################
+
 def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_5(os.path.dirname(__file__) + '/IN/' + archivo)
 
     tiempo_inicio = time.time()
-    # FIXME aca esta el random!!!
-    conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos) 
-    encontro_solucion = True
 
+    # aca estaba el random!!!
+    # conjuntos = generar_conjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos) 
+
+    # Hice un modelo que distribuye los archivos en distintos conjuntos
+    conjuntos = model_aux.generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos, threshold)
+    encontro_solucion = True
     while True:
         inicio_ciclo = time.time()
-        if inicio_ciclo - tiempo_inicio >= threshold:
+        tiempo = inicio_ciclo - tiempo_inicio
+        if tiempo >= threshold:
             encontro_solucion = False
             break
         
-        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - (inicio_ciclo - tiempo_inicio))
+        modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - tiempo)
 
         x, _ = model_part_3.obtener_solucion_primal_3(modelo)
         y, _ = model_part_3.obtener_solucion_dual_3(modelo)
 
-        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - (inicio_ciclo - tiempo_inicio))
+        distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - tiempo)
         solucion_modelo_2 = outputs.obtener_solucion_2(distribucion)
 
         if solucion_modelo_2 is None or x is None:
@@ -48,36 +56,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     tiempo = time.time() - tiempo_inicio
 
     if encontro_solucion:
-        conjuntos_seleccionados = obtener_conjuntos_seleccionados(obtener_solucion_entera(modelo, x))
+        soluc_entera = model_aux.obtener_solucion_entera(modelo, x)
+        conjuntos_seleccionados = model_aux.obtener_conjuntos_seleccionados(soluc_entera)
         return [conjuntos_seleccionados, modelo, conjuntos, tiempo]
     return None
-
-def obtener_conjuntos_seleccionados(solucion):
-    conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
-    return conjuntos_seleccionados
-
-def obtener_solucion_entera(model, solucion_continua):
-    variables = model.getVars()
-    sol = model.getBestSol()
-    mejor_combinacion = None
-    mejor_solucion = float('inf')
-
-    for i in range(1, 10):
-        umbral = i/10
-        redondeos = [1 if valor >= umbral else 0 for valor in solucion_continua]
-
-        if es_optimo(model, variables, redondeos, sol):
-            valor_objetivo = model.getSolObjVal(sol)
-            model.hideOutput()
-
-            if valor_objetivo < mejor_solucion:
-                mejor_solucion = valor_objetivo
-                mejor_combinacion = redondeos
-
-    return mejor_combinacion
-
-def es_optimo(model, variables, solucion, sol):
-    for var, val in zip(variables, solucion):
-        model.setSolVal(sol, var, val)
-    
-    return model.checkSol(sol)
