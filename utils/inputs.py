@@ -1,7 +1,7 @@
 import random
 
 ######################################################################
-# Generar inputs 1 (y 4 y 5) y 2
+# Generar inputs 1, 2, 4, 5 y 6
 ######################################################################
 
 def generar_input_1(ruta_archivo: str):
@@ -14,6 +14,9 @@ def generar_input_4(ruta_archivo: str):
     generar_input_1(ruta_archivo)
 
 def generar_input_5(ruta_archivo: str):
+    generar_input_1(ruta_archivo)
+
+def generar_input_6(ruta_archivo: str):
     generar_input_1(ruta_archivo)
 
 def generar_input(ruta_archivo: str, importancia: bool):
@@ -55,7 +58,7 @@ def generar_archivos(cant_archivos: int, importancia: bool):
     return archivos
 
 ######################################################################
-# Leer inputs 1 (y 4 y 5) y 2
+# Leer inputs 1, 2,  4, 5 y 6
 ######################################################################
 
 def leer_input_1(ruta_archivo: str):
@@ -68,6 +71,9 @@ def leer_input_4(ruta_archivo: str):
     return leer_input_1(ruta_archivo)
 
 def leer_input_5(ruta_archivo: str):
+    return leer_input_1(ruta_archivo)
+
+def leer_input_6(ruta_archivo: str):
     return leer_input_1(ruta_archivo)
 
 def leer_input(ruta_archivo: str, importancia: bool):

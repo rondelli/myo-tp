@@ -89,7 +89,7 @@ def obtener_solucion_2(solucion):
     return archivos_elegidos, importancia_archivos
 
 ######################################################################
-# Generar outputs 3 y 5
+# Generar outputs 3, 5 y 6
 ######################################################################
 
 def generar_output_3(nombre_archivo, solucion, conjuntos):
@@ -101,6 +101,10 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
             f.write(f"Conjunto H_{solucion[i]}: {conjuntos[solucion[i]]}.\n")
 
 def generar_output_5(nombre_archivo, solucion):
+    # solucion = [conjuntos_seleccionados, modelo, conjuntos, tiempo]
+    generar_output_3(nombre_archivo, solucion[0], solucion[2])
+
+def generar_output_6(nombre_archivo, solucion):
     # solucion = [conjuntos_seleccionados, modelo, conjuntos, tiempo]
     generar_output_3(nombre_archivo, solucion[0], solucion[2])
 
