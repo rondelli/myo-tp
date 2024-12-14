@@ -8,7 +8,7 @@ from pyscipopt import Model
 ########################################################################
 
 def generar_conjuntos(d_t, F, s, time_limit=420):
-    model = Model("Partition Files")
+    model = Model("Generacion de conjuntos")
     model.setParam("limits/time", time_limit)
     
     d = d_t * 10**6

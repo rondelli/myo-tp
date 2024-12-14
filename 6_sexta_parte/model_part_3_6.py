@@ -1,9 +1,6 @@
 from pyscipopt import Model
 from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
-from itertools import product
-from math import floor, ceil
-
 import pyscipopt
 
 def elegir_conjuntos(F: list, H: list, time_limit=420):
@@ -105,7 +102,3 @@ def obtener_solucion_primal_3(model):
 def obtener_solucion_dual_3(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
     return y, quicksum(y)
-
-def obtener_conjuntos_seleccionados(solucion):
-    conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
-    return conjuntos_seleccionados

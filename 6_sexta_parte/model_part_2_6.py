@@ -47,7 +47,6 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
 # Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
-    # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
 
     d = d_t * 10**6

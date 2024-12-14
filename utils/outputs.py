@@ -17,7 +17,7 @@ def generar_output_1(ruta_archivo, solucion):
     max_discos = cant_archivos
 
     with open(ruta_archivo, "w") as f:
-        f.write(f"Para la configuración del archivo, {cant_discos} discos son suficientes.\n")
+        f.write(f"Para la configuracion del archivo, {cant_discos} discos son suficientes.\n")
         for j in range(max_discos):
             if model.getVal(y[j]) == 0:
                 continue
@@ -89,7 +89,7 @@ def obtener_solucion_2(solucion):
     return archivos_elegidos, importancia_archivos
 
 ######################################################################
-# Generar outputs 3, 5 y 6
+# Generar output 3
 ######################################################################
 
 def generar_output_3(nombre_archivo, solucion, conjuntos):
@@ -99,14 +99,6 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
         f.write(f"Para la configuracion del archivo, se han elegido {len(solucion)} de {len(conjuntos)} conjuntos de H:\n\n")
         for i in range(len(solucion)):
             f.write(f"Conjunto H_{solucion[i]}: {conjuntos[solucion[i]]}.\n")
-
-def generar_output_5(nombre_archivo, solucion):
-    # solucion = [conjuntos_seleccionados, modelo, conjuntos, tiempo]
-    generar_output_3(nombre_archivo, solucion[0], solucion[2])
-
-def generar_output_6(nombre_archivo, solucion):
-    # solucion = [conjuntos_seleccionados, modelo, conjuntos, tiempo]
-    generar_output_3(nombre_archivo, solucion[0], solucion[2])
 
 ######################################################################
 # Generar output 4
@@ -126,7 +118,7 @@ def generar_output_4(ruta_archivo, solucion):
         (p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
     
     with open(ruta_archivo, "w") as f:
-        f.write(f"Para la configuración del archivo, {len(patrones_seleccionados)} discos/patrones son suficientes.\n")
+        f.write(f"Para la configuracion del archivo, {len(patrones_seleccionados)} discos/patrones son suficientes.\n")
 
         # Iterar sobre los patrones seleccionados
         for p, veces in patrones_seleccionados:
@@ -145,6 +137,39 @@ def generar_output_4(ruta_archivo, solucion):
 
             # f.write(f"Tamaños cubiertos: {list(list(set(file_sizes))[k] for k, v in enumerate(c[p]) if v > 0)}\n")
             f.write(f"Archivos cubiertos: {', '.join(archivos_cubiertos)}\n\n")
+
+######################################################################
+# Generar outputs 5 y 6
+######################################################################
+
+def generar_output_5(nombre_archivo, solucion):
+    # solucion = [conjuntos_seleccionados, modelo, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
+    conjuntos_seleccionados = solucion[0]
+    conjuntos = solucion[2]
+    nombres_archivos = solucion[3]
+    tamaños_archivos = solucion[4]
+
+    with open(nombre_archivo, "w") as f:
+        f.write(f"Para la configuracion del archivo, {len(conjuntos_seleccionados)} discos son suficientes.\n")
+        
+        for i in range(len(conjuntos_seleccionados)):
+            archivos_en_disco = []
+            espacio_ocupado = 0
+            espacio_ocupado = 0
+
+            for archivo in conjuntos[conjuntos_seleccionados[i]]:
+                tamaño = tamaños_archivos[nombres_archivos.index(archivo)]
+                espacio_ocupado += tamaño
+                archivos_en_disco.append(f"{archivo}  {tamaño}")
+
+            f.write(f"\nDisco {i+1}: {espacio_ocupado} MB\n")
+            for archivo in archivos_en_disco:
+                f.write(archivo + "\n")
+
+
+def generar_output_6(nombre_archivo, solucion):
+    # solucion = [conjuntos_seleccionados, modelo, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
+    generar_output_5(nombre_archivo, solucion)
 
 ######################################################################
 # Generar output fallido
