@@ -42,7 +42,7 @@ elif sys.argv[1] == '-c':
 
 for archivo in archivos:
     tiempo_inicio = time.time()
-    solucion = model_part_6.obtener_conjuntos(archivo, threshold * 60)
+    solucion = model_part_6.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
     tiempo_tardado = time.time() - tiempo_inicio
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')

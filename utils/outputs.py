@@ -106,13 +106,13 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
 
 # TODO: Hay que ver que los nombres de los archivos no se repitan - Esto solo funciona cuando no hay tamaños repetidos!
 def generar_output_4(ruta_archivo, solucion):
-    # solucion = [model, F, x, ordenamiento, c, file_sizes]
+    # [F, model, x, file_sizes, ordenamiento, c]
     _ = solucion[0]
     _ = solucion[1]
     x = solucion[2]
-    ordenamiento = solucion[3]
-    c = solucion[4]
-    file_sizes = solucion[5]
+    file_sizes = solucion[3]
+    ordenamiento = solucion[4]
+    c = solucion[5]    
 
     patrones_seleccionados = [
         (p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
@@ -176,6 +176,7 @@ def generar_output_6(nombre_archivo, solucion):
 ######################################################################
 
 def generar_output_fallido(nombre_archivo):
+    print(nombre_archivo)
     with open(nombre_archivo, "w") as f:
         f.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
 

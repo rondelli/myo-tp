@@ -58,7 +58,7 @@ def generar_archivos(cant_archivos: int, importancia: bool):
     return archivos
 
 ######################################################################
-# Leer inputs 1, 2,  4, 5 y 6
+# Leer inputs 1, 2, 4, 5, 6 y 7
 ######################################################################
 
 def leer_input_1(ruta_archivo: str):
@@ -74,6 +74,9 @@ def leer_input_5(ruta_archivo: str):
     return leer_input_1(ruta_archivo)
 
 def leer_input_6(ruta_archivo: str):
+    return leer_input_1(ruta_archivo)
+
+def leer_input_7(ruta_archivo: str):
     return leer_input_1(ruta_archivo)
 
 def leer_input(ruta_archivo: str, importancia: bool):

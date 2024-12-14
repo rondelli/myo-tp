@@ -56,6 +56,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], time_li
 
     if solution is not None and status in ["optimal", "feasible"]:
         ordenamiento = sorted(list(zip(file_sizes, F)), reverse=True)
-        return [model, F, x, ordenamiento, c, file_sizes]
+        return [F, model, x, file_sizes, ordenamiento, c]
     else:
         return None

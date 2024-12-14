@@ -16,8 +16,8 @@ import model_part_3_6
 #   El threshold es en segundos
 ########################################################################
 
-def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
-    capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_6(os.path.dirname(__file__) + '/IN/' + archivo)
+def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
+    capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_6(ruta_archivo)
 
     tiempo_inicio = time.time()
 
@@ -30,7 +30,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
     while True:
         inicio_ciclo = time.time()
         tiempo = inicio_ciclo - tiempo_inicio
-        if tiempo >= threshold:
+        if tiempo >= threshold or conjuntos is None:
             encontro_solucion = False
             break
         
@@ -50,8 +50,7 @@ def obtener_conjuntos(archivo, threshold: int = float('inf')) -> None:
         else:
             encontro_solucion = True
             break
-    
-    conjuntos_seleccionados = []
+
     tiempo = time.time() - tiempo_inicio
 
     if encontro_solucion:
