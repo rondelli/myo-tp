@@ -104,40 +104,63 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
 # Generar output 4
 ######################################################################
 
-# TODO: Hay que ver que los nombres de los archivos no se repitan - Esto solo funciona cuando no hay tamaños repetidos!
 def generar_output_4(ruta_archivo, solucion):
-    # [F, model, x, file_sizes, ordenamiento, c]
-    _ = solucion[0]
-    _ = solucion[1]
+    # [F, model, x, s, ordenamiento, c]
+    # F = solucion[0]
+    # _ = solucion[1]
+    # x = solucion[2]
+    # s = solucion[3]
+    # ordenamiento = solucion[4]
+    # c = solucion[5]    
+
+    # [F, model, x, s, c, tamaños_nombres]
+    # F = solucion[0]
     x = solucion[2]
-    file_sizes = solucion[3]
-    ordenamiento = solucion[4]
-    c = solucion[5]    
+    # s = solucion[3]
+    c = solucion[4]
+    tamaños_nombres = solucion[5]
 
-    patrones_seleccionados = [
-        (p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
-    
+    # obtengo los tamaños sin repetidos, y los ordeno de mayor a menor para que los indices de los tamaños coincidan con los usados en los patrones
+    tamaños_existentes = sorted(list(dict.fromkeys(tamaños_nombres)), reverse=True)
+
+    archivos_almacenados = {tamaño: [] for tamaño in dict.fromkeys(tamaños_nombres)}
+
+    # cuantas veces se uso cada patron {numero de patron, cantidad de usos}
+    patrones_seleccionados = [(p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
+    patrones_seleccionados = [i for i, cantidad in patrones_seleccionados for _ in range(cantidad)]
+
+    print("PATRONES GENERADOS", len(c), "-->", c)
+    print("PATRONES SELECCIONADOS:", patrones_seleccionados)
+        
+    cont_discos = 0
     with open(ruta_archivo, "w") as f:
-        f.write(f"Para la configuracion del archivo, {len(patrones_seleccionados)} discos/patrones son suficientes.\n")
-
-        # Iterar sobre los patrones seleccionados
-        for p, veces in patrones_seleccionados:
-            f.write(f"Patron {p} (usado {veces} veces):\n")
-            archivos_cubiertos = []
-
+        f.write(f"Para la configuracion del archivo, {len(patrones_seleccionados)} discos son suficientes.\n")
+        for indice_patron in patrones_seleccionados:
+            cont_discos += 1
+            archivos_cubiertos_patron = []
+            espacio_ocupado = 0
+            patron = c[indice_patron]
+            print("\n", cont_discos, "PATRON NRO", indice_patron, "-->", patron)
             # Revisar qué tamaños cubre este patrón
-            for k, cantidad in enumerate(c[p]):
-                if cantidad > 0:
-                    # Buscar archivos con este tamaño
-                    archivos_cubiertos += [
-                        archivo
-                        for size, archivo in ordenamiento
-                        if size == list(set(file_sizes))[k]
-                    ]
+            for i in range(len(patron)): # revisamos cada posicion del patron
+                if patron[i] > 0: # se utiliza al menos un tamaño de la posicion i del patron
+                    tamaño_i = tamaños_existentes[i] # recuperamos el tamaño de la posicion i del patron
+                    cont_usos = 0
+                    for archivo in tamaños_nombres[tamaño_i]:
+                        # filtramos: queremos la cantidad suficiente de archivos de ese tamaño que todavia no hayan sido usados en otro patron anterior
+                        if archivo not in archivos_almacenados[tamaño_i] and cont_usos < patron[i]:
+                            archivos_almacenados[tamaño_i].append(archivo)
+                            archivos_cubiertos_patron.append(f"{archivo}  {tamaño_i}")
+                            espacio_ocupado = espacio_ocupado + tamaño_i
+                            cont_usos += 1
+                            print("   TAMAÑO:", tamaño_i, "NOMBRE:", archivo, "CONT USOS:", cont_usos, "USOS:", patron[i])
+                            
+            f.write(f"\nDisco {cont_discos}: {espacio_ocupado} MB\n")
 
-            # f.write(f"Tamaños cubiertos: {list(list(set(file_sizes))[k] for k, v in enumerate(c[p]) if v > 0)}\n")
-            f.write(f"Archivos cubiertos: {', '.join(archivos_cubiertos)}\n\n")
-
+            for archivo in archivos_cubiertos_patron:
+                f.write(archivo + "\n")
+            
+            
 ######################################################################
 # Generar outputs 5 y 6
 ######################################################################

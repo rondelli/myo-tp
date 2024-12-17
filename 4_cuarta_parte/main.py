@@ -44,6 +44,7 @@ elif sys.argv[1] == '-c':
 for archivo in archivos:
     capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_4(os.path.dirname(__file__) + '/IN/' + archivo)
     
+    # ordenamos los tamaños (junto con los nombres) de mayor a menor
     ordenamiento = sorted(list(zip(tamaños_archivos, nombres_archivos)), reverse=True)
     tamaños_archivos, nombres_archivos = zip(*ordenamiento)
     solucion = model_part_4.distribuir_archivos_4(capacidad_disco, list(nombres_archivos), list(tamaños_archivos), threshold * 60)

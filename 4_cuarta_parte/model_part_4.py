@@ -5,47 +5,42 @@ import Pattern
 import sys
 import time
 
+########################################################################
+    # d_t: capacidad del discoen TB,
+    # F: nombres de los archivos,
+    # s: tamaños de los archvios,
+    # time_limit: threshold en segundos
+########################################################################
 
-# d_t : tamaño del disco en TB
-# F : nombres de archivos
-# file_sizes: tamaños de archivos
-def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], time_limit=420):
+def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     tiempo_inicio = time.time()
-    c = Pattern.Pattern(d_t * 10**6, list(set(file_sizes))).obtener_patrones()
-    
-    S = {size: file_sizes.count(size) for size in set(file_sizes)}
-    S = dict(sorted(S.items(), reverse=True))
+   
+    # {tamaño: cantidad de archivos con ese tamaño}
+    tamaños_cantidades = {size: s.count(size) for size in set(s)}
+    # ordena el diccionario por tamaños, de mayor a menor
+    tamaños_cantidades = dict(sorted(tamaños_cantidades.items(), reverse=True))
 
-    # Cantidad de archivos
-    n = len(F) #sum(S[key] for key in S)
+    # lista de los tamaños únicos de archivo de S
+    tamaños_existentes = list(dict.fromkeys(tamaños_cantidades))
+    t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 
-    # Cantidad de tamaños de archivos
-    s = list(dict.fromkeys(S))
-    t = len(s)
+    c = Pattern.Pattern(d_t * 10**6, tamaños_existentes).obtener_patrones()
+    q = len(c) # Cantidad de patrones
 
-    # Cantidad de discos, a lo sumo, un disco por archivo
-    # m = n
-
-    # Cantidad de patrones
-    q = len(c)
-
-    # Define model
     model = Model("model_part_4")
-    # Configurar el límite de tiempo en el solver
-
     time_limit = time_limit - (time.time() - tiempo_inicio)
     model.setParam("limits/time", time_limit)
 
     # x[p] entera: cantidad de veces que se usa el patrón p, con p ∈ {1,…,q}, donde x_{p} ≥ 0
     x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
 
-    # minimize disks:
+    # Minimizar la cantidad de patrones usados
     model.setObjective(quicksum(x), sense="minimize")
 
-    # Restricción B
+    # Hay que cubrir todos los archivos de cada tamaño
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= S[s[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= tamaños_cantidades[tamaños_existentes[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
 
     model.optimize()
 
@@ -55,7 +50,9 @@ def distribuir_archivos_4(d_t: int, F: list[str], file_sizes: list[int], time_li
     sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
-        ordenamiento = sorted(list(zip(file_sizes, F)), reverse=True)
-        return [F, model, x, file_sizes, ordenamiento, c]
+        tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
+        for i in range(len(s)):
+            tamaños_nombres[s[i]].append(F[i])
+        return [F, model, x, s, c, tamaños_nombres]
     else:
         return None

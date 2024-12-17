@@ -52,7 +52,7 @@ for archivo in archivos:
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
     solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60) 
-    # [F, model, x, file_sizes, ordenamiento, c]
+    # [F, model, x, s, c, tamaños_nombres]
     if solucion_4 is not None: 
         cotas[1], mejores[1], var[1], tiempos[1] = funciones.datos_modelo(solucion_4[1])                
         outputs.generar_output_4(archivo_out, solucion_4)
