@@ -1,0 +1,31 @@
+Holis! 
+
+Estos dias me puse con esto y avance con algunas cosas. Hice mas que nada refactorizaciones:
+* Refacor de los main.py: agregué una opcion para leer un archivo de configuración en cada x_parte.
+* Refactor de inputs, outputs y configuraciones: saqué los archivos de configuracion y generadores de outputs de cada x_parte, los puse en una nueva carpeta llamada utils. 
+--> En esa misma carpeta está la funcion que lee el archivo de configuracion (archivo.cfg) --> O sea, ahora las funciones para generar/leer inputs/outputs/configuraciones estan
+centralizados en una sola carpeta.
+* Corrección de outputs: ahora los outputs de las partes 4, 5 y 6 hablan de discos y archivos, en lugar de conjuntos y patrones.
+* Parte 4: el output estaba mal (asumía que había sólo un archivo de cada tamaño), creo que ahora quedó bien (aunque quedó horriblemente largo). 
+* Parte 4: separé la generación del output de patrones. Los outputs de patrones generados se almacenan en una nueva carpeta llamada patrones.
+* Supuesta correccion del random de las partes 5 y 6: en el paso 1) creabamos conjuntos aleatoriamente, lo cambie por un modelo que encuentra la mejor distribución de archivos
+en conjuntos. Parece andar, al menos ahora da siempre los mismos resultados (aunque no sean optimos, ojo).
+
+Lo que falta es:
+* Corregir la generación de patrones: hay que ver que se generen todos/todos los maximales.
+* Filtrar patrones que no sirven: el modelo no debería tener en cuenta los patrones que usen más tamaños de los que tenemos en realidad (o sea, si tengo 3 archivos de x tamaño,
+no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opción es directamente no generarlos.
+* Revisar bien las partes 5 y 6:
+    * Ví que la parte 5 devuelve muy rápido soluciones que son factibles pero no óptimas. Tal vez habría que hacer algo para que, si todavía hay tiempo, siga buscando hasta 
+    encontrar una óptima. Supongo que en la parte 6 pasa lo mismo, pero bueno, lo noté en la parte 5 por ahora --> con f0017 (o f0018) la parte 5 devuelve un factible que no
+    es óptimo, pero la parte 6 sí devuelve el óptimo (o al menos devuelve el mismo resultado que la parte 1).
+    * Si en el tiempo límite no encontró ninguna solución óptima, estaría bueno que al menos devuelva una solución que sea factible (no sé si hacemos esto jeje).
+    * La parte 6 genera sólo los conjuntos que utiliza, ni más ni menos. No sé si está mal, pero al menos es raro jaja. La parte 5, en cambio, genera muchos conjuntos, y sólo usa
+    algunos.
+    * Algo curioso: en la consigna sugiere que hay que usar patrones ("resolver el problema de las secciones 1 and 4, nuevamente suponiendo que los tamaños de los archivos 
+    pertenecen a un conjunto pequeño"). Pero nosotros no usamos patrones en ningún momento D:
+* Informe --> actualizar todo básicamente.
+* Buscar las cotas (n_x).
+* Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
+
+Creo que eso es todo. Ánimos, tenemos que promocionar esta porquería jaja. 

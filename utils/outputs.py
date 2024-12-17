@@ -105,18 +105,7 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
 ######################################################################
 
 def generar_output_4(ruta_archivo, solucion):
-    # [F, model, x, s, ordenamiento, c]
-    # F = solucion[0]
-    # _ = solucion[1]
-    # x = solucion[2]
-    # s = solucion[3]
-    # ordenamiento = solucion[4]
-    # c = solucion[5]    
-
-    # [F, model, x, s, c, tamaños_nombres]
-    # F = solucion[0]
     x = solucion[2]
-    # s = solucion[3]
     c = solucion[4]
     tamaños_nombres = solucion[5]
 
@@ -129,8 +118,8 @@ def generar_output_4(ruta_archivo, solucion):
     patrones_seleccionados = [(p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
     patrones_seleccionados = [i for i, cantidad in patrones_seleccionados for _ in range(cantidad)]
 
-    print("PATRONES GENERADOS", len(c), "-->", c)
-    print("PATRONES SELECCIONADOS:", patrones_seleccionados)
+    # print("PATRONES GENERADOS", len(c), "-->", c)
+    # print("PATRONES SELECCIONADOS:", patrones_seleccionados)
         
     cont_discos = 0
     with open(ruta_archivo, "w") as f:
@@ -140,7 +129,7 @@ def generar_output_4(ruta_archivo, solucion):
             archivos_cubiertos_patron = []
             espacio_ocupado = 0
             patron = c[indice_patron]
-            print("\n", cont_discos, "PATRON NRO", indice_patron, "-->", patron)
+            # print("\n", cont_discos, "PATRON NRO", indice_patron, "-->", patron)
             # Revisar qué tamaños cubre este patrón
             for i in range(len(patron)): # revisamos cada posicion del patron
                 if patron[i] > 0: # se utiliza al menos un tamaño de la posicion i del patron
@@ -153,7 +142,7 @@ def generar_output_4(ruta_archivo, solucion):
                             archivos_cubiertos_patron.append(f"{archivo}  {tamaño_i}")
                             espacio_ocupado = espacio_ocupado + tamaño_i
                             cont_usos += 1
-                            print("   TAMAÑO:", tamaño_i, "NOMBRE:", archivo, "CONT USOS:", cont_usos, "USOS:", patron[i])
+                            # print("   TAMAÑO:", tamaño_i, "NOMBRE:", archivo, "CONT USOS:", cont_usos, "USOS:", patron[i])
                             
             f.write(f"\nDisco {cont_discos}: {espacio_ocupado} MB\n")
 
@@ -199,7 +188,6 @@ def generar_output_6(nombre_archivo, solucion):
 ######################################################################
 
 def generar_output_fallido(nombre_archivo):
-    print(nombre_archivo)
     with open(nombre_archivo, "w") as f:
         f.write(f"No se ha encontrado solucion para la configuracion del archivo.\n")
 
