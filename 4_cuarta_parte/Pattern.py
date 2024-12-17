@@ -1,47 +1,19 @@
-class Pattern:
+def obtener_patrones(capacidad_maxima, tamaños):
+    # Genera TODOS los patrones posibles, maximales o no
+    patrones = []
 
-    def __init__(self, capacidad_maxima, tamaños):
-        self.capacidad_maxima = capacidad_maxima
-        self.tamaños = tamaños
-        self.ultimo_patron = [0] * len(tamaños)
-        self.disponible = capacidad_maxima
-        self.indice_actual = 0
-
-    def obtener_patrones(self):
-        patrones = []
-        patrones.append(self.obtener_primer_patron()[:])
-   
-        while True:
-            patron = self.obtener_siguiente_patron()
-
-            if patron is None:
-                break
-            patrones.append(patron[:])
-        return patrones
-
-    def obtener_siguiente_patron(self):
-        for i in range(self.indice_actual, len(self.tamaños)):
-            if self.ultimo_patron[i] > 0:
-                self.ultimo_patron[i] -= 1
-                self.disponible += self.tamaños[i]
-                self.actualizar_tamaños(i + 1)
-                if self.ultimo_patron[i] == 0:
-                    self.indice_actual += 1
-                return self.ultimo_patron
-            
-            else:
-                self.disponible = self.capacidad_maxima
-                self.actualizar_tamaños(i)
-                return self.ultimo_patron
-        return None
-
-    def actualizar_tamaños(self, indice_tamaño):
-        for i in range(indice_tamaño, len(self.tamaños)):
-            max_cantidad = self.disponible // self.tamaños[i]
-            if max_cantidad >= 0:
-                self.ultimo_patron[i] = max_cantidad
-                self.disponible -= max_cantidad * self.tamaños[i]
-
-    def obtener_primer_patron(self):
-        self.actualizar_tamaños(0)
-        return self.ultimo_patron
+    def obtener_patron(espacio_disponible, indice, patron_actual):
+        if indice == len(tamaños):
+            patrones.append(patron_actual[:])
+            return
+        
+        tamaño = tamaños[indice]
+        maximo = espacio_disponible // tamaño
+        
+        for cont in range(maximo + 1):
+            patron_actual[indice] = cont
+            obtener_patron(espacio_disponible - cont * tamaño, indice + 1, patron_actual)
+            patron_actual[indice] = 0
+    
+    obtener_patron(capacidad_maxima, 0, [0] * len(tamaños))
+    return patrones

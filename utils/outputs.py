@@ -199,8 +199,9 @@ def generar_output_patrones(nombre_archivo, patrones, tamaños):
     with open(nombre_archivo, "w") as f:
         for i in range(len(patrones)):
             f.write(f"Patron {i + 1}: \n")
-            
+            # print(patrones[i])
             for j in range(len(patrones[i])):
-                f.write(f"{tamaños[j]}: {patrones[i][j]}    ")
+                # print(f"tamaño {j} {tamaños[j]}:  cantidad {i, j} {patrones[i][j]}    ")
+                f.write(f" {tamaños[j]}: {patrones[i][j]}\n")
         
             f.write(f"\n\n") 
