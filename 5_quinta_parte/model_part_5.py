@@ -28,11 +28,13 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     # Hice un modelo que distribuye los archivos en distintos conjuntos
     conjuntos = model_aux.generar_conjuntos(capacidad_disco, nombres_archivos, tamaños_archivos, threshold)
     encontro_solucion = True
+    termino_tiempo = False
+    
     while True:
         inicio_ciclo = time.time()
         tiempo = inicio_ciclo - tiempo_inicio
         if tiempo >= threshold or conjuntos is None:
-            encontro_solucion = False
+            termino_tiempo = True
             break
         
         modelo = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - tiempo)
@@ -54,7 +56,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     
     tiempo = time.time() - tiempo_inicio
 
-    if encontro_solucion:
+    if encontro_solucion or termino_tiempo: # en caso de que termine el tiempo, x sería factible, no óptima (creo)
         soluc_entera = model_aux.obtener_solucion_entera(modelo, x)
         conjuntos_seleccionados = model_aux.obtener_conjuntos_seleccionados(soluc_entera)
         return [conjuntos_seleccionados, modelo, conjuntos, nombres_archivos, tamaños_archivos, tiempo]

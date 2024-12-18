@@ -17,9 +17,16 @@ Lo que falta es:
 no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opción es directamente no generarlos.
 * Revisar bien las partes 5 y 6:
     * Ví que la parte 5 devuelve muy rápido soluciones que son factibles pero no óptimas. Tal vez habría que hacer algo para que, si todavía hay tiempo, siga buscando hasta 
-    encontrar una óptima. Supongo que en la parte 6 pasa lo mismo, pero bueno, lo noté en la parte 5 por ahora --> con f0017 (o f0018) la parte 5 devuelve un factible que no
+    encontrar una óptima. 
+    
+    ~En realidad, eso está así porque el lo pidió. Termina cuando la función objetivo es < 1... o, al menos, si quería algo más, no lo dijo.
+
+    Supongo que en la parte 6 pasa lo mismo, pero bueno, lo noté en la parte 5 por ahora --> con f0017 (o f0018) la parte 5 devuelve un factible que no
     es óptimo, pero la parte 6 sí devuelve el óptimo (o al menos devuelve el mismo resultado que la parte 1).
     * Si en el tiempo límite no encontró ninguna solución óptima, estaría bueno que al menos devuelva una solución que sea factible (no sé si hacemos esto jeje).
+
+    ~no lo hacemos. puede devolver el x, la solución primal. esta, entiendo, sería factible. modifico el código para añadir eso. igual, no sé si es lo ideal, porque creo que no lo hacemos en otro modelo.
+
     * La parte 6 genera sólo los conjuntos que utiliza, ni más ni menos. No sé si está mal, pero al menos es raro jaja. La parte 5, en cambio, genera muchos conjuntos, y sólo usa
     algunos.
     * Algo curioso: en la consigna sugiere que hay que usar patrones ("resolver el problema de las secciones 1 and 4, nuevamente suponiendo que los tamaños de los archivos 
