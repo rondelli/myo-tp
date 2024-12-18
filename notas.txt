@@ -31,7 +31,12 @@ no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opci
     algunos.
     * Algo curioso: en la consigna sugiere que hay que usar patrones ("resolver el problema de las secciones 1 and 4, nuevamente suponiendo que los tamaños de los archivos 
     pertenecen a un conjunto pequeño"). Pero nosotros no usamos patrones en ningún momento D:
+
+    ~no me preocuparía! según él, los modelos están bien.................... asjj
+
 * Informe --> actualizar todo básicamente.
+    ⤷ recordar modelar el dual de la parte 5
+    
 * Buscar las cotas (n_x).
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
 
