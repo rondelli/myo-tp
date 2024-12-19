@@ -5,10 +5,14 @@ class TestPattern(unittest.TestCase):
     def test_capacidad_0(self):
         capacidad_maxima = 0
         tamaños = range(10)
-        patrones_esperados = [[0] * 10]
 
+        patrones_esperados = [[0] * 10]
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
+
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
     
     def test_tamaños_0(self):
         capacidad_maxima = 2
@@ -21,38 +25,50 @@ class TestPattern(unittest.TestCase):
         tamaños = [0] * 2
 
         patrones_esperados = [[0] * 2]
-        
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
+
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
 
     def test_capacidad_menor_a_tamaños(self):
         capacidad_maxima = 2
         tamaños = range(3, 10)
-        patrones_esperados = [[0] * 7]
         
+        patrones_esperados = [[0] * 7]
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
 
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
 
-    
     def test_tamaño_igual_que_capacidad(self):
         capacidad_maxima = 2
         tamaños = [2] * 2
 
-        patrones_esperados = [[1, 0],
-                              [0, 1]]
-        
+        patrones_esperados = [[0, 1],
+                              [1, 0]]
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
+
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
 
     def test_tamaños_redondos(self):    #jasashjasjas no se como ponerle
         capacidad_maxima = 10
         tamaños = [3, 7]
 
-        patrones_esperados = [[1, 1]]
-        
+        patrones_esperados = [[1, 1],
+                              [3, 0]]
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
+
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
     
     def test_tamaños_diferencia(self):    #jasashjasjas no se como ponerle
         capacidad_maxima = 10
@@ -61,15 +77,19 @@ class TestPattern(unittest.TestCase):
         patrones_esperados = [[0, 2],
                               [1, 1],
                               [3, 0]]
-        
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        
+        patrones_esperados_set = set(map(tuple, patrones_esperados))
+        patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
+
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
 
     def test_tres_tamaños(self):
         capacidad_maxima = 10
         tamaños = [1, 2, 3]
 
         patrones_esperados = [[1, 0, 3],
+                              [0, 2, 2],
                               [2, 1, 2],
                               [4, 0, 2],
                               [1, 3, 1],
@@ -85,12 +105,9 @@ class TestPattern(unittest.TestCase):
 
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
 
-        # la idea es que haga solo los que necesita
         patrones_esperados_set = set(map(tuple, patrones_esperados))
         patrones_obtenidos_set = set(map(tuple, patrones_obtenidos))
 
-        self.assertTrue(patrones_esperados_set.issubset(patrones_obtenidos_set), "No todos los patrones están en 'patrones_obtenidos_set'.")
-
-        # self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+        self.assertEqual(patrones_esperados_set, patrones_obtenidos_set, "Los conjuntos de patrones difieren.")
 
 unittest.TextTestRunner().run(unittest.makeSuite(TestPattern))
