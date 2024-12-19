@@ -9,6 +9,21 @@ class TestPattern(unittest.TestCase):
 
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
         self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
+    
+    def test_tamaños_0(self):
+        capacidad_maxima = 2
+        tamaños = [0] * 2
+
+        # Acá esperamos que meta infinitas veces cada tamaño... no creo que haga falta
+    
+    def test_capacidad_y_tamaños_0(self):
+        capacidad_maxima = 0
+        tamaños = [0] * 2
+
+        patrones_esperados = [[0] * 2]
+        
+        patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
+        self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
 
     def test_capacidad_menor_a_tamaños(self):
         capacidad_maxima = 2
@@ -18,15 +33,7 @@ class TestPattern(unittest.TestCase):
         patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
         self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
 
-    def test_tamaños_0(self):
-        capacidad_maxima = 2
-        tamaños = [0] * 2
 
-        # Acá esperamos que meta infinitas veces cada tamaño... no creo que haga falta
-        # patrones_esperados = [[0] * 7]
-        
-        # patrones_obtenidos = Pattern.obtener_patrones(capacidad_maxima, tamaños)
-        # self.assertEqual(patrones_esperados, patrones_obtenidos, msg=None)
     
     def test_tamaño_igual_que_capacidad(self):
         capacidad_maxima = 2

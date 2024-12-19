@@ -1,5 +1,8 @@
 def obtener_patrones(capacidad_maxima, tamaños):
     # Genera TODOS los patrones posibles, maximales o no
+    if capacidad_maxima == 0:
+        return [[0] * len(tamaños)]
+
     patrones = []
 
     def obtener_patron(espacio_disponible, indice, patron_actual):
