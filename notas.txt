@@ -12,9 +12,15 @@ centralizados en una sola carpeta.
 en conjuntos. Parece andar, al menos ahora da siempre los mismos resultados (aunque no sean optimos, ojo).
 
 Lo que falta es:
+
+### MODELO 4 - PATRONES ###
 * Corregir la generación de patrones: hay que ver que se generen todos/todos los maximales.
 * Filtrar patrones que no sirven: el modelo no debería tener en cuenta los patrones que usen más tamaños de los que tenemos en realidad (o sea, si tengo 3 archivos de x tamaño,
 no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opción es directamente no generarlos.
+
+~por ahora sólo modifiqué la selección de patrones, no la generación. toma únicamente los maximales. pienso seguir con lo de patrones que no sirven.
+
+### MODELOS 5 Y 6 ###
 * Revisar bien las partes 5 y 6:
     * Ví que la parte 5 devuelve muy rápido soluciones que son factibles pero no óptimas. Tal vez habría que hacer algo para que, si todavía hay tiempo, siga buscando hasta 
     encontrar una óptima. 
@@ -23,6 +29,7 @@ no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opci
 
     Supongo que en la parte 6 pasa lo mismo, pero bueno, lo noté en la parte 5 por ahora --> con f0017 (o f0018) la parte 5 devuelve un factible que no
     es óptimo, pero la parte 6 sí devuelve el óptimo (o al menos devuelve el mismo resultado que la parte 1).
+    
     * Si en el tiempo límite no encontró ninguna solución óptima, estaría bueno que al menos devuelva una solución que sea factible (no sé si hacemos esto jeje).
 
     ~no lo hacemos. puede devolver el x, la solución primal. esta, entiendo, sería factible. modifico el código para añadir eso. igual, no sé si es lo ideal, porque creo que no lo hacemos en otro modelo.
@@ -34,9 +41,11 @@ no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opci
 
     ~no me preocuparía! según él, los modelos están bien.................... asjj
 
+### INFORME ###
 * Informe --> actualizar todo básicamente.
     ⤷ recordar modelar el dual de la parte 5
-    
+
+### PARTE 7 ###
 * Buscar las cotas (n_x).
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
 

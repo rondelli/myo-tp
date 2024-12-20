@@ -30,7 +30,6 @@ def obtener_patrones(capacidad_maxima, tamaños):
 capacidad_maxima = 10
 tamaños = [1, 2, 3]
 
-# ESTO FALLA PORQUE CREO QUE TIENE RAZON Y FALTAN PATRONES
 patrones_esperados = [[0, 2, 2],
                       [0, 5, 0],
                       [1, 0, 3],

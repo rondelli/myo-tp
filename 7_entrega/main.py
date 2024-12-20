@@ -20,9 +20,11 @@ import funciones
 
 archivo_conf = os.path.join(os.path.dirname(__file__), 'archivo.cfg')
 print(f'Leyendo configuración {archivo_conf}\n')
+
 configuraciones = configs.leer_configuracion(archivo_conf)
 out_path = configuraciones.get('outPath')[:-1]
 threshold = int(configuraciones.get('threshold', 0))
+
 archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
 archivos.remove('.gitkeep')
 
@@ -42,6 +44,7 @@ for archivo in archivos:
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT1', f'{archivo[:-3]}.out')
     solucion_1 = model_part_1.distribuir_archivos_1(d_t, F, s, threshold * 60) 
+    
     # [F, model, y, x, s]
     if solucion_1 is not None:
         cotas[0], mejores[0], var[0], tiempos[0] = funciones.datos_modelo(solucion_1[1])
@@ -49,9 +52,9 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
 
-
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
     solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60) 
+    
     # [F, model, x, s, c, tamaños_nombres]
     if solucion_4 is not None: 
         cotas[1], mejores[1], var[1], tiempos[1] = funciones.datos_modelo(solucion_4[1])                
@@ -62,6 +65,7 @@ for archivo in archivos:
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT5', f'{archivo[:-3]}.out')
     solucion_5  = model_part_5.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60) 
+    
     # [conjuntos_seleccionados, modelo, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
     if solucion_5 is not None:        
         cotas[2], _, var[2], _ = funciones.datos_modelo(solucion_5[1])
@@ -71,9 +75,9 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
 
-
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT6', f'{archivo[:-3]}.out')
     solucion_6  = model_part_6.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
+    
     # [conjuntos_seleccionados, modelo, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
     if solucion_6 is not None:
         cotas[3], _, var[3], _ = funciones.datos_modelo(solucion_6[1])
@@ -82,7 +86,6 @@ for archivo in archivos:
         outputs.generar_output_6(archivo_out, solucion_6)        
     else:
         outputs.generar_output_fallido(archivo_out)
-
 
     cotas_validas = [c for c in cotas if c != '-']
     if cotas_validas:
