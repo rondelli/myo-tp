@@ -16,8 +16,8 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades):
 
     def obtener_patron(espacio_disponible, indice, patron_actual, minimo):
         if indice == len(tamaños):
-            if espacio_disponible < minimo:
-                patrones.append(patron_actual[:])
+            # if espacio_disponible < minimo:
+            patrones.append(patron_actual[:])
             return
         
         cantidad = cantidades[indice]

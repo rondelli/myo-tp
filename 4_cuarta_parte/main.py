@@ -48,13 +48,15 @@ for archivo in archivos:
     ordenamiento = sorted(list(zip(tamaños_archivos, nombres_archivos)), reverse=True)
     tamaños_archivos, nombres_archivos = zip(*ordenamiento)
     solucion = model_part_4.distribuir_archivos_4(capacidad_disco, list(nombres_archivos), list(tamaños_archivos), threshold * 60)
-
+    
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     
     if solucion is not None:
         outputs.generar_output_4(archivo_out, solucion)
+        
         patrones_out = os.path.join(os.path.dirname(__file__), 'patrones', f'{archivo[:-3]}.out')
         # en solucion[4]= c, solucion[5] = {tamaño: [archivos]}
         outputs.generar_output_patrones(patrones_out, solucion[4], sorted(list(dict.fromkeys(solucion[5])), reverse=True))
+        
     else:
         outputs.generar_output_fallido(archivo_out)

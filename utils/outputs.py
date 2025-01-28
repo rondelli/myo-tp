@@ -105,50 +105,45 @@ def generar_output_3(nombre_archivo, solucion, conjuntos):
 ######################################################################
 
 def generar_output_4(ruta_archivo, solucion):
-    x = solucion[2]
-    c = solucion[4]
+    x = solucion[2] 
+    c = solucion[4] 
     tamaños_nombres = solucion[5]
 
-    # obtengo los tamaños sin repetidos, y los ordeno de mayor a menor para que los indices de los tamaños coincidan con los usados en los patrones
+    # Ordena los tamaños de mayor a menor
     tamaños_existentes = sorted(list(dict.fromkeys(tamaños_nombres)), reverse=True)
 
-    archivos_almacenados = {tamaño: [] for tamaño in dict.fromkeys(tamaños_nombres)}
+    # Asignamos archivos disponibles a cada tamaño
+    archivos_disponibles = {tamaño: list(tamaños_nombres[tamaño]) for tamaño in tamaños_existentes}
 
-    # cuantas veces se uso cada patron {numero de patron, cantidad de usos}
+
     patrones_seleccionados = [(p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
-    patrones_seleccionados = [i for i, cantidad in patrones_seleccionados for _ in range(cantidad)]
 
-    # print("PATRONES GENERADOS", len(c), "-->", c)
-    # print("PATRONES SELECCIONADOS:", patrones_seleccionados)
-        
     cont_discos = 0
     with open(ruta_archivo, "w") as f:
-        f.write(f"Para la configuracion del archivo, {len(patrones_seleccionados)} discos son suficientes.\n")
-        for indice_patron in patrones_seleccionados:
-            cont_discos += 1
-            archivos_cubiertos_patron = []
-            espacio_ocupado = 0
-            patron = c[indice_patron]
-            # print("\n", cont_discos, "PATRON NRO", indice_patron, "-->", patron)
-            # Revisar qué tamaños cubre este patrón
-            for i in range(len(patron)): # revisamos cada posicion del patron
-                if patron[i] > 0: # se utiliza al menos un tamaño de la posicion i del patron
-                    tamaño_i = tamaños_existentes[i] # recuperamos el tamaño de la posicion i del patron
-                    cont_usos = 0
-                    for archivo in tamaños_nombres[tamaño_i]:
-                        # filtramos: queremos la cantidad suficiente de archivos de ese tamaño que todavia no hayan sido usados en otro patron anterior
-                        if archivo not in archivos_almacenados[tamaño_i] and cont_usos < patron[i]:
-                            archivos_almacenados[tamaño_i].append(archivo)
-                            archivos_cubiertos_patron.append(f"{archivo}  {tamaño_i}")
-                            espacio_ocupado = espacio_ocupado + tamaño_i
-                            cont_usos += 1
-                            # print("   TAMAÑO:", tamaño_i, "NOMBRE:", archivo, "CONT USOS:", cont_usos, "USOS:", patron[i])
-                            
-            f.write(f"\nDisco {cont_discos}: {espacio_ocupado} MB\n")
+        f.write(f"Para la configuracion del archivo, {sum(cantidad for _, cantidad in patrones_seleccionados)} discos son suficientes.\n")
 
-            for archivo in archivos_cubiertos_patron:
-                f.write(archivo + "\n")
-            
+        for indice_patron, cantidad_usos in patrones_seleccionados:
+            patron = c[indice_patron]
+            for _ in range(cantidad_usos):
+                cont_discos += 1
+                espacio_ocupado = 0
+                archivos_cubiertos_patron = []
+
+                # Procesa cada tamaño en el patrón
+                for i in range(len(patron)):
+                    if patron[i] > 0:  # Si este tamaño está siendo usado
+                        tamaño = tamaños_existentes[i]
+                        for _ in range(patron[i]):  # Asigna archivos según la cantidad del patrón
+                            if archivos_disponibles[tamaño]:
+                                archivo = archivos_disponibles[tamaño].pop(0)
+                                archivos_cubiertos_patron.append(f"{archivo}  {tamaño}")
+                                espacio_ocupado += tamaño
+
+                # Escribe el disco al archivo de salida
+                f.write(f"\nDisco {cont_discos}: {espacio_ocupado} MB\n")
+                for archivo in archivos_cubiertos_patron:
+                    f.write(archivo + "\n")
+
             
 ######################################################################
 # Generar outputs 5 y 6

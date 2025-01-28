@@ -6,7 +6,7 @@ import sys
 import time
 
 ########################################################################
-    # d_t: capacidad del discoen TB,
+    # d_t: capacidad del disco en TB,
     # F: nombres de los archivos,
     # s: tamaños de los archvios,
     # time_limit: threshold en segundos
@@ -47,13 +47,13 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     solution = model.getBestSol()
     status = model.getStatus()
-    
-    sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
 
     if solution is not None and status in ["optimal", "feasible"]:
+        sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
         tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
         for i in range(len(s)):
             tamaños_nombres[s[i]].append(F[i])
         return [F, model, x, s, c, tamaños_nombres]
     else:
+        sys.stderr.write(f"[Debugging] Solution not found")
         return None

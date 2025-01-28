@@ -1,16 +1,3 @@
-Holis! 
-
-Estos dias me puse con esto y avance con algunas cosas. Hice mas que nada refactorizaciones:
-* Refacor de los main.py: agregué una opcion para leer un archivo de configuración en cada x_parte.
-* Refactor de inputs, outputs y configuraciones: saqué los archivos de configuracion y generadores de outputs de cada x_parte, los puse en una nueva carpeta llamada utils. 
---> En esa misma carpeta está la funcion que lee el archivo de configuracion (archivo.cfg) --> O sea, ahora las funciones para generar/leer inputs/outputs/configuraciones estan
-centralizados en una sola carpeta.
-* Corrección de outputs: ahora los outputs de las partes 4, 5 y 6 hablan de discos y archivos, en lugar de conjuntos y patrones.
-* Parte 4: el output estaba mal (asumía que había sólo un archivo de cada tamaño), creo que ahora quedó bien (aunque quedó horriblemente largo). 
-* Parte 4: separé la generación del output de patrones. Los outputs de patrones generados se almacenan en una nueva carpeta llamada patrones.
-* Supuesta correccion del random de las partes 5 y 6: en el paso 1) creabamos conjuntos aleatoriamente, lo cambie por un modelo que encuentra la mejor distribución de archivos
-en conjuntos. Parece andar, al menos ahora da siempre los mismos resultados (aunque no sean optimos, ojo).
-
 Lo que falta es:
 
 ### MODELO 4 - PATRONES ###
@@ -19,13 +6,17 @@ Lo que falta es:
 no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opción es directamente no generarlos.
 
 ~por ahora sólo modifiqué la selección de patrones, no la generación. toma únicamente los maximales. pienso seguir con lo de patrones que no sirven.
+# Holiiiis, modifique lo de los patrones para que genere todos los posibles, por ejemplo, si entran 4 archivos, va a generar un patron con 4 archivos,
+y otros con 3, 2 y 1. Eso porque si hay muchos archivos del mismo tamaño vamos a necesitar patrones para cubrir todas las opciones.
+
+
 
 ### MODELOS 5 Y 6 ###
 * Revisar bien las partes 5 y 6:
     * Ví que la parte 5 devuelve muy rápido soluciones que son factibles pero no óptimas. Tal vez habría que hacer algo para que, si todavía hay tiempo, siga buscando hasta 
     encontrar una óptima. 
-    
     ~En realidad, eso está así porque el lo pidió. Termina cuando la función objetivo es < 1... o, al menos, si quería algo más, no lo dijo.
+    # Okis, queda asi entonces.
 
     Supongo que en la parte 6 pasa lo mismo, pero bueno, lo noté en la parte 5 por ahora --> con f0017 (o f0018) la parte 5 devuelve un factible que no
     es óptimo, pero la parte 6 sí devuelve el óptimo (o al menos devuelve el mismo resultado que la parte 1).
@@ -40,6 +31,7 @@ no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opci
     pertenecen a un conjunto pequeño"). Pero nosotros no usamos patrones en ningún momento D:
 
     ~no me preocuparía! según él, los modelos están bien.................... asjj
+    # Bueno bueno :3
 
 ### INFORME ###
 * Informe --> actualizar todo básicamente.
@@ -48,5 +40,3 @@ no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opci
 ### PARTE 7 ###
 * Buscar las cotas (n_x).
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
-
-Creo que eso es todo. Ánimos, tenemos que promocionar esta porquería jaja. 
