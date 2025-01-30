@@ -1,6 +1,9 @@
-def obtener_patrones(capacidad_maxima, tamaños_cantidades):
+import time
+
+def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
     # Genera TODOS los patrones posibles, maximales o no
 
+    tiempo_inicio = time.time()
     tamaños= []
     cantidades = []
 
@@ -31,5 +34,9 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades):
             obtener_patron(espacio_disponible - cont * tamaño, indice + 1, patron_actual, minimo)
             patron_actual[indice] = 0
     
-    obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
+
+    tiempo_transcurrido = time_limit - (time.time() - tiempo_inicio)
+    if tiempo_transcurrido < time_limit:
+        obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
+
     return patrones

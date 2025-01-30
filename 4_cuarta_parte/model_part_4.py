@@ -26,7 +26,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 
     # c = Pattern.Pattern(d_t * 10**6, tamaños_existentes).obtener_patrones()
-    c = Pattern.obtener_patrones(d_t * 10**6, tamaños_cantidades)
+    c = Pattern.obtener_patrones(d_t * 10**6, tamaños_cantidades, 420)
     q = len(c) # Cantidad de patrones
 
     model = Model("model_part_4")
@@ -49,7 +49,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
+        # sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
         tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
         for i in range(len(s)):
             tamaños_nombres[s[i]].append(F[i])
