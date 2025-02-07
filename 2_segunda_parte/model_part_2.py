@@ -43,7 +43,7 @@ def resolver_modelo_binario_2(d_t: int,
     ########################################################################
     # BINARY
     # x_{i} = 1 si se elige el archivo i, 0 si no
-    x = [model.addVar(f"y_{i}", vtype="BINARY") for i in range(n)]
+    x = [model.addVar(f"x_{i}", vtype="BINARY") for i in range(n)]
     ########################################################################
 
     # maximize importance:

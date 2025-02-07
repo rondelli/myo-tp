@@ -25,7 +25,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     tamaños_existentes = list(dict.fromkeys(tamaños_cantidades))
     t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 
-    # c = Pattern.Pattern(d_t * 10**6, tamaños_existentes).obtener_patrones()
     c = Pattern.obtener_patrones(d_t * 10**6, tamaños_cantidades, 420)
     q = len(c) # Cantidad de patrones
 
@@ -41,7 +40,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     # Hay que cubrir todos los archivos de cada tamaño
     for k in range(t):
-        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= tamaños_cantidades[tamaños_existentes[k]]) # con == es infeasible, con >= se pasa del tamaño del disco
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= tamaños_cantidades[tamaños_existentes[k]]) # con == tarda muchisimo
 
     model.optimize()
 
@@ -49,7 +48,7 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        # sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
+        sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
         tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
         for i in range(len(s)):
             tamaños_nombres[s[i]].append(F[i])
