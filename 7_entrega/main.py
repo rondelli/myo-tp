@@ -18,18 +18,13 @@ import outputs
 import configs
 import funciones
 
-##################################
-# Archivos .in del profe:        #
-# f0032.in, f0512.in y f2048.in. #
-##################################
-
-##################################
-# Archivos .in por modelo:       #
-# n_1 --> f0017.in               #
-# n_4 --> f0082.in               #
-# n_5 --> desconocido            #
-# n_6 --> desconocido            #
-##################################
+##################################    ########################################
+## Archivos .in del profe:      ##    ## Archivos .in por modelo:           ##
+## f0032.in                     ##    ## n_1 --> f0017.in                   ##
+## f0512.in                     ##    ## n_4 --> f0074.in (f0082.in con >=) ##
+## f2048.in                     ##    ## n_5 --> desconocido                ##
+##################################    ## n_6 --> desconocido                ##
+                                      ########################################
 
 archivo_conf = os.path.join(os.path.dirname(__file__), 'archivo.cfg')
 print(f'Leyendo configuración {archivo_conf}\n')

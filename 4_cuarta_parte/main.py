@@ -56,7 +56,7 @@ for archivo in archivos:
         
         patrones_out = os.path.join(os.path.dirname(__file__), 'patrones', f'{archivo[:-3]}.out')
         # en solucion[4]= c, solucion[5] = {tamaño: [archivos]}
-        outputs.generar_output_patrones(patrones_out, solucion[4], sorted(list(dict.fromkeys(solucion[5])), reverse=True))
+        # outputs.generar_output_patrones(patrones_out, solucion[4], sorted(list(dict.fromkeys(solucion[5])), reverse=True))
         
     else:
         outputs.generar_output_fallido(archivo_out)
