@@ -1,63 +1,81 @@
+import sys
+
+sys.path.insert(0, "../4_cuarta_parte")
+
 from pyscipopt import Model
+from pyscipopt import quicksum
+import time
+from Pattern import obtener_patrones
 
 ########################################################################
-    # d_t: capacidad del discoen TB,
+    # d_t: capacidad del disco en TB,
     # F: nombres de los archivos,
     # s: tamaños de los archvios,
     # time_limit: threshold en segundos
 ########################################################################
 
+# * Es el modelo del punto 4, con la diferencia de que tiene un >= en lugar de un ==
+# * Creo que podria optimizarse haciendo que la función que genera patrones retorne solo los patrones maximales
+# (me refiero a los patrones con la mayor cantidad de archivos por disco, en luagr del codigo actual que permite que en el disco
+# sobre espacio --> sería descomentar un if nomas).
 def generar_conjuntos(d_t, F, s, time_limit=420):
-    model = Model("Generacion de conjuntos")
-    model.setParam("limits/time", time_limit)
     
-    d = d_t * 10**6
-    n = len(F)
+    tiempo_inicio = time.time()
+   
+    # {tamaño: cantidad de archivos con ese tamaño}
+    tamaños_cantidades = {size: s.count(size) for size in set(s)}
+    # ordena el diccionario por tamaños, de mayor a menor
+    tamaños_cantidades = dict(sorted(tamaños_cantidades.items(), reverse=True))
 
-    # x[i][j] = 1 si el archivo i está en el disco j
-    x = {}
+    # lista de los tamaños únicos de archivo de S
+    tamaños_existentes = list(dict.fromkeys(tamaños_cantidades))
+    t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 
-    # y[j] = 1 si el disco j se usa
-    y = {}
+    c = obtener_patrones(d_t * 10**6, tamaños_cantidades, 420)
+    q = len(c)
 
-    max_disks = n
+    model = Model("model_aux_part_5")
+    time_limit = time_limit - (time.time() - tiempo_inicio)
+    model.setParam("limits/time", time_limit)
 
-    for i in range(n):
-        for j in range(max_disks):
-            x[i, j] = model.addVar(vtype="B", name=f"x({i},{j})")
+    # x[p] entera: cantidad de veces que se usa el patrón p, con p ∈ {1,…,q}, donde x_{p} ≥ 0
+    x = [model.addVar(vtype='I', name=f"x_{p}") for p in range(q)]
 
-    for j in range(max_disks):
-        y[j] = model.addVar(vtype="B", name=f"y({j})")
+    # Minimizar la cantidad de patrones usados
+    model.setObjective(quicksum(x), sense="minimize")
 
-    # Cada archivo debe estar en al menos un disco
-    for i in range(n):
-        model.addCons(sum(x[i, j] for j in range(max_disks)) >= 1, name=f"coverage({i})")
-
-    # Capacidad de cada disco
-    for j in range(max_disks):
-        model.addCons(
-            sum(x[i, j] * s[i] for i in range(n)) <= d * y[j],
-            name=f"capacity({j})"
-        )
-
-    # Minimizar discos
-    model.setObjective(sum(y[j] for j in range(max_disks)), sense="minimize")
+    # Hay que cubrir todos los archivos de cada tamaño
+    for k in range(t):
+        # La consigna dice que cada archivo debe estar en *al menos* un conjunto. En el modelo 4 sí dice ==.
+        model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) >= tamaños_cantidades[tamaños_existentes[k]])
 
     model.optimize()
-    sol = model.getBestSol()
 
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus() == "feasible":
-        conjuntos = []
-        for j in range(max_disks):
-            if model.getVal(y[j]) > 0.5:
-                archivos_en_disco = [
-                    F[i] for i in range(n) if model.getVal(x[i, j]) > 0.5
-                ]
-                conjuntos.append(archivos_en_disco)
-        return conjuntos
+    solution = model.getBestSol()
+    status = model.getStatus()
+
+    if solution is not None and status in ["optimal", "feasible"]:
+
+        tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
+        for i in range(len(s)):
+            tamaños_nombres[s[i]].append(F[i])
+
+        conjuntos_archivos = []
+        for p in range(q):
+            cantidad = int(model.getVal(x[p]))
+            if cantidad > 0:
+                for _ in range(cantidad):
+                    conjunto = []
+                    for k in range(t):
+                        tamaño = tamaños_existentes[k]
+                        num_archivos = c[p][k]
+                        conjunto.extend(tamaños_nombres[tamaño][:num_archivos])
+                        tamaños_nombres[tamaño] = tamaños_nombres[tamaño][num_archivos:]
+                    conjuntos_archivos.append(conjunto)
+        return conjuntos_archivos
     else:
         return None
-    
+
 
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
