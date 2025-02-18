@@ -51,22 +51,8 @@ def generar_subconjuntos(tamaño_disco, archivos):
 
     return patrones
 
-archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
-tamaños_cantidades = dict(Counter(archivos.values()))
-
-print(tamaños_cantidades)
-
-tamaño_discos = 50
-
-patrones_1 = generar_subconjuntos_peor(tamaño_discos, tamaños_cantidades)
-patrones_2 = generar_subconjuntos(tamaño_discos, archivos)
-
-print(f"Output primer función {patrones_1}")
-print(f"Output segunda función {patrones_2}")
-
-
 # FUNCION DE AGUS
-def generar_subconjuntos(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
+def generar_subconjuntos_Agus(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
             H = []
             archivos = list(zip(nombres_archivos, pesos_archivos))
             print ("Generando subconjuntos")
@@ -92,6 +78,24 @@ def generar_subconjuntos(peso_disco, nombres_archivos, pesos_archivos, tiempo_in
 
 def chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite):
     return True
+
+archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
+tamaños_cantidades = dict(Counter(archivos.values()))
+
+print(tamaños_cantidades)
+
+tamaño_discos = 50
+
+patrones_1 = generar_subconjuntos_peor(tamaño_discos, tamaños_cantidades)
+patrones_2 = generar_subconjuntos(tamaño_discos, archivos)
+patrones_agus = generar_subconjuntos_Agus(tamaño_discos, list(archivos.keys()), list(archivos.values()), 0, 0)
+
+print(f"Output primer función {patrones_1}")
+print(f"Output segunda función {patrones_2}")
+print(f"Output agus {patrones_agus}")
+
+
+
 
 
 
