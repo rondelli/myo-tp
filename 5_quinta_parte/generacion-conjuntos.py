@@ -1,30 +1,34 @@
 from collections import Counter
 
-archivos = {'a1': 20, 'a2': 13, 'a3': 20}
+archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
 tamaños_cantidades = dict(Counter(archivos.values()))
 
 tamaño_discos = 50
 patrones = []
 
+print(tamaños_cantidades)
 
 # no recuerdo si ya hicimos algo así...
-while sum(tamaños_cantidades.values()) > 0:
+# esto repite patrones, por ahora
+# sorry por los nombres de las variables
+for tamaño_archivo, cantidad_archivos in tamaños_cantidades.items():
     tamaño_disco_actual = tamaño_discos
-    patron = []
-
-    for tamaño_archivo, cantidad_archivos in tamaños_cantidades.items():
-        cantidad_utilizados = cantidad_archivos
-        espacio_restante = tamaño_disco_actual - (tamaño_archivo * cantidad_utilizados)
+    patron = {}
+    
+    espacio_restante_patron = tamaño_disco_actual - tamaño_archivo
+    patron[tamaño_archivo] = 1
+    
+    for tamaño_archivo_2, cantidad_archivos_2 in tamaños_cantidades.items():
+        cantidad_utilizados = cantidad_archivos_2 - (1 if tamaño_archivo == tamaño_archivo_2 else 0)
+        espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
 
         while espacio_restante < 0 and cantidad_utilizados > 0:
             cantidad_utilizados = cantidad_utilizados - 1
-            espacio_restante = tamaño_disco_actual - (tamaño_archivo * cantidad_utilizados)
+            espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
         
-        patron.append({tamaño_archivo: cantidad_utilizados})
-        tamaño_disco_actual = espacio_restante
-
-        tamaños_cantidades[tamaño_archivo] = tamaños_cantidades[tamaño_archivo] - cantidad_utilizados
-
+        patron[tamaño_archivo_2] = patron.get(tamaño_archivo_2, 0) + cantidad_utilizados
+        espacio_restante_patron = espacio_restante
+    
     patrones.append(patron)
 
 print(patrones)
@@ -53,6 +57,9 @@ def generar_subconjuntos(peso_disco, nombres_archivos, pesos_archivos, tiempo_in
                         return []
             print ("Termino de generar subconjuntos")
             return H
+
+def chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite):
+    return True
 
 
 
