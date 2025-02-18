@@ -82,7 +82,7 @@ def chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite):
 archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
 tamaños_cantidades = dict(Counter(archivos.values()))
 
-print(tamaños_cantidades)
+print(f"Tamaños y cantidades {tamaños_cantidades}")
 
 tamaño_discos = 50
 
