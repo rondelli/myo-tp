@@ -1,67 +1,68 @@
 from collections import Counter
 from itertools import combinations_with_replacement
 
+def generar_subconjuntos_peor(tamaño_disco, archivos):
+    # no recuerdo si ya hicimos algo así...
+    # esto repite patrones, por ahora
+    # sorry por los nombres de las variables
+    
+    patrones = []
+    
+    for tamaño_archivo, _ in archivos.items():
+        tamaño_disco_actual = tamaño_disco
+        patron = {}
+        
+        espacio_restante_patron = tamaño_disco_actual - tamaño_archivo
+        patron[tamaño_archivo] = 1
+        
+        for tamaño_archivo_2, cantidad_archivos_2 in archivos.items():
+            cantidad_utilizados = cantidad_archivos_2 - (1 if tamaño_archivo == tamaño_archivo_2 else 0)
+            espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
+
+            while espacio_restante < 0 and cantidad_utilizados > 0:
+                cantidad_utilizados = cantidad_utilizados - 1
+                espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
+            
+            patron[tamaño_archivo_2] = patron.get(tamaño_archivo_2, 0) + cantidad_utilizados
+            espacio_restante_patron = espacio_restante
+        
+        patrones.append(patron)
+
+    return patrones
+
 # otra opción
-def generar_subconjuntos(peso_disco, archivos):
-    subconjuntos_validos = []
+def generar_subconjuntos(tamaño_disco, archivos):
+    patrones = []
     peso_minimo = min(archivos.values())
 
     for r in range(1, len(archivos) + 1):
         for combinacion in combinations_with_replacement(archivos.values(), r):
             
             tamaño_combinacion = sum(tamaño for tamaño in combinacion)
-            if tamaño_combinacion <= peso_disco and peso_disco - tamaño_combinacion < peso_minimo:
+            if tamaño_combinacion <= tamaño_disco and tamaño_disco - tamaño_combinacion < peso_minimo:
                 patron = {}
                 
                 for tamaño in combinacion:
                     patron[tamaño] = patron.get(tamaño, 0) + 1
                 
-                if patron not in subconjuntos_validos:
-                    subconjuntos_validos.append(patron)
-                # subconjuntos_validos.append([nombre for nombre, _ in combo])
+                if patron not in patrones:
+                    patrones.append(patron)
+                # patrones.append([nombre for nombre, _ in combo])
 
-    return subconjuntos_validos
+    return patrones
 
 archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
 tamaños_cantidades = dict(Counter(archivos.values()))
 
-tamaño_discos = 50
-patrones = []
-
 print(tamaños_cantidades)
 
-# no recuerdo si ya hicimos algo así...
-# esto repite patrones, por ahora
-# sorry por los nombres de las variables
-for tamaño_archivo, cantidad_archivos in tamaños_cantidades.items():
-    tamaño_disco_actual = tamaño_discos
-    patron = {}
-    
-    espacio_restante_patron = tamaño_disco_actual - tamaño_archivo
-    patron[tamaño_archivo] = 1
-    
-    for tamaño_archivo_2, cantidad_archivos_2 in tamaños_cantidades.items():
-        cantidad_utilizados = cantidad_archivos_2 - (1 if tamaño_archivo == tamaño_archivo_2 else 0)
-        espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
+tamaño_discos = 50
 
-        while espacio_restante < 0 and cantidad_utilizados > 0:
-            cantidad_utilizados = cantidad_utilizados - 1
-            espacio_restante = espacio_restante_patron - (tamaño_archivo_2 * cantidad_utilizados)
-        
-        patron[tamaño_archivo_2] = patron.get(tamaño_archivo_2, 0) + cantidad_utilizados
-        espacio_restante_patron = espacio_restante
-    
-    patrones.append(patron)
+patrones_1 = generar_subconjuntos_peor(tamaño_discos, tamaños_cantidades)
+patrones_2 = generar_subconjuntos(tamaño_discos, archivos)
 
-print(patrones)
-
-output_funcion = generar_subconjuntos(tamaño_discos, archivos)
-print(output_funcion)
-
-for patron in output_funcion:
-    espacio_total = sum(peso * cantidad for peso, cantidad in patron.items())
-    print(patron, espacio_total)
-
+print(f"Output primer función {patrones_1}")
+print(f"Output segunda función {patrones_2}")
 
 
 # FUNCION DE AGUS
