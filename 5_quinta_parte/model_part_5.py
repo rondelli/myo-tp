@@ -27,7 +27,6 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     # 1) Obtener H cursiva.
     conjuntos = generacion_conjuntos.generar_subconjuntos_Agus(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos, tiempo_inicio, threshold)
-    # print("CONJUNTOS:", conjuntos)
     if conjuntos is None:
         return None
 
@@ -48,7 +47,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         # --> Obtenemos un conjunto de maxima importancia H.
         distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - tiempo) # [F, model, fake_x, I, s]
         solucion_modelo_2 = outputs.obtener_solucion_2(distribucion)
-        print("Soluc modelo 2:", solucion_modelo_2)
+
         if solucion_modelo_2 is None or x is None or modelo_P is None:
             encontro_solucion = False
             break
@@ -65,10 +64,8 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             if not existe_subconjunto:
                 conjuntos.append(set(solucion_modelo_2[0]))
             else:
-                print(f"El subconjunto {solucion_modelo_2[0]} ya está contenido en otro subconjunto de H.")
                 break
         else:
-            print("CONJUNTOS RESULTADO:", conjuntos)
             break
     
     tiempo = time.time() - tiempo_inicio

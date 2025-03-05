@@ -1,5 +1,8 @@
 ~NOTA: creé un repo con lo de Agus Vidal! creo que deebríamos continuar con lo nuestro y al final comparar nuestros resultados con los de ella
 
+--> HOLIS :DD Incorporé al modelo 5 la funcion de Agus. Veo que en el resultado hay archivos repetidos, no sé si eso esta bien :s
+
+
 Lo que falta es:
 
 ### MODELO 4 - PATRONES ###
