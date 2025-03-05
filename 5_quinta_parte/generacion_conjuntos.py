@@ -1,3 +1,4 @@
+import time
 from collections import Counter
 from itertools import combinations_with_replacement
 
@@ -51,48 +52,42 @@ def generar_subconjuntos(tamaño_disco, archivos):
 
     return patrones
 
-# FUNCION DE AGUS
 def generar_subconjuntos_Agus(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
             H = []
             archivos = list(zip(nombres_archivos, pesos_archivos))
-            print ("Generando subconjuntos")
-            if not chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite_total):
-                print("Se terminó el tiempo generando los conjuntos.")
-                return None
-            # También generamos subconjuntos de archivos de forma más interdependiente para agregar variedad
             for i in range(len(archivos)):
+                agregado = False
                 for j in range(i + 1, len(archivos)):
-                    # Intentamos agregar combinaciones de diferentes pares de archivos
                     combo = [archivos[i], archivos[j]]
                     total_size = sum(peso for _, peso in combo)
-                    if not chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite_total):
-                        print("Se terminó el tiempo generando los subconjuntos.")
+                    if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
                         return []
                     if total_size <= peso_disco:
                         H.append([nombre for nombre, _ in combo])
-            if not chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite_total):
-                        print("Se terminó el tiempo generando los subconjuntos.")
+                        agregado = True
+                if not agregado:
+                     H.append([archivos[i][0]])
+            if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
                         return []
-            print ("Termino de generar subconjuntos")
             return H
 
-def chequear_existe_tiempo_ejecucion(tiempo_inicio, tiempo_limite):
-    return True
+def hay_tiempo(tiempo_inicio, tiempo_limite):
+    return (time.time() - tiempo_inicio) < tiempo_limite
 
-archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
-tamaños_cantidades = dict(Counter(archivos.values()))
+# archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
+# tamaños_cantidades = dict(Counter(archivos.values()))
 
-print(f"Tamaños y cantidades {tamaños_cantidades}")
+# print(f"Tamaños y cantidades {tamaños_cantidades}")
 
-tamaño_discos = 50
+# tamaño_discos = 50
 
-patrones_1 = generar_subconjuntos_peor(tamaño_discos, tamaños_cantidades)
-patrones_2 = generar_subconjuntos(tamaño_discos, archivos)
-patrones_agus = generar_subconjuntos_Agus(tamaño_discos, list(archivos.keys()), list(archivos.values()), 0, 0)
+# patrones_1 = generar_subconjuntos_peor(tamaño_discos, tamaños_cantidades)
+# patrones_2 = generar_subconjuntos(tamaño_discos, archivos)
+# patrones_agus = generar_subconjuntos_Agus(tamaño_discos, list(archivos.keys()), list(archivos.values()), 0, 0)
 
-print(f"Output primer función {patrones_1}")
-print(f"Output segunda función {patrones_2}")
-print(f"Output agus {patrones_agus}")
+# print(f"Output primer función {patrones_1}")
+# print(f"Output segunda función {patrones_2}")
+# print(f"Output agus {patrones_agus}")
 
 
 
