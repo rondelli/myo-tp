@@ -55,6 +55,8 @@ def generar_subconjuntos(tamaño_disco, archivos):
 def generar_subconjuntos_Agus(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
             H = []
             archivos = list(zip(nombres_archivos, pesos_archivos))
+            if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
+                        return []
             for i in range(len(archivos)):
                 agregado = False
                 for j in range(i + 1, len(archivos)):
