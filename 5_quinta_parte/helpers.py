@@ -16,7 +16,7 @@ def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
             if total_size <= peso_disco:
                 H.append(set([nombre for nombre, _ in combo]))
                 agregado = True
-        if not agregado:
+        if not agregado and archivos[i][1] <= peso_disco:
             H.append(set([archivos[i][0]]))
     return H
 
