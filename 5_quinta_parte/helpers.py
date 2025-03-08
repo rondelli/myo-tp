@@ -14,7 +14,7 @@ def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
                 H.append(set([nombre for nombre, _ in combo]))
                 agregado = True
         if not agregado:
-                H.append(set([archivos[i][0]]))
+            H.append(set([archivos[i][0]]))
     return H
 
 # * Esta opcion retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
