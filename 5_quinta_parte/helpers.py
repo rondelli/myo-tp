@@ -3,29 +3,26 @@ import time
 
 # * Retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
 def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
-    H = []
-    archivos = list(zip(nombres_archivos, tamaños_archivos))
-
-    for i in range(len(archivos)):
-        agregado = False
-
-        for j in range(i + 1, len(archivos)):
-            combo = [archivos[i], archivos[j]]
-            total_size = sum(peso for _, peso in combo)
-            
-            if total_size <= peso_disco:
-                H.append(set([nombre for nombre, _ in combo]))
-                agregado = True
-        if not agregado and archivos[i][1] <= peso_disco:
-            H.append(set([archivos[i][0]]))
-    return H
+            H = []
+            archivos = list(zip(nombres_archivos, tamaños_archivos))
+            for i in range(len(archivos)):
+                agregado = False
+                for j in range(i + 1, len(archivos)):
+                    combo = [archivos[i], archivos[j]]
+                    total_size = sum(peso for _, peso in combo)
+                    if total_size <= peso_disco:
+                        H.append(set([nombre for nombre, _ in combo]))
+                        agregado = True
+                if not agregado:
+                     H.append(set([archivos[i][0]]))
+            return H
 
 # * Esta opcion retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
 def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
     H = []
     archivos = dict(zip(nombres_archivos, tamaños_archivos))
     archivos_disponibles = set(archivos.keys())
-
+    
     while archivos_disponibles:
         subconjunto = set()
         espacio_restante = tamaño_disco
