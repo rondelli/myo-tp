@@ -56,24 +56,6 @@ def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
 
     H.extend([{nombres1[i], nombres2[i]} for i in range(len(nombres1))])
     return H
-    return [{nombre} for nombre in nombres_archivos]
-
-    H = []
-    archivos = list(zip(nombres_archivos, tamaños_archivos))
-
-    for r in range(1, len(archivos) + 1):
-        for combinacion in combinations_with_replacement(archivos, r):
-            tamaño_combinacion = sum(tamaño for _, tamaño in combinacion)
-
-            if tamaño_combinacion <= tamaño_disco and tamaño_disco:
-                h = set([nombre for nombre, _ in combinacion])
-                
-                # for _, tamaño in combinacion:
-                #     h[tamaño] = h.get(tamaño, 0) + 1
-                
-                if h not in H:
-                    H.append(h)
-    return H
 
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
