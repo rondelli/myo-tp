@@ -1,13 +1,12 @@
 import sys
 import time
-from pyscipopt import SCIP_PARAMSETTING
 
 sys.path.insert(0, "../2_segunda_parte")
 sys.path.insert(0, "../3_tercera_parte")
 sys.path.insert(0, "../utils")
 
-import generacion_conjuntos
-import model_aux
+# import generacion_conjuntos
+import helpers
 import inputs
 import outputs
 import model_part_2
@@ -27,13 +26,13 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     print("PASO 1")
     # 1) Obtener H cursiva.
-    conjuntos = generacion_conjuntos.generar_subconjuntos_Agus(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos, tiempo_inicio, threshold)
+    conjuntos = helpers.generar_subconjuntos_5(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
     if conjuntos is None:
         return None
 
     while True:
         tiempo = time.time() - tiempo_inicio
-        if not hay_tiempo(tiempo_inicio, threshold):
+        if not helpers.hay_tiempo(tiempo_inicio, threshold):
             print("TIEMPO")
             termino_tiempo = True
             break
@@ -47,7 +46,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             encontro_solucion = False
             break
 
-        if not hay_tiempo(tiempo_inicio, threshold):
+        if not helpers.hay_tiempo(tiempo_inicio, threshold):
             print("TIEMPO")
             termino_tiempo = True
             break
@@ -61,17 +60,17 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         # --> Obtenemos un conjunto de maxima importancia H.
         distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - tiempo) # [F, model, fake_x, I, s]
         solucion_modelo_2 = outputs.obtener_solucion_2(distribucion)
-        if solucion_modelo_2 is None:
-            encontro_solucion = False
-            break
-
-        if not hay_tiempo(tiempo_inicio, threshold):
+        
+        if not helpers.hay_tiempo(tiempo_inicio, threshold):
             print("TIEMPO")
             termino_tiempo = True
             break
 
+        if solucion_modelo_2 is None:
+            encontro_solucion = False
+            break
         # 5) Si la funcion objetivo del paso anterior es > 1, agregamos H a H cursiva y volvemos al paso 3.
-        elif sum(solucion_modelo_2[1]) > 1:
+        if sum(solucion_modelo_2[1]) > 1:
             print("PASO 5")
             existe_subconjunto = False
             for subconjunto in conjuntos:
@@ -89,10 +88,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     tiempo = time.time() - tiempo_inicio
     
     if encontro_solucion or termino_tiempo: # Retorna la solucion optima o, en caso de que se haya terminado el tiempo, la ultima solucion factible encontrada
-        soluc_entera = model_aux.obtener_solucion_entera(modelo_P, x)
-        conjuntos_seleccionados = model_aux.obtener_conjuntos_seleccionados(soluc_entera)
+        soluc_entera = helpers.obtener_solucion_entera(modelo_P, x)
+        conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(soluc_entera)
         return [conjuntos_seleccionados, modelo_P, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
     return None
-
-def hay_tiempo(tiempo_inicio, tiempo_limite):
-    return (time.time() - tiempo_inicio) < tiempo_limite

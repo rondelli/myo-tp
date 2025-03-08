@@ -22,7 +22,7 @@ import funciones
 ## Archivos .in del profe:      ##    ## Archivos .in por modelo:           ##
 ## f0032.in                     ##    ## n_1 --> f0017.in                   ##
 ## f0512.in                     ##    ## n_4 --> f0074.in (f0082.in con >=) ##
-## f2048.in                     ##    ## n_5 --> desconocido                ##
+## f2048.in                     ##    ## n_5 --> f0850.in (digamos)         ##
 ##################################    ## n_6 --> desconocido                ##
                                       ########################################
 

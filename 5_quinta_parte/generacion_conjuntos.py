@@ -32,6 +32,7 @@ def generar_subconjuntos_peor(tamaño_disco, archivos):
     return patrones
 
 # otra opción
+# * Transporté este método a model_aux (ahora "helpers.py") con el nombre "generar_subconjuntos_6()"
 def generar_subconjuntos(tamaño_disco, archivos):
     patrones = []
     peso_minimo = min(archivos.values())
@@ -52,29 +53,30 @@ def generar_subconjuntos(tamaño_disco, archivos):
 
     return patrones
 
-def generar_subconjuntos_Agus(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
-            H = []
-            archivos = list(zip(nombres_archivos, pesos_archivos))
-            if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
-                        return []
-            for i in range(len(archivos)):
-                agregado = False
-                for j in range(i + 1, len(archivos)):
-                    combo = [archivos[i], archivos[j]]
-                    total_size = sum(peso for _, peso in combo)
-                    if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
-                        return []
-                    if total_size <= peso_disco:
-                        H.append([nombre for nombre, _ in combo])
-                        agregado = True
-                if not agregado:
-                     H.append([archivos[i][0]])
-            if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
-                        return []
-            return H
+# * Transporté este método a model_aux (ahora "helpers.py") con el nombre "generar_subconjuntos_5()"
+# def generar_subconjuntos_Agus(peso_disco, nombres_archivos, pesos_archivos, tiempo_inicio, tiempo_limite_total):
+#             H = []
+#             archivos = list(zip(nombres_archivos, pesos_archivos))
+#             if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
+#                         return []
+#             for i in range(len(archivos)):
+#                 agregado = False
+#                 for j in range(i + 1, len(archivos)):
+#                     combo = [archivos[i], archivos[j]]
+#                     total_size = sum(peso for _, peso in combo)
+#                     if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
+#                         return []
+#                     if total_size <= peso_disco:
+#                         H.append([nombre for nombre, _ in combo])
+#                         agregado = True
+#                 if not agregado:
+#                      H.append([archivos[i][0]])
+#             if not hay_tiempo(tiempo_inicio, tiempo_limite_total):
+#                         return []
+#             return H
 
-def hay_tiempo(tiempo_inicio, tiempo_limite):
-    return (time.time() - tiempo_inicio) < tiempo_limite
+# def hay_tiempo(tiempo_inicio, tiempo_limite):
+#     return (time.time() - tiempo_inicio) < tiempo_limite
 
 # archivos = {'a1': 20, 'a2': 13, 'a3': 20, 'a4': 15, 'a5': 30, 'a6': 15, 'a7': 15}
 # tamaños_cantidades = dict(Counter(archivos.values()))
