@@ -2,6 +2,8 @@ import time
 from collections import Counter
 from itertools import combinations_with_replacement
 
+# esta no la vamos a necesitar. hice esta y generar_subconjuntos para probar, y la otra es mejor
+# la dejé por las dudas pero creo que no la vamos a usar
 def generar_subconjuntos_peor(tamaño_disco, archivos):
     # no recuerdo si ya hicimos algo así...
     # esto repite patrones, por ahora
