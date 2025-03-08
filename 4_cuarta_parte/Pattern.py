@@ -40,3 +40,5 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
         obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
 
     return patrones
+
+# se que son 
