@@ -33,7 +33,8 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     while True:
         tiempo = time.time() - tiempo_inicio
-        if tiempo >= threshold:
+        if not hay_tiempo(tiempo_inicio, threshold):
+            print("TIEMPO")
             termino_tiempo = True
             break
 
@@ -44,6 +45,11 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         x, _ = model_part_3.obtener_solucion_primal_3(modelo_P)
         if x is None:
             encontro_solucion = False
+            break
+
+        if not hay_tiempo(tiempo_inicio, threshold):
+            print("TIEMPO")
+            termino_tiempo = True
             break
 
         print("PASO 3")
@@ -59,7 +65,11 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             encontro_solucion = False
             break
 
-            
+        if not hay_tiempo(tiempo_inicio, threshold):
+            print("TIEMPO")
+            termino_tiempo = True
+            break
+
         # 5) Si la funcion objetivo del paso anterior es > 1, agregamos H a H cursiva y volvemos al paso 3.
         elif sum(solucion_modelo_2[1]) > 1:
             print("PASO 5")
@@ -78,8 +88,11 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     
     tiempo = time.time() - tiempo_inicio
     
-    if encontro_solucion or termino_tiempo:
+    if encontro_solucion or termino_tiempo: # Retorna la solucion optima o, en caso de que se haya terminado el tiempo, la ultima solucion factible encontrada
         soluc_entera = model_aux.obtener_solucion_entera(modelo_P, x)
         conjuntos_seleccionados = model_aux.obtener_conjuntos_seleccionados(soluc_entera)
         return [conjuntos_seleccionados, modelo_P, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
     return None
+
+def hay_tiempo(tiempo_inicio, tiempo_limite):
+    return (time.time() - tiempo_inicio) < tiempo_limite
