@@ -26,8 +26,8 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     print("PASO 1")
     # 1) Obtener H cursiva.
-    conjuntos = helpers.generar_subconjuntos_5(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
-    if conjuntos is None:
+    conjunto_H = helpers.generar_subconjuntos_5(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+    if conjunto_H is None:
         return None
 
     while True:
@@ -39,7 +39,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
         print("PASO 2")
         # 2) Plantear un modelo como el de seccion 3 pero relajado --> lo denominamos P.
-        modelo_P = model_part_3.crear_modelo_3(nombres_archivos, conjuntos, threshold - tiempo)
+        modelo_P = model_part_3.crear_modelo_3(nombres_archivos, conjunto_H, threshold - tiempo)
         # 2.1) Obtenemos la solución de P.
         x, _ = model_part_3.obtener_solucion_primal_3(modelo_P)
         if x is None:
@@ -73,13 +73,13 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         if sum(solucion_modelo_2[1]) > 1:
             print("PASO 5")
             existe_subconjunto = False
-            for subconjunto in conjuntos:
+            for subconjunto in conjunto_H:
                 if set(solucion_modelo_2[0]).issubset(set(subconjunto)):
                     existe_subconjunto = True
                     break
 
             if not existe_subconjunto:
-                conjuntos.append(set(solucion_modelo_2[0]))
+                conjunto_H.append(set(solucion_modelo_2[0]))
             else:
                 break
         else:
@@ -90,5 +90,5 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     if encontro_solucion or termino_tiempo: # Retorna la solucion optima o, en caso de que se haya terminado el tiempo, la ultima solucion factible encontrada
         soluc_entera = helpers.obtener_solucion_entera(modelo_P, x)
         conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(soluc_entera)
-        return [conjuntos_seleccionados, modelo_P, conjuntos, nombres_archivos, tamaños_archivos, tiempo]
+        return [conjuntos_seleccionados, modelo_P, conjunto_H, nombres_archivos, tamaños_archivos, tiempo]
     return None
