@@ -45,6 +45,8 @@ def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
     return H
 
 def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
+    return [{nombre} for nombre in nombres_archivos]
+
     H = []
     archivos = list(zip(nombres_archivos, tamaños_archivos))
 
