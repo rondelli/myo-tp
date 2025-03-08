@@ -1,7 +1,7 @@
 from itertools import combinations_with_replacement
 import time
 
-# * Retorna listas con los nombres de los archivos, por ejemplo [['a3', 'a5'], ['a7', 'a4', 'a1'], ['a6', 'a2']]
+# * Retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
 def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
             H = []
             archivos = list(zip(nombres_archivos, tamaños_archivos))
@@ -11,10 +11,10 @@ def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
                     combo = [archivos[i], archivos[j]]
                     total_size = sum(peso for _, peso in combo)
                     if total_size <= peso_disco:
-                        H.append([nombre for nombre, _ in combo])
+                        H.append(set([nombre for nombre, _ in combo]))
                         agregado = True
                 if not agregado:
-                     H.append([archivos[i][0]])
+                     H.append(set([archivos[i][0]]))
             return H
 
 # * Esta opcion retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]

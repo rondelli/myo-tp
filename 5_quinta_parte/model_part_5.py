@@ -74,7 +74,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             print("PASO 5")
             existe_subconjunto = False
             for subconjunto in conjunto_H:
-                if set(solucion_modelo_2[0]).issubset(set(subconjunto)):
+                if set(solucion_modelo_2[0]).issubset(subconjunto):
                     existe_subconjunto = True
                     break
 
