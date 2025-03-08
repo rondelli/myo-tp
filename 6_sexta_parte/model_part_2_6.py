@@ -11,7 +11,7 @@ def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], 
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        sys.stderr.write(f"[Debuggin] {status}: {solution}\n\n")
+        # sys.stderr.write(f"[Debuggin] {status}: {solution}\n\n")
         return [F, model, fake_x, I, s]
     else:
         return None
