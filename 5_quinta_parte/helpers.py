@@ -1,9 +1,10 @@
 from itertools import combinations_with_replacement
 import time
 
-def generar_subconjuntos_5(peso_disco, nombres_archivos, pesos_archivos):
+# * Retorna listas con los nombres de los archivos, por ejemplo [['a3', 'a5'], ['a7', 'a4', 'a1'], ['a6', 'a2']]
+def generar_subconjuntos_5(peso_disco, nombres_archivos, tamaños_archivos):
             H = []
-            archivos = list(zip(nombres_archivos, pesos_archivos))
+            archivos = list(zip(nombres_archivos, tamaños_archivos))
             for i in range(len(archivos)):
                 agregado = False
                 for j in range(i + 1, len(archivos)):
@@ -16,7 +17,31 @@ def generar_subconjuntos_5(peso_disco, nombres_archivos, pesos_archivos):
                      H.append([archivos[i][0]])
             return H
 
-def generar_subconjuntos_6(tamaño_disco, archivos):
+# * Esta opcion retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
+def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
+    H = []
+    archivos = dict(zip(nombres_archivos, tamaños_archivos))
+    archivos_disponibles = set(archivos.keys())
+
+    while archivos_disponibles:
+        subconjunto = set()
+        espacio_restante = tamaño_disco
+        print("Nuevo subconjunto: disponibles:", archivos_disponibles)
+        
+        # Ordenamos los archivos priorizando archivos grandes.
+        for archivo in sorted(archivos_disponibles, key=lambda x: archivos[x], reverse=True):
+            if archivos[archivo] <= espacio_restante:
+                subconjunto.add(archivo)
+                espacio_restante -= archivos[archivo]
+                print("\t Nuevo archivo", subconjunto, "Espacio restante:", espacio_restante)
+
+        H.append(subconjunto)
+        archivos_disponibles -= subconjunto
+        print("Subconjunto creado:", subconjunto, "Espacio restante:", espacio_restante)
+
+    return H
+
+def generar_subconjuntos(tamaño_disco, archivos):
     patrones = []
     peso_minimo = min(archivos.values())
 
