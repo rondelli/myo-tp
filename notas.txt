@@ -6,16 +6,6 @@ incorporarce en la parte 6. Ahi tambien podemos usar un algoritmo mejorado para 
 
 Lo que falta es:
 
-### MODELO 4 - PATRONES ###
-* Corregir la generación de patrones: hay que ver que se generen todos/todos los maximales.
-* Filtrar patrones que no sirven: el modelo no debería tener en cuenta los patrones que usen más tamaños de los que tenemos en realidad (o sea, si tengo 3 archivos de x tamaño,
-no quiero usar los patrones donde el x tamaño se usa 4 veces o más). Otra opción es directamente no generarlos.
-
-~por ahora sólo modifiqué la selección de patrones, no la generación. toma únicamente los maximales. pienso seguir con lo de patrones que no sirven.
-# Holiiiis, modifique lo de los patrones para que genere todos los posibles, por ejemplo, si entran 4 archivos, va a generar un patron con 4 archivos,
-y otros con 3, 2 y 1. Eso porque si hay muchos archivos del mismo tamaño vamos a necesitar patrones para cubrir todas las opciones.
-
-
 
 ### MODELOS 5 Y 6 ###
 * Revisar bien las partes 5 y 6:
@@ -33,11 +23,6 @@ y otros con 3, 2 y 1. Eso porque si hay muchos archivos del mismo tamaño vamos 
 
     * La parte 6 genera sólo los conjuntos que utiliza, ni más ni menos. No sé si está mal, pero al menos es raro jaja. La parte 5, en cambio, genera muchos conjuntos, y sólo usa
     algunos.
-    * Algo curioso: en la consigna sugiere que hay que usar patrones ("resolver el problema de las secciones 1 and 4, nuevamente suponiendo que los tamaños de los archivos 
-    pertenecen a un conjunto pequeño"). Pero nosotros no usamos patrones en ningún momento D:
-
-    ~no me preocuparía! según él, los modelos están bien.................... asjj
-    # Bueno bueno :3
 
 ### INFORME ###
 * Informe --> actualizar todo básicamente.
