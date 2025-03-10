@@ -47,39 +47,21 @@ def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
 
 def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
     H = []
+    archivos = list(zip(nombres_archivos, tamaños_archivos))
 
-    # Dividir la lista de nombres de archivos en tres partes
-    tercio = len(nombres_archivos) // 3
-    nombres1 = nombres_archivos[:tercio]
-    nombres2 = nombres_archivos[tercio:2*tercio]
-    nombres3 = nombres_archivos[2*tercio:]
+    archivos.sort(key=lambda x: x[1], reverse=True)
 
-    # Si la longitud de nombres_archivos no es divisible por 3, manejar los elementos restantes
-    if len(nombres_archivos) % 3 == 1:
-        nombres3.append(nombres_archivos[-1])
-    elif len(nombres_archivos) % 3 == 2:
-        nombres2.append(nombres_archivos[-2])
-        nombres3.append(nombres_archivos[-1])
+    while archivos:
+        subconjunto = set()
+        espacio_restante = tamaño_disco
 
-    # Crear subconjuntos de tres elementos
-    for i in range(min(len(nombres1), len(nombres2), len(nombres3))):
-        H.append({nombres1[i], nombres2[i], nombres3[i]})
+        for archivo in archivos[:]:
+            if archivo[1] <= espacio_restante:
+                subconjunto.add(archivo[0])
+                espacio_restante -= archivo[1]
+                archivos.remove(archivo)
 
-    # Crear subconjuntos de dos elementos si hay elementos restantes
-    if len(nombres1) > len(nombres2):
-        H.append({nombres1[-1], nombres2[-1]})
-    elif len(nombres2) > len(nombres3):
-        H.append({nombres2[-1], nombres3[-1]})
-    elif len(nombres3) > len(nombres1):
-        H.append({nombres3[-1], nombres1[-1]})
-
-    # Crear subconjuntos de un elemento si hay un elemento restante
-    if len(nombres1) > len(nombres2) and len(nombres1) > len(nombres3):
-        H.append({nombres1[-1]})
-    elif len(nombres2) > len(nombres1) and len(nombres2) > len(nombres3):
-        H.append({nombres2[-1]})
-    elif len(nombres3) > len(nombres1) and len(nombres3) > len(nombres2):
-        H.append({nombres3[-1]})
+        H.append(subconjunto)
 
     return H
 
