@@ -48,7 +48,6 @@ def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
 def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
     H = []
     archivos = list(zip(nombres_archivos, tamaños_archivos))
-
     archivos.sort(key=lambda x: x[1], reverse=True)
 
     while archivos:
@@ -65,80 +64,42 @@ def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
 
     return H
 
+def generar_subconjuntos_prueba(tamaño_disco, nombres_archivos, tamaños_archivos):
+    H = []
+    archivos = list(zip(nombres_archivos, tamaños_archivos))
+    archivos.sort(key=lambda x: x[1], reverse=True)
+
+    archivo_menor = archivos[len(archivos) - 1]
+
+    # Tratar de combinar el mínimo con otros archivos.
+    for archivo in archivos:
+
+        # No entra con el mínimo. No entra con ninguno.
+        if archivo_menor[1] + archivo[1] > tamaño_disco:
+            H.append({archivo[0]})
+
+        # Entra en el subconjunto.
+        else:
+            H.append({archivo_menor[0], archivo[0]})
+
+    return H
+
 def generar_subconjuntos_pares(tamaño_disco, nombres_archivos, tamaños_archivos):
     H = []
     archivos = list(zip(nombres_archivos, tamaños_archivos))
 
-    mitad = len(archivos) // 2
-    archivos1 = archivos[:mitad]
-    archivos2 = archivos[mitad:]
+    archivos.sort(key=lambda x: x[1], reverse=False)
 
-    if len(archivos) % 2 == 1:
-        archivos2.append(archivos[-1])
-        
-    for i in range(min(len(archivos1), len(archivos2))):
-        subconjunto = {archivos1[i][0], archivos2[i][0]}
-        total_size = archivos1[i][1] + archivos2[i][1]
-        if total_size <= tamaño_disco:
-            H.append(subconjunto)
+    for i in range(len(archivos)):
+        archivo_actual = archivos[i]
 
-    if len(archivos1) > len(archivos2):
-        if archivos1[-1][1] <= tamaño_disco:
-            H.append({archivos1[-1][0]})
-    elif len(archivos2) > len(archivos1):
-        if archivos2[-1][1] <= tamaño_disco:
-            H.append({archivos2[-1][0]})
+        # Encontrar el mayor archivo restante que pueda combinarse con el archivo actual
+        for j in range(len(archivos) - 1, 0, -1):
+            archivo_max = archivos[j]
 
-    return H
-
-
-def generar_subconjuntos_tercios(tamaño_disco, nombres_archivos, tamaños_archivos):
-    H = []
-    archivos = list(zip(nombres_archivos, tamaños_archivos))
-
-    tercio = len(archivos) // 3
-    archivos1 = archivos[:tercio]
-    archivos2 = archivos[tercio:2*tercio]
-    archivos3 = archivos[2*tercio:]
-
-    if len(archivos) % 3 == 1:
-        archivos3.append(archivos[-1])
-    elif len(archivos) % 3 == 2:
-        archivos2.append(archivos[-2])
-        archivos3.append(archivos[-1])
-
-    for i in range(min(len(archivos1), len(archivos2), len(archivos3))):
-        subconjunto = {archivos1[i][0], archivos2[i][0], archivos3[i][0]}
-        total_size = archivos1[i][1] + archivos2[i][1] + archivos3[i][1]
-        if total_size <= tamaño_disco:
-            H.append(subconjunto)
-
-    if len(archivos1) > len(archivos2):
-        subconjunto = {archivos1[-1][0], archivos2[-1][0]}
-        total_size = archivos1[-1][1] + archivos2[-1][1]
-        if total_size <= tamaño_disco:
-            H.append(subconjunto)
-    elif len(archivos2) > len(archivos3):
-        subconjunto = {archivos2[-1][0], archivos3[-1][0]}
-        total_size = archivos2[-1][1] + archivos3[-1][1]
-        if total_size <= tamaño_disco:
-            H.append(subconjunto)
-    elif len(archivos3) > len(archivos1):
-        subconjunto = {archivos3[-1][0], archivos1[-1][0]}
-        total_size = archivos3[-1][1] + archivos1[-1][1]
-        if total_size <= tamaño_disco:
-            H.append(subconjunto)
-
-    if len(archivos1) > len(archivos2) and len(archivos1) > len(archivos3):
-        if archivos1[-1][1] <= tamaño_disco:
-            H.append({archivos1[-1][0]})
-    elif len(archivos2) > len(archivos1) and len(archivos2) > len(archivos3):
-        if archivos2[-1][1] <= tamaño_disco:
-            H.append({archivos2[-1][0]})
-    elif len(archivos3) > len(archivos1) and len(archivos3) > len(archivos2):
-        if archivos3[-1][1] <= tamaño_disco:
-            H.append({archivos3[-1][0]})
-
+            if archivo_actual[1] + archivo_max[1] <= tamaño_disco:
+                H.append({archivo_actual[0], archivo_max[0]})
+                break
     return H
 
 def obtener_conjuntos_seleccionados(solucion):
