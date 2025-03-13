@@ -99,6 +99,35 @@ def obtener_solucion_primal_3(model):
     return None, None
 
 # Esta función supone que el model es `optimal`
+"""
+Dual: 
+    y_{i} =  Variable dual asociada a la restricción de que el archivo _i_ debe estar cubierto.
+        Es decir, y_{i} se relaciona con sum_{j=1}^m a_{i, j} * x_{j} >= 1
+    
+    Objetivo: maximizar la suma de las variables duales.
+        Es decir, max sum_{i=1}^n y_i
+
+    Restricciones:
+        1) sum_{i=1}^n a_{i, j} * y_{i} <= 1 para todo j
+        2) y_{i} >= 0 para todo i
+        3) y_{i} continua para todo i
+    
+    Interpretación:
+        Se termina generando una restricción por archivo. Mientras más cercana a 1, más importante
+        es que el archivo esté en algún conjunto. Si es exactamente 1, significa que en el primal,
+        la restricción se cumple por igualdad, lo que quiere decir que el archivo se encuentra en
+        exactamente un disco.
+
+        Entonces, maximizar la suma de las variables duales => maximizar la cantidad de archivos
+        que se encuentran en un solo disco => encontrar una mejor solución primal.
+    
+    Nota:
+        Entiendo que, en cada iteración, los archivos _importantes_ son los que no fueron cubiertos
+        todavía. El siguiente paso intenta generar el mejor subconjunto posible con los archivos
+        que no se cubrieron. Se añade, y se continúa iterando hasta que se cubran todos los archivos.
+
+        No entiendo cómo define la importancia inicial, que es crucial para las restantes. 
+"""
 def obtener_solucion_dual_3(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
     return y, quicksum(y)
