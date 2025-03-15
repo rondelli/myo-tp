@@ -35,6 +35,9 @@ threshold = int(configuraciones.get('threshold', 0))
 
 archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
 archivos.remove('.gitkeep')
+archivos.remove('f0017.in')
+archivos.remove('f0032.in')
+archivos.remove('f0074.in')
 
 sys.stderr.write(f'[Debugging] {configuraciones}\n')
 sys.stderr.write(f'[Debugging] {archivos}\n')
@@ -50,6 +53,7 @@ for archivo in archivos:
     var = ['-', '-', '-', '-']
     tiempos = [420, 420, 420, 420]
 
+    sys.stderr.write(f'[Debugging] MODELO 1\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT1', f'{archivo[:-3]}.out')
     solucion_1 = model_part_1.distribuir_archivos_1(d_t, F, s, threshold * 60) 
     
@@ -57,9 +61,12 @@ for archivo in archivos:
     if solucion_1 is not None:
         cotas[0], mejores[0], var[0], tiempos[0] = funciones.datos_modelo(solucion_1[1])
         outputs.generar_output_1(archivo_out, solucion_1)
+        # (caso, [cant, cota_dual, mejor, var, tiempo])
     else:
         outputs.generar_output_fallido(archivo_out)
+    funciones.agregar_contenido_a_linea(caso, [cant, cotas[0], mejores[0], var[0], tiempos[0]])
 
+    sys.stderr.write(f'[Debugging] MODELO 4\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
     solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60) 
     
@@ -69,8 +76,9 @@ for archivo in archivos:
         outputs.generar_output_4(archivo_out, solucion_4)
     else:
         outputs.generar_output_fallido(archivo_out)
+    funciones.agregar_contenido_a_linea(caso, [cant, cotas[1], mejores[1], var[1], tiempos[1]])
 
-
+    sys.stderr.write(f'[Debugging] MODELO 5\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT5', f'{archivo[:-3]}.out')
     solucion_5  = model_part_5.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60) 
     
@@ -83,6 +91,7 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
 
+    sys.stderr.write(f'[Debugging] MODELO 6\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT6', f'{archivo[:-3]}.out')
     solucion_6  = model_part_6.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
     
@@ -102,4 +111,4 @@ for archivo in archivos:
         cota_dual = '-'
 
     # funciones.guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])
-    funciones.guardar_prueba([caso, cant, cota_dual, mejores, var, tiempos])
+    # funciones.guardar_prueba([caso, cant, cota_dual, mejores, var, tiempos])
