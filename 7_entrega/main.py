@@ -64,7 +64,7 @@ for archivo in archivos:
         # (caso, [cant, cota_dual, mejor, var, tiempo])
     else:
         outputs.generar_output_fallido(archivo_out)
-    funciones.agregar_contenido_a_linea(caso, [cant, cotas[0], mejores[0], var[0], tiempos[0]])
+    funciones.agregar_contenido_a_fila(caso, [cant, cotas[0], mejores[0], var[0], tiempos[0]])
 
     sys.stderr.write(f'[Debugging] MODELO 4\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
@@ -76,7 +76,7 @@ for archivo in archivos:
         outputs.generar_output_4(archivo_out, solucion_4)
     else:
         outputs.generar_output_fallido(archivo_out)
-    funciones.agregar_contenido_a_linea(caso, [cant, cotas[1], mejores[1], var[1], tiempos[1]])
+    funciones.agregar_contenido_a_fila(caso, [cant, cotas[1], mejores[1], var[1], tiempos[1]])
 
     sys.stderr.write(f'[Debugging] MODELO 5\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT5', f'{archivo[:-3]}.out')
@@ -90,6 +90,7 @@ for archivo in archivos:
         outputs.generar_output_5(archivo_out, solucion_5)
     else:
         outputs.generar_output_fallido(archivo_out)
+    funciones.agregar_contenido_a_fila(caso, [cant, cotas[2], mejores[2], var[2], tiempos[2]])
 
     sys.stderr.write(f'[Debugging] MODELO 6\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT6', f'{archivo[:-3]}.out')
@@ -103,7 +104,9 @@ for archivo in archivos:
         outputs.generar_output_6(archivo_out, solucion_6)        
     else:
         outputs.generar_output_fallido(archivo_out)
+    funciones.agregar_contenido_a_fila(caso, [cant, cotas[3], mejores[3], var[3], tiempos[3]])
 
+    # FIXME
     cotas_validas = [c for c in cotas if c != '-']
     if cotas_validas:
         cota_dual = min(cotas_validas)
