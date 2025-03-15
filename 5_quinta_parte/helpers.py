@@ -41,25 +41,6 @@ def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
 
     return H
 
-def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
-    H = []
-    archivos = list(zip(nombres_archivos, tamaños_archivos))
-    archivos.sort(key=lambda x: x[1], reverse=True)
-
-    while archivos:
-        subconjunto = set()
-        espacio_restante = tamaño_disco
-
-        for archivo in archivos[:]:
-            if archivo[1] <= espacio_restante:
-                subconjunto.add(archivo[0])
-                espacio_restante -= archivo[1]
-                archivos.remove(archivo)
-
-        H.append(subconjunto)
-
-    return H
-
 def generar_subconjuntos_prueba(tamaño_disco, nombres_archivos, tamaños_archivos):
     H = []
     archivos = list(zip(nombres_archivos, tamaños_archivos))
