@@ -53,7 +53,7 @@ for archivo in archivos:
     var = ['-', '-', '-', '-']
     tiempos = [420, 420, 420, 420]
 
-    sys.stderr.write(f'[Debugging] MODELO 1\n')
+    sys.stderr.write(f'[Debugging] [INICIO MODELO 1]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT1', f'{archivo[:-3]}.out')
     solucion_1 = model_part_1.distribuir_archivos_1(d_t, F, s, threshold * 60) 
     
@@ -64,9 +64,11 @@ for archivo in archivos:
         # (caso, [cant, cota_dual, mejor, var, tiempo])
     else:
         outputs.generar_output_fallido(archivo_out)
+    
     funciones.agregar_contenido_a_fila(caso, [cant, cotas[0], mejores[0], var[0], tiempos[0]])
+    sys.stderr.write(f'[Debugging] [FIN MODELO 1]\n')
 
-    sys.stderr.write(f'[Debugging] MODELO 4\n')
+    sys.stderr.write(f'[Debugging] [INICIO MODELO 4]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
     solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60) 
     
@@ -76,9 +78,11 @@ for archivo in archivos:
         outputs.generar_output_4(archivo_out, solucion_4)
     else:
         outputs.generar_output_fallido(archivo_out)
+    
     funciones.agregar_contenido_a_fila(caso, [cant, cotas[1], mejores[1], var[1], tiempos[1]])
+    sys.stderr.write(f'[Debugging] [FIN MODELO 4]\n')
 
-    sys.stderr.write(f'[Debugging] MODELO 5\n')
+    sys.stderr.write(f'[Debugging] [INICIO MODELO 5]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT5', f'{archivo[:-3]}.out')
     solucion_5  = model_part_5.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60) 
     
@@ -90,9 +94,11 @@ for archivo in archivos:
         outputs.generar_output_5(archivo_out, solucion_5)
     else:
         outputs.generar_output_fallido(archivo_out)
+    
     funciones.agregar_contenido_a_fila(caso, [cant, cotas[2], mejores[2], var[2], tiempos[2]])
-
-    sys.stderr.write(f'[Debugging] MODELO 6\n')
+    sys.stderr.write(f'[Debugging] [FIN MODELO 5]\n')
+    
+    sys.stderr.write(f'[Debugging] [INICIO MODELO 6]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT6', f'{archivo[:-3]}.out')
     solucion_6  = model_part_6.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
     
@@ -104,7 +110,9 @@ for archivo in archivos:
         outputs.generar_output_6(archivo_out, solucion_6)        
     else:
         outputs.generar_output_fallido(archivo_out)
+    
     funciones.agregar_contenido_a_fila(caso, [cant, cotas[3], mejores[3], var[3], tiempos[3]])
+    sys.stderr.write(f'[Debugging] [FIN MODELO 6]\n')
 
     # FIXME
     cotas_validas = [c for c in cotas if c != '-']
