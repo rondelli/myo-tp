@@ -2,6 +2,28 @@ import csv
 import os
 import math
 
+def agregar_contenido_a_linea(caso, nuevos_datos):
+    ruta_actual = os.path.dirname(os.path.abspath(__file__)) 
+    nombre_archivo = "pruebas.csv" 
+    ruta_archivo = os.path.join(ruta_actual, nombre_archivo)
+
+    with open(ruta_archivo, 'r', newline='') as archivo:
+        lector_csv = list(csv.reader(archivo))
+
+    existe_caso = False
+    for linea in lector_csv:
+        if linea[0] == str(caso):
+            linea.extend(nuevos_datos)  # Agrega los datos al final de la línea
+            existe_caso = True
+            break
+
+    if not existe_caso:
+        lector_csv.append([caso] + nuevos_datos)   # Agregar los datosa una nueva línea
+
+    with open(ruta_archivo, 'w', newline='') as archivo:
+        escritor_csv = csv.writer(archivo)
+        escritor_csv.writerows(lector_csv)
+
 def guardar_prueba(resultado):
     # resultado = [caso, cant, cota_dual, mejores, var, tiempos]
     # [caso, cant, cota dual, mejor, var, tiempo, mejor, var, tiempo, mejor, var, tiempo, mejor, var, tiempo]
@@ -25,7 +47,6 @@ def escribir_csv(datos):
             archivo_csv.writerow(headers)
         
         archivo_csv.writerows(datos)
-        
 
 def datos_modelo(model):
     try:
