@@ -60,24 +60,6 @@ def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
 
     return H
 
-def generar_subconjuntos_pares(tamaño_disco, nombres_archivos, tamaños_archivos):
-    H = []
-    archivos = list(zip(nombres_archivos, tamaños_archivos))
-
-    archivos.sort(key=lambda x: x[1], reverse=False)
-
-    for i in range(len(archivos)):
-        archivo_actual = archivos[i]
-
-        # Encontrar el mayor archivo restante que pueda combinarse con el archivo actual
-        for j in range(len(archivos) - 1, 0, -1):
-            archivo_max = archivos[j]
-
-            if archivo_actual[1] + archivo_max[1] <= tamaño_disco:
-                H.append({archivo_actual[0], archivo_max[0]})
-                break
-    return H
-
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
