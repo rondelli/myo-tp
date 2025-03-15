@@ -26,7 +26,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     print("PASO 1")
     # 1) Obtener H cursiva.
-    conjunto_H = helpers.generar_subconjuntos_5(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
+    conjunto_H = helpers.generar_subconjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
     if conjunto_H is None:
         return None
 
