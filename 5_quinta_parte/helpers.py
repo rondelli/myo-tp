@@ -23,10 +23,6 @@ def generar_subconjuntos_6(tamaño_disco, nombres_archivos, tamaños_archivos):
     archivos = dict(zip(nombres_archivos, tamaños_archivos))
     archivos_disponibles = set(archivos.keys())
 
-    for archivo in sorted(archivos_disponibles, key=lambda x: archivos[x], reverse=True):
-            if archivos[archivo] < tamaño_disco:
-                return None
-
     while archivos_disponibles:
         subconjunto = set()
         espacio_restante = tamaño_disco
