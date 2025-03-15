@@ -13,11 +13,11 @@ import time
 ########################################################################
 
 def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
-
     tiempo_inicio = time.time()
    
     # {tamaño: cantidad de archivos con ese tamaño}
     tamaños_cantidades = {size: s.count(size) for size in set(s)}
+    
     # ordena el diccionario por tamaños, de mayor a menor
     tamaños_cantidades = dict(sorted(tamaños_cantidades.items(), reverse=True))
 
@@ -40,8 +40,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
 
     # Hay que cubrir todos los archivos de cada tamaño
     for k in range(t):
-        # con == tarda más que con >= Lo correcto CREO que es el ==, ya que el >= permite que haya más archivos de x tamaño de los que
-        # en realidad tenemos. El >= se usa en el modelo auxiliar de la parte 5.
         model.addCons(quicksum(c[p][k] * x[p] for p in range(q)) == tamaños_cantidades[tamaños_existentes[k]])
 
     model.optimize()
@@ -50,7 +48,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     status = model.getStatus()
 
     if solution is not None and status in ["optimal", "feasible"]:
-        # sys.stderr.write(f"[Debugging] Solution: {solution}\n\n")
         tamaños_nombres = {tamaño: [] for tamaño in tamaños_existentes}
         for i in range(len(s)):
             tamaños_nombres[s[i]].append(F[i])
