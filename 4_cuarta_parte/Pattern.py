@@ -1,10 +1,11 @@
 import time
 
+# Cuelga con 512 en el modelo 4
 def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
     # Genera TODOS los patrones posibles, maximales o no
 
     tiempo_inicio = time.time()
-    tamaños= []
+    tamaños = []
     cantidades = []
 
     for tamaño, cantidad in tamaños_cantidades.items():
@@ -19,7 +20,6 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
 
     def obtener_patron(espacio_disponible, indice, patron_actual, minimo):
         if indice == len(tamaños):
-            # if espacio_disponible < minimo:
             patrones.append(patron_actual[:])
             return
         
@@ -40,5 +40,3 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
         obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
 
     return patrones
-
-# se que son 
