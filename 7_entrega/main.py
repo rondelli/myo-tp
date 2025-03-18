@@ -35,10 +35,6 @@ out_path = configuraciones.get('outPath')[:-1]
 threshold = int(configuraciones.get('threshold', 0))
 
 archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
-archivos.remove('.gitkeep')
-archivos.remove('f0017.in')
-archivos.remove('f0032.in')
-archivos.remove('f0074.in')
 
 sys.stderr.write(f'[Debugging] {configuraciones}\n')
 sys.stderr.write(f'[Debugging] {archivos}\n')
@@ -48,6 +44,8 @@ for archivo in archivos:
     d_t, F, s  = inputs.leer_input_7(os.path.join(os.path.dirname(__file__), 'IN', archivo))
     caso = archivo
     cant = len(F)
+
+    funciones.agregar_contenido_a_archivo(caso, [cant, 'cota_dual'])
 
     cotas = ['-', '-', '-', '-']
     mejores = ['-', '-', '-', '-']
@@ -62,11 +60,10 @@ for archivo in archivos:
     if solucion_1 is not None:
         cotas[0], mejores[0], var[0], tiempos[0] = funciones.datos_modelo(solucion_1[1])
         outputs.generar_output_1(archivo_out, solucion_1)
-        # (caso, [cant, cota_dual, mejor, var, tiempo])
     else:
         outputs.generar_output_fallido(archivo_out)
     
-    funciones.agregar_contenido_a_fila(caso, [cant, cotas[0], mejores[0], var[0], tiempos[0]])
+    funciones.agregar_contenido_a_archivo(caso, [mejores[0], var[0], tiempos[0]])
     sys.stderr.write(f'{datetime.now()} [Debugging] [FIN MODELO 1]\n')
 
     sys.stderr.write(f'{datetime.now()} [Debugging] [INICIO MODELO 4]\n')
@@ -80,8 +77,8 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
     
-    funciones.agregar_contenido_a_fila(caso, [cant, cotas[1], mejores[1], var[1], tiempos[1]])
     sys.stderr.write(f'{datetime.now()} [Debugging] [FIN MODELO 4]\n')
+    funciones.agregar_contenido_a_archivo(caso, [mejores[1], var[1], tiempos[1]])
 
     sys.stderr.write(f'{datetime.now()} [Debugging] [INICIO MODELO 5]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT5', f'{archivo[:-3]}.out')
@@ -96,7 +93,7 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
     
-    funciones.agregar_contenido_a_fila(caso, [cant, cotas[2], mejores[2], var[2], tiempos[2]])
+    funciones.agregar_contenido_a_archivo(caso, [mejores[2], var[2], tiempos[2]])
     sys.stderr.write(f'{datetime.now()} [Debugging] [FIN MODELO 5]\n')
     
     sys.stderr.write(f'{datetime.now()} [Debugging] [INICIO MODELO 6]\n')
@@ -112,10 +109,9 @@ for archivo in archivos:
     else:
         outputs.generar_output_fallido(archivo_out)
     
-    funciones.agregar_contenido_a_fila(caso, [cant, cotas[3], mejores[3], var[3], tiempos[3]])
+    funciones.agregar_contenido_a_archivo(caso, [mejores[3], var[3], tiempos[3]])
     sys.stderr.write(f'{datetime.now()} [Debugging] [FIN MODELO 6]\n')
 
-    # FIXME
     cotas_validas = [c for c in cotas if c != '-']
     if cotas_validas:
         cota_dual = min(cotas_validas)
@@ -123,4 +119,5 @@ for archivo in archivos:
         cota_dual = '-'
 
     # funciones.guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])
-    # funciones.guardar_prueba([caso, cant, cota_dual, mejores, var, tiempos])
+    # esto agrega el dual al final para no perder las ejecuciones previas en caso de error
+    funciones.agregar_contenido_a_archivo(caso, [cota_dual])
