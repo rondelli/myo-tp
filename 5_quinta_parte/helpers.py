@@ -1,5 +1,3 @@
-import itertools
-from collections import Counter, defaultdict
 import time
 
 # * Esta opcion retorna conjuntos con los nombres de los archivos, por ejemplo [{'a3', 'a5'}, {'a7', 'a4', 'a1'}, {'a6', 'a2'}]
@@ -19,13 +17,11 @@ def generar_subconjuntos(tamaño_disco, nombres_archivos, tamaños_archivos):
                 archivos.remove(archivo)
 
         H.append(subconjunto)
-
     return H
 
 def obtener_conjuntos_seleccionados(solucion):
     conjuntos_seleccionados = [i for i in range(len(solucion)) if solucion[i] == 1]
     return conjuntos_seleccionados
-
 
 def obtener_solucion_entera(model, solucion_continua):
     variables = model.getVars()
