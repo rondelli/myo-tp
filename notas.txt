@@ -1,5 +1,3 @@
-~NOTA: creé un repo con lo de Agus Vidal! creo que deebríamos continuar con lo nuestro y al final comparar nuestros resultados con los de ella
-
 --> HOLIS :DD Incorporé al modelo 5 la funcion de Agus. Veo que en el resultado hay archivos repetidos, no sé si eso esta bien :s --> en todo caso, esa mejora puede
 incorporarce en la parte 6. Ahi tambien podemos usar un algoritmo mejorado para generar el conjunto H. Voy buscando el n de la parte 5, es 900 > n > 870.
 
