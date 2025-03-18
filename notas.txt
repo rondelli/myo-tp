@@ -34,3 +34,5 @@ Lo que falta es:
 
 El modelo 1 no limita bien el tiempo: [Debugging] [MODELO 1] Time: 589.0
 El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
+
+El modelo 6 da siempre 0 en var
