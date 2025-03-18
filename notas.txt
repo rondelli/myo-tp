@@ -32,7 +32,9 @@ Lo que falta es:
 * Buscar las cotas (n_x).
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
 
-El modelo 1 no limita bien el tiempo: [Debugging] [MODELO 1] Time: 589.0
-El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
+* El modelo 1 no limita bien el tiempo en el presolve: [Debugging] [MODELO 1] Time: 589.0
+* El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
 
-El modelo 6 da siempre 0 en var
+* El modelo 6 da siempre 0 en var
+
+* Quedó únicamente una función para generar los subconjuntos. La función del modelo 6 es la que mejor va con el 5. Como el modelo 6 termina siendo más rápido por otros motivos, me pareció lo mejor.
