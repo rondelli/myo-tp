@@ -32,32 +32,5 @@ Lo que falta es:
 * Buscar las cotas (n_x).
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
 
-
-## MODELO 5
-
-f0032.in
-generar_subconjuntos:
-    Tiempo de ejecución: 3.8912928104400635
-    Solución: 18 discos
- 
-generar_subconjuntos_5:
-    Tiempo de ejecución: 2.2299866676330566
-    Solución: 22 discos
-
-f0074.in
-generar_subconjuntos:
-    Tiempo de ejecución: 14.538620233535767
-    Solución: 40 discos
- 
-generar_subconjuntos_5:
-    Tiempo de ejecución: 1.4084925651550293
-    Solución: 55 discos
-
-f0512.in
-generar_subconjuntos:
-    Tiempo de ejecución: 11.714281797409058
-    Solución: 280 discos
- 
-generar_subconjuntos_5:
-    Tiempo de ejecución: 41.4480140209198
-    Solución: 286 discos
+El modelo 1 no limita bien el tiempo: [Debugging] [MODELO 1] Time: 589.0
+El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
