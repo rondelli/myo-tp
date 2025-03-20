@@ -28,16 +28,7 @@ def elegir_conjuntos(F: list, H: list, time_limit=420):
         model.addCons(quicksum(y[i, j] * x[j] for j in range(m)) >= 1)
 
     model.optimize()
-    sol = model.getBestSol()
-
-    if sol is not None and model.getStatus() == "optimal" or model.getStatus(
-    ) == "feasible":
-        conjuntos_seleccionados = [
-            j for j in range(m) if model.getVal(x[j]) > 0.5
-        ]
-        return conjuntos_seleccionados
-    else:
-        return None
+    return model
 
 # Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_3(F: list, H: list, time_limit=420):

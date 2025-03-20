@@ -84,10 +84,12 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         else:
             break
 
+    # 6) Arreglar la solucion del paso 3 para que sea una solucion entera para nuestro problema.
+    modelo_3_binario = model_part_3_6.elegir_conjuntos(nombres_archivos, conjunto_H, threshold - tiempo)
+    x, _ = model_part_3_6.obtener_solucion_primal_3(modelo_3_binario)
     tiempo = time.time() - tiempo_inicio
 
     if encontro_solucion or termino_tiempo:
-        soluc_entera = helpers.obtener_solucion_entera(modelo_P, x)
-        conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(soluc_entera)
-        return [conjuntos_seleccionados, modelo_P, conjunto_H, nombres_archivos, tamaños_archivos, tiempo]
+        conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(x)
+        return [conjuntos_seleccionados, modelo_3_binario, conjunto_H, nombres_archivos, tamaños_archivos, tiempo]
     return None
