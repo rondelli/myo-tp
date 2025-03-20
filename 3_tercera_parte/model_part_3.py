@@ -9,8 +9,7 @@ import pyscipopt
     # H: conjuntos (es una lista de conjuntos de archivos)
     # time_limit: threshold en segundos
 ########################################################################
-
-def elegir_conjuntos(F: list, H: list, time_limit=420):
+def crear_modelo_binario(F: list, H: list, time_limit=420):
     model = Model("model_part_3")
     model.setParam("limits/time", time_limit)
 
@@ -35,6 +34,10 @@ def elegir_conjuntos(F: list, H: list, time_limit=420):
         model.addCons(quicksum(y[i, j] * x[j] for j in range(m)) >= 1)
 
     model.optimize()
+    return model
+
+def elegir_conjuntos(F: list, H: list, time_limit=420):
+    model = crear_modelo(F, H, time_limit)
     sol = model.getBestSol()
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
