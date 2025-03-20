@@ -644,3 +644,6 @@ $RECYCLE.BIN/
 # Input & output files
 *.in
 *.out
+
+# Cache
+*.cpython-313.pyc
