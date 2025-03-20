@@ -85,7 +85,7 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             break
 
     # 6) Arreglar la solucion del paso 3 para que sea una solucion entera para nuestro problema.
-    modelo_3_binario = model_part_3_6.elegir_conjuntos(nombres_archivos, conjunto_H, threshold - tiempo)
+    modelo_3_binario = model_part_3_6.crear_modelo_binario(nombres_archivos, conjunto_H, threshold - tiempo)
     x, _ = model_part_3_6.obtener_solucion_primal_3(modelo_3_binario)
     tiempo = time.time() - tiempo_inicio
 
