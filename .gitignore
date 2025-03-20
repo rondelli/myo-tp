@@ -645,5 +645,5 @@ $RECYCLE.BIN/
 *.in
 *.out
 
-# Cache
+# Caché
 *.cpython-313.pyc
