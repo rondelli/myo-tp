@@ -35,12 +35,14 @@ out_path = configuraciones.get('outPath')[:-1]
 threshold = int(configuraciones.get('threshold', 0))
 
 archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
+archivos.remove('.gitkeep')
 
 sys.stderr.write(f'[Debugging] {configuraciones}\n')
 sys.stderr.write(f'[Debugging] {archivos}\n')
 
 for archivo in archivos:
     sys.stderr.write(f'[Debugging] {archivo}\n')
+    print(archivo)
     d_t, F, s  = inputs.leer_input_7(os.path.join(os.path.dirname(__file__), 'IN', archivo))
     caso = archivo
     cant = len(F)
