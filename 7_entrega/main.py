@@ -42,12 +42,11 @@ sys.stderr.write(f'[Debugging] {archivos}\n')
 
 for archivo in archivos:
     sys.stderr.write(f'[Debugging] {archivo}\n')
-    print(archivo)
     d_t, F, s  = inputs.leer_input_7(os.path.join(os.path.dirname(__file__), 'IN', archivo))
     caso = archivo
     cant = len(F)
 
-    funciones.agregar_contenido_a_archivo(caso, [cant, 'cota_dual'])
+    funciones.agregar_contenido_a_archivo(caso, [cant])
 
     cotas = ['-', '-', '-', '-']
     mejores = ['-', '-', '-', '-']
