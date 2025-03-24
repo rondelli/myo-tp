@@ -48,8 +48,7 @@ for archivo in archivos:
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     if solucion is not None:
         outputs.generar_output_6(archivo_out, solucion)
-        print(f"Tiempo de ejecución: {solucion[-1]} segundos")
-        print(f"Solución: {solucion[0]}")
+        print(f"Se encontró solución")
     else:
         outputs.generar_output_fallido(archivo_out)
         print("No se encontró solución")
