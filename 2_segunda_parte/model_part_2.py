@@ -13,11 +13,7 @@ from pyscipopt import *
     # time_limit: threshold en segundos
 ########################################################################
 
-def distribuir_archivos_2(d_t: int,
-                          F: list[str],
-                          s: list[int],
-                          I: list[float],
-                          time_limit=420):
+def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
 
     solution = model.getBestSol()
@@ -29,34 +25,26 @@ def distribuir_archivos_2(d_t: int,
         return None
 
 
-def resolver_modelo_binario_2(d_t: int,
-                              F: list[str],
-                              s: list[int],
-                              I: list[float],
-                              time_limit=420):
+def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
-
     d = d_t * 10**6
-
     n = len(F)
 
     ########################################################################
-    # BINARY
+    # BINARIA
     # x_{i} = 1 si se elige el archivo i, 0 si no
     x = [model.addVar(f"x_{i}", vtype="BINARY") for i in range(n)]
     ########################################################################
 
-    # maximize importance:
+    # Maximizar importancia:
     model.setObjective(quicksum(x[i] * I[i] for i in range(n)),
                        sense="maximize")
 
-    # los archivos elegidos deben entrar en el disco
+    # Los archivos elegidos deben entrar en el disco
     model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
 
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
-    #model.setParam("display/freq", 1)
-
     model.optimize()
 
     sys.stderr.write(
@@ -66,19 +54,14 @@ def resolver_modelo_binario_2(d_t: int,
 
 
 # Crea el modelo relajado y lo devuelve optimizado
-def crear_modelo_2(d_t: int,
-                   F: list[str],
-                   s: list[int],
-                   I: list[float],
-                   time_limit=420):
+def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
 
     d = d_t * 10**6
-
     n = len(F)
 
     ########################################################################
-    # CONTINUOUS
+    # CONTINUA
     # x_{i} = 1 si se elige el archivo i, 0 si no
     x = [
         model.addVar(f"y_{i}", lb=0, ub=1, vtype="CONTINUOUS")
@@ -86,11 +69,11 @@ def crear_modelo_2(d_t: int,
     ]
     ########################################################################
 
-    # maximize importance:
+    # MAximizar importancia:
     model.setObjective(quicksum(x[i] * I[i] for i in range(n)),
                        sense="maximize")
 
-    # los archivos elegidos deben entrar en el disco
+    # Loss archivos elegidos deben entrar en el disco
     model.addCons(quicksum(x[i] * s[i] for i in range(n)) <= d)
 
     # Configurar el límite de tiempo en el solver
