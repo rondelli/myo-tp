@@ -571,7 +571,52 @@ INICIO obtener_conjuntos(archivo, threshold = infinito)
 FIN
 \end{lstlisting}
 
-\newpage
+\subsection{Modelo $P$}
+Este modelo es una relajación del modelo planteado en la Parte 3, considerando a $x_{j}$ como una variable continua.
+
+\subsubsection{Definición de variables}
+
+\noindent $n$: Constante, cantidad de archivos. \\
+
+\noindent $m$: Constante, cantidad de conjuntos $H$. \\
+
+\noindent $a_{ij}$: Constante binaria, donde $a_{ij} = 1$ indica que el conjunto $H_{j}$ contiene el archivo $i$, con $y_{ij} \in \{0, 1\}$, $\forall i \in \{1, \ldots, n\}$, $\forall j \in \{1, \ldots, m\}$. \\
+
+\noindent $x_{j}$: Variable continua, donde $x_{j} = 1$ indica que el conjunto $H_{j}$ pertenece a $I$, con $x_{j} \in [0, 1]$, $\forall j \in \{1, \ldots, m\}$. \\
+
+
+\subsubsection{Modelo}
+
+\begin{alignat*}{2}
+    \minimize & \sum_{j = 1}^{m} x_{j}\\
+    \subjto   & \sum_{j=1}^{m} a_{i,j} \cdot x_j \geq 1 \quad \forall i,\ \text{(todos los archivos deben estar en al menos un conjunto elegido)}\\
+              & x_{j} \in \{0,1\}, \quad \forall j \in \{1, \ldots, m\} \\
+\end{alignat*}
+
+\subsection{Dual de $P$}
+
+Obtenemos el dual de $P$ considerando las restricciones de $P$.
+
+\subsubsection{Definición de variables}
+
+\noindent $n$: Constante, cantidad de archivos. \\
+
+\noindent $m$: Constante, cantidad de conjuntos $H$. \\
+
+\noindent $a_{ij}$: Constante binaria, donde $a_{ij} = 1$ indica que el conjunto $H_{j}$ contiene el archivo $i$, con $a_{ij} \in \{0, 1\}$, $\forall i \in \{1, \ldots, n\}$, $\forall j \in \{1, \ldots, m\}$. \\
+
+\noindent $y_{i}$:  Variable dual continua asociada a la restricción de que el archivo $i$ debe estar cubierto.
+        %Es decir, y_{i} se relaciona con sum_{j=1}^m a_{i, j} * x_{j} >= 1
+
+\subsubsection{Modelo}
+
+\begin{alignat*}{2}
+    \maximize & \sum_{i = 1}^{n} y_{i}\\
+    \subjto   & \sum_{i=1}^{n} a_{i,j} \cdot y_{i} \leq 1 \quad \forall j\\
+              & y_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\} \\
+\end{alignat*}
+
+\newpages
 \section{Parte 6}
 
 \subsection{Descripción}
