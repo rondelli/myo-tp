@@ -1,4 +1,3 @@
-import time
 import sys
 from pyscipopt import Model
 from pyscipopt import quicksum
@@ -6,16 +5,13 @@ from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
 ########################################################################
-    # d_t: capacidad del discoen TB,
+    # d_t: capacidad del disco en TB,
     # F: nombres de los archivos,
     # s: tamaños de los archvios,
     # time_limit: threshold en segundos
 ########################################################################
 
-def distribuir_archivos_1(d_t: int,
-                          F: list[str],
-                          s: list[int],
-                          time_limit=420):
+def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
 
     solution = model.getBestSol()
@@ -27,10 +23,7 @@ def distribuir_archivos_1(d_t: int,
         return None
 
 
-def resolver_modelo_binario_1(d_t: int,
-                              F: list[str],
-                              s: list[int],
-                              time_limit=420):
+def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model = Model("model_part_1")
     model.setParam("limits/time", time_limit)
 
@@ -70,8 +63,6 @@ def resolver_modelo_binario_1(d_t: int,
 
     sys.stderr.write(
         f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
-    # sys.stderr.write(
-    #     f"[Debugging] [MODELO 1] Cantidad sols: {model.getNSols()}\n\n")
 
     return model, y, x
 
@@ -81,9 +72,6 @@ def obtener_solucion_primal_1(model):
     status = model.getStatus()
 
     if sol is not None and status in ["optimal", "feasible"]:
-        # El nombre de variable x, acá es missleading, es x porque es el primal.
-        # Esta línea devuelve **todas** las variables del modelo, las $x$: archivo
-        # seleccionado y las $y$: disco seleccionado
         x = [v.getLPSol() for v in model.getVars(False)]
         return x, model.getObjVal()
     else:
