@@ -1,6 +1,5 @@
 ### INFORME ###
 * Informe --> actualizar todo básicamente.
-    ⤷ recordar modelar el dual de la parte 5
 
 ### PARTE 7 ###
 * Buscar las cotas (n_x).
@@ -10,6 +9,7 @@
 * El modelo 1 no limita bien el tiempo en el presolve: [Debugging] [MODELO 1] Time: 589.0 -- 512
 * El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
 * el modelo 5 termino en 423 segs
+* el modelo 6 anda para 2048. seguimos buscando el n?
 
 Dual: 
     y_{i} =  Variable dual asociada a la restricción de que el archivo _i_ debe estar cubierto.
