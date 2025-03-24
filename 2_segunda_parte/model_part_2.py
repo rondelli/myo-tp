@@ -4,7 +4,6 @@ from pyscipopt import quicksum
 from pyscipopt import SCIP_PARAMSETTING
 from pyscipopt import *
 
-
 ########################################################################
     # d_t: capacidad del discoen TB,
     # F: nombres de los archivos,
@@ -12,7 +11,6 @@ from pyscipopt import *
     # I: importancia de los archivos,
     # time_limit: threshold en segundos
 ########################################################################
-
 def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model, fake_x = resolver_modelo_binario_2(d_t, F, s, I, time_limit)
 
@@ -23,7 +21,6 @@ def distribuir_archivos_2(d_t: int, F: list[str], s: list[int], I: list[float], 
         return [F, model, fake_x, I, s]
     else:
         return None
-
 
 def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
     model = Model("model_part_2")
@@ -51,7 +48,6 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
     f"[Debugging] [MODELO 2] Time: {model.getSolvingTime()}\n\n")
 
     return model, x
-
 
 # Crea el modelo relajado y lo devuelve optimizado
 def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_limit=420):
@@ -82,7 +78,6 @@ def crear_modelo_2(d_t: int, F: list[str], s: list[int], I: list[float], time_li
     model.optimize()
     return model
 
-
 def obtener_solucion_primal_2(model):
     sol = model.getBestSol()
     status = model.getStatus()
@@ -92,7 +87,6 @@ def obtener_solucion_primal_2(model):
         return x, model.getObjVal()
     else:
         return None
-
 
 def obtener_solucion_dual_2(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
