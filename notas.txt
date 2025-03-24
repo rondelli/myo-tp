@@ -20,7 +20,32 @@ Lo que falta es:
 ### OBSERVACIONES ###
 * El modelo 1 no limita bien el tiempo en el presolve: [Debugging] [MODELO 1] Time: 589.0
 * El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
+* el modelo 5 termino en 423 segs
 
-* El modelo 6 da siempre 0 en var
+Dual: 
+    y_{i} =  Variable dual asociada a la restricción de que el archivo _i_ debe estar cubierto.
+        Es decir, y_{i} se relaciona con sum_{j=1}^m a_{i, j} * x_{j} >= 1
+    
+    Objetivo: maximizar la suma de las variables duales.
+        Es decir, max sum_{i=1}^n y_i
 
-* Quedó únicamente una función para generar los subconjuntos. La función del modelo 6 es la que mejor va con el 5. Como el modelo 6 termina siendo más rápido por otros motivos, me pareció lo mejor.
+    Restricciones:
+        1) sum_{i=1}^n a_{i, j} * y_{i} <= 1 para todo j
+        2) y_{i} >= 0 para todo i
+        3) y_{i} continua para todo i
+    
+    Interpretación:
+        Se termina generando una restricción por archivo. Mientras más cercana a 1, más importante
+        es que el archivo esté en algún conjunto. Si es exactamente 1, significa que en el primal,
+        la restricción se cumple por igualdad, lo que quiere decir que el archivo se encuentra en
+        exactamente un disco.
+
+        Entonces, maximizar la suma de las variables duales => maximizar la cantidad de archivos
+        que se encuentran en un solo disco => encontrar una mejor solución primal.
+    
+    Nota:
+        Entiendo que, en cada iteración, los archivos _importantes_ son los que no fueron cubiertos
+        todavía. El siguiente paso intenta generar el mejor subconjunto posible con los archivos
+        que no se cubrieron. Se añade, y se continúa iterando hasta que se cubran todos los archivos.
+
+        No entiendo cómo define la importancia inicial, que es crucial para las restantes. 

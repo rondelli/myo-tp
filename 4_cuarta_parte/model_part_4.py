@@ -11,17 +11,16 @@ import time
     # s: tamaños de los archvios,
     # time_limit: threshold en segundos
 ########################################################################
-
 def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     tiempo_inicio = time.time()
    
     # {tamaño: cantidad de archivos con ese tamaño}
     tamaños_cantidades = {size: s.count(size) for size in set(s)}
     
-    # ordena el diccionario por tamaños, de mayor a menor
+    # Orden del diccionario por tamaños, de mayor a menor
     tamaños_cantidades = dict(sorted(tamaños_cantidades.items(), reverse=True))
 
-    # lista de los tamaños únicos de archivo de S
+    # Lista de los tamaños únicos de archivo de S
     tamaños_existentes = list(dict.fromkeys(tamaños_cantidades))
     t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 

@@ -46,13 +46,16 @@ elif sys.argv[1] == '-c':
 for archivo in archivos:
     tiempo_inicio = time.time()
     solucion = model_part_5.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
+    modelo = solucion[1]
+
     tiempo_tardado = time.time() - tiempo_inicio
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     if solucion is not None:
+        print(f"Status: {modelo.getStatus()}")
         outputs.generar_output_5(archivo_out, solucion)
         print(f"Tiempo de ejecución: {solucion[-1]} segundos")
-        print(f"Solución: {solucion[0]}")
+        # print(f"Solución: {solucion[0]}")
     else:
         outputs.generar_output_fallido(archivo_out)
         print("No se encontró solución")

@@ -83,11 +83,17 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             else:
                 break
         else:
+            encontro_solucion = True
             break
-    
+
+    tiempo = time.time() - tiempo_inicio
     modelo_3_binario = model_part_3.crear_modelo_binario(nombres_archivos, conjunto_H, threshold - tiempo)
     x, _ = model_part_3.obtener_solucion_primal_3(modelo_3_binario)
-    tiempo = time.time() - tiempo_inicio
+    
+    if encontro_solucion:
+        print("Se encontró una solución óptima.")
+    elif termino_tiempo:
+        print("La ejecución terminó por tiempo. Óptimo no encontrado.")
     
     if encontro_solucion or termino_tiempo: # Retorna la solucion optima o, en caso de que se haya terminado el tiempo, la ultima solucion factible encontrada
         conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(x)
