@@ -10,7 +10,6 @@ from pyscipopt import *
     # s: tamaños de los archvios,
     # time_limit: threshold en segundos
 ########################################################################
-
 def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model, fake_y, fake_x = resolver_modelo_binario_1(d_t, F, s, time_limit)
 
@@ -21,7 +20,6 @@ def distribuir_archivos_1(d_t: int, F: list[str], s: list[int], time_limit=420):
         return [F, model, fake_y, fake_x, s]
     else:
         return None
-
 
 def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=420):
     model = Model("model_part_1")
@@ -66,7 +64,6 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
 
     return model, y, x
 
-
 def obtener_solucion_primal_1(model):
     sol = model.getBestSol()
     status = model.getStatus()
@@ -76,7 +73,6 @@ def obtener_solucion_primal_1(model):
         return x, model.getObjVal()
     else:
         return None
-
 
 def obtener_solucion_dual_1(model):
     y = [model.getDualSolVal(c) for c in model.getConss(False)]
