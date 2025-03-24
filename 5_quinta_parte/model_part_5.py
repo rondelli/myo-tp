@@ -18,7 +18,7 @@ import model_part_3
 
 def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     capacidad_disco, nombres_archivos, tamaños_archivos = inputs.leer_input_5(ruta_archivo)
-    encontro_solucion = True
+    encontro_solucion = False
     termino_tiempo = False
     modelo_P = None
 
@@ -69,16 +69,13 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
         if solucion_modelo_2 is None:
             encontro_solucion = False
             break
+
         # 5) Si la funcion objetivo del paso anterior es > 1, agregamos H a H cursiva y volvemos al paso 3.
         if sum(solucion_modelo_2[1]) > 1:
             print("PASO 5")
-            existe_subconjunto = False
-            for subconjunto in conjunto_H:
-                if set(solucion_modelo_2[0]).issubset(subconjunto):
-                    existe_subconjunto = True
-                    break
+            nuevo_subconjunto = solucion_modelo_2[0]
 
-            if not existe_subconjunto:
+            if nuevo_subconjunto not in conjunto_H:
                 conjunto_H.append(set(solucion_modelo_2[0]))
             else:
                 break
@@ -86,8 +83,9 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             encontro_solucion = True
             break
 
+    # 6) Arreglar la solucion del paso 3 para que sea una solucion entera para nuestro problema.
     tiempo = time.time() - tiempo_inicio
-    modelo_3_binario = model_part_3.crear_modelo_binario(nombres_archivos, conjunto_H, threshold - tiempo)
+    modelo_3_binario = model_part_3.crear_modelo_binario(nombres_archivos, conjunto_H)
     x, _ = model_part_3.obtener_solucion_primal_3(modelo_3_binario)
     
     if encontro_solucion:
