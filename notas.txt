@@ -1,14 +1,3 @@
---> HOLIS :DD Incorporé al modelo 5 la funcion de Agus. Veo que en el resultado hay archivos repetidos, no sé si eso esta bien :s --> en todo caso, esa mejora puede
-incorporarce en la parte 6. Ahi tambien podemos usar un algoritmo mejorado para generar el conjunto H. Voy buscando el n de la parte 5, es 900 > n > 870.
-
-Lo que falta es:
-### MODELOS 5 Y 6 ###
-* Revisar bien las partes 5 y 6:
-    * Ví que la parte 5 devuelve muy rápido soluciones que son factibles pero no óptimas. Tal vez habría que hacer algo para que, si todavía hay tiempo, siga buscando hasta 
-    encontrar una óptima. 
-    ~En realidad, eso está así porque el lo pidió. Termina cuando la función objetivo es < 1... o, al menos, si quería algo más, no lo dijo.
-    # Okis, queda asi entonces.
-
 ### INFORME ###
 * Informe --> actualizar todo básicamente.
     ⤷ recordar modelar el dual de la parte 5
@@ -18,7 +7,7 @@ Lo que falta es:
 * Llenar las carpetas IN y OUT con archivos caso_i.in/caso_i.out.
 
 ### OBSERVACIONES ###
-* El modelo 1 no limita bien el tiempo en el presolve: [Debugging] [MODELO 1] Time: 589.0
+* El modelo 1 no limita bien el tiempo en el presolve: [Debugging] [MODELO 1] Time: 589.0 -- 512
 * El modelo 4 consume memoria excesiva en la generación de subconjuntos para n >= 512
 * el modelo 5 termino en 423 segs
 
