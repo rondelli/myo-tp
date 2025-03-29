@@ -22,9 +22,9 @@ import funciones
 ##################################    ########################################
 ## Archivos .in del profe:      ##    ## Archivos .in por modelo:           ##
 ## f0032.in                     ##    ## n_1 --> f0017.in                   ##
-## f0512.in                     ##    ## n_4 --> f0074.in (f0082.in con >=) ##
-## f2048.in                     ##    ## n_5 --> f0850.in (digamos)         ##
-##################################    ## n_6 --> desconocido                ##
+## f0512.in                     ##    ## n_4 --> f0074.in                   ##
+## f2048.in                     ##    ## n_5 --> f1158.in                   ##
+##################################    ## n_6 --> f16384.in                  ##
                                       ########################################
 
 archivo_conf = os.path.join(os.path.dirname(__file__), 'archivo.cfg')
@@ -69,7 +69,7 @@ for archivo in archivos:
 
     sys.stderr.write(f'{datetime.now()} [Debugging] [INICIO MODELO 4]\n')
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, 'OUT4', f'{archivo[:-3]}.out')
-    solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60) 
+    solucion_4 = model_part_4.distribuir_archivos_4(d_t, F, s, threshold * 60)
     
     # [F, model, x, s, c, tamaños_nombres]
     if solucion_4 is not None: 
@@ -119,6 +119,5 @@ for archivo in archivos:
     else:
         cota_dual = '-'
 
-    # funciones.guardar_prueba([[caso, cant, cota_dual, mejor_1, var_1, tiempo_1, mejor_4, var_4, tiempo_4, mejor_5, var_5, tiempo_5, mejor_6, var_6, tiempo_6]])
     # esto agrega el dual al final para no perder las ejecuciones previas en caso de error
     funciones.agregar_contenido_a_archivo(caso, [cota_dual])
