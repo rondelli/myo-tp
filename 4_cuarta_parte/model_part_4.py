@@ -25,6 +25,11 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     t = len(tamaños_existentes) # Cantidad de tamaños diferentes de archivos
 
     c = Pattern.obtener_patrones(d_t * 10**6, tamaños_cantidades, 420)
+   
+    if c == []:
+        sys.stderr.write(f"[Debugging] Time's up\n")
+        return None
+    
     q = len(c) # Cantidad de patrones
 
     model = Model("model_part_4")

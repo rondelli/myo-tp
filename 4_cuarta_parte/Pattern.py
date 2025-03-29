@@ -1,4 +1,7 @@
-import time
+import time, sys
+
+sys.path.insert(0, "../5_quinta_parte")
+import helpers
 
 def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
     tiempo_inicio = time.time()
@@ -27,12 +30,15 @@ def obtener_patrones(capacidad_maxima, tamaños_cantidades, time_limit = -1):
         limite = maximo if maximo < cantidad else cantidad
         
         for cont in range(limite, -1, -1):
+            if not helpers.hay_tiempo(tiempo_inicio, time_limit):
+                break
+            
             patron_actual[indice] = cont
             obtener_patron(espacio_disponible - cont * tamaño, indice + 1, patron_actual, minimo)
             patron_actual[indice] = 0
-    
-    tiempo_transcurrido = time_limit - (time.time() - tiempo_inicio)
-    if tiempo_transcurrido < time_limit:
-        obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
 
-    return patrones
+    if helpers.hay_tiempo(tiempo_inicio, time_limit):
+        obtener_patron(capacidad_maxima, 0, [0] * len(tamaños), minimo)
+        return patrones
+    else:
+        return []
