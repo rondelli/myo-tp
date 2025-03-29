@@ -115,7 +115,6 @@ def generar_output_4(ruta_archivo, solucion):
     # Asignamos archivos disponibles a cada tamaño
     archivos_disponibles = {tamaño: list(tamaños_nombres[tamaño]) for tamaño in tamaños_existentes}
 
-
     patrones_seleccionados = [(p, int(x[p].getLPSol())) for p in range(len(x)) if x[p].getLPSol() > 0]
 
     cont_discos = 0

@@ -641,9 +641,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows,android,vim,visualstudiocode,latex,python,kate
 
-# Input & output files
-*.in
-*.out
-
 # Caché
 *.cpython-313.pyc

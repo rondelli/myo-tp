@@ -6,7 +6,6 @@ import pyscipopt
 def crear_modelo_binario(F: list, H: list, time_limit=420):
     model = Model("model_part_3")
     model.setParam("limits/time", time_limit)
-    model.setPresolve(SCIP_PARAMSETTING.OFF) # esto no elimina las variables
 
     n = len(F)  # cantidad de archivos
     m = len(H)  # cantidad de conjuntos
