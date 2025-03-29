@@ -52,11 +52,10 @@ for archivo in archivos:
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     
     if solucion is not None:
+        print(f'Se encontró solución. Generando {archivo_out}...')
         outputs.generar_output_4(archivo_out, solucion)
-        
-        patrones_out = os.path.join(os.path.dirname(__file__), 'patrones', f'{archivo[:-3]}.out')
-        # en solucion[4]= c, solucion[5] = {tamaño: [archivos]}
-        # outputs.generar_output_patrones(patrones_out, solucion[4], sorted(list(dict.fromkeys(solucion[5])), reverse=True))
-        
+        print(f'Solución generada en {archivo_out}')
     else:
+        print(f'No se encontró solución para {archivo}')
         outputs.generar_output_fallido(archivo_out)
+        print(f'Solución fallida generada en {archivo_out}')

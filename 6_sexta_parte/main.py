@@ -39,17 +39,18 @@ elif sys.argv[1] == '-c':
     archivos = [f for f in os.listdir(configuraciones.get('inPath'))]
     archivos.remove('.gitkeep')
 
-
 for archivo in archivos:
     tiempo_inicio = time.time()
     solucion = model_part_6.obtener_conjuntos(os.path.dirname(__file__) + '/IN/' + archivo, threshold * 60)
     tiempo_tardado = time.time() - tiempo_inicio
 
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
-    if solucion is not None:
+    if solucion is not None and tiempo_tardado < threshold * 60:
+        print(f"Se encontró solución. Generando {archivo_out}...")
         outputs.generar_output_6(archivo_out, solucion)
-        print(f"Se encontró solución")
+        print(f"Solución generada en {archivo_out}")
     else:
+        print(f"No se encontró solución para {archivo}")
         outputs.generar_output_fallido(archivo_out)
-        print("No se encontró solución")
+        print(f"Solución fallida generada en {archivo_out}")
     print(f"Tiempo de ejecución: {tiempo_tardado}")

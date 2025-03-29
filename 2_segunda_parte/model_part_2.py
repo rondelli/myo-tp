@@ -43,10 +43,7 @@ def resolver_modelo_binario_2(d_t: int, F: list[str], s: list[int], I: list[floa
     # Configurar el límite de tiempo en el solver
     model.setParam("limits/time", time_limit)
     model.optimize()
-
-    sys.stderr.write(
-    f"[Debugging] [MODELO 2] Time: {model.getSolvingTime()}\n\n")
-
+    
     return model, x
 
 # Crea el modelo relajado y lo devuelve optimizado

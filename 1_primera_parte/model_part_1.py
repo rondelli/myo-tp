@@ -56,12 +56,8 @@ def resolver_modelo_binario_1(d_t: int, F: list[str], s: list[int], time_limit=4
         model.addCons(quicksum(x[i, j] * s[i] for i in range(n)) <= d * y[j])
 
     model.setParam("display/freq", 1)
-
     model.optimize()
-
-    sys.stderr.write(
-        f"[Debugging] [MODELO 1] Time: {model.getSolvingTime()}\n\n")
-
+    
     return model, y, x
 
 def obtener_solucion_primal_1(model):

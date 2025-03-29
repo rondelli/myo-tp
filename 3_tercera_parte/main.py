@@ -47,6 +47,10 @@ for archivo in archivos:
     archivo_out = os.path.join(os.path.dirname(__file__), out_path, f'{archivo[:-3]}.out')
     
     if solucion is not None:
+        print(f'Se encontró solución. Generando {archivo_out}...')
         outputs.generar_output_3(archivo_out, solucion, conjuntos)
+        print(f'Solución generada en {archivo_out}')
     else:
+        print(f'No se encontró solución para {archivo}')
         outputs.generar_output_fallido(archivo_out)
+        print(f'Solución fallida generada en {archivo_out}')

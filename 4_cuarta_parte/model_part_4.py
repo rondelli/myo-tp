@@ -27,7 +27,6 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
     c = Pattern.obtener_patrones(d_t * 10**6, tamaños_cantidades, 420)
    
     if c == []:
-        sys.stderr.write(f"[Debugging] Time's up\n")
         return None
     
     q = len(c) # Cantidad de patrones
@@ -57,5 +56,4 @@ def distribuir_archivos_4(d_t: int, F: list[str], s: list[int], time_limit=420):
             tamaños_nombres[s[i]].append(F[i])
         return [F, model, x, s, c, tamaños_nombres]
     else:
-        sys.stderr.write(f"[Debugging] Solution not found")
         return None

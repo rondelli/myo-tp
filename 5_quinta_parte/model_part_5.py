@@ -24,7 +24,6 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
     tiempo_inicio = time.time()
 
-    print("PASO 1")
     # 1) Obtener H cursiva.
     conjunto_H = helpers.generar_subconjuntos(capacidad_disco * 10**6, nombres_archivos, tamaños_archivos)
     if conjunto_H is None:
@@ -33,13 +32,12 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     while True:
         tiempo = time.time() - tiempo_inicio
         if not helpers.hay_tiempo(tiempo_inicio, threshold):
-            print("TIEMPO")
             termino_tiempo = True
             break
 
-        print("PASO 2")
         # 2) Plantear un modelo como el de seccion 3 pero relajado --> lo denominamos P.
         modelo_P = model_part_3.crear_modelo_3(nombres_archivos, conjunto_H, threshold - tiempo)
+        
         # 2.1) Obtenemos la solución de P.
         x, _ = model_part_3.obtener_solucion_primal_3(modelo_P)
         if x is None:
@@ -51,18 +49,15 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
             termino_tiempo = True
             break
 
-        print("PASO 3")
         # 3) Obtener una solucion y* del dual de P --> y* le asigna un valor a cada archivo.
         y, _ = model_part_3.obtener_solucion_dual_3(modelo_P)
 
-        print("PASO 4")
         # 4) Resolver el problema de la seccion 2 --> El indicador de importancia I_f de cada archivo f viene dado por el valor dual y*_f 
         # --> Obtenemos un conjunto de maxima importancia H.
         distribucion = model_part_2.distribuir_archivos_2(capacidad_disco, nombres_archivos, tamaños_archivos, y, threshold - tiempo) # [F, model, fake_x, I, s]
         solucion_modelo_2 = outputs.obtener_solucion_2(distribucion)
         
         if not helpers.hay_tiempo(tiempo_inicio, threshold):
-            print("TIEMPO")
             termino_tiempo = True
             break
 
@@ -72,7 +67,6 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
 
         # 5) Si la funcion objetivo del paso anterior es > 1, agregamos H a H cursiva y volvemos al paso 3.
         if sum(solucion_modelo_2[1]) > 1:
-            print("PASO 5")
             nuevo_subconjunto = solucion_modelo_2[0]
 
             if nuevo_subconjunto not in conjunto_H:
@@ -87,11 +81,6 @@ def obtener_conjuntos(ruta_archivo, threshold: int = float('inf')) -> None:
     tiempo = time.time() - tiempo_inicio
     modelo_3_binario = model_part_3.crear_modelo_binario(nombres_archivos, conjunto_H)
     x, _ = model_part_3.obtener_solucion_primal_3(modelo_3_binario)
-    
-    if encontro_solucion:
-        print("Se encontró una solución óptima.")
-    elif termino_tiempo:
-        print("La ejecución terminó por tiempo. Óptimo no encontrado.")
     
     if encontro_solucion or termino_tiempo: # Retorna la solucion optima o, en caso de que se haya terminado el tiempo, la ultima solucion factible encontrada
         conjuntos_seleccionados = helpers.obtener_conjuntos_seleccionados(x)
