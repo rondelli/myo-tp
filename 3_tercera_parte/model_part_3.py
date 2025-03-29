@@ -36,8 +36,11 @@ def crear_modelo_binario(F: list, H: list, time_limit=420):
     return model
 
 def elegir_conjuntos(F: list, H: list, time_limit=420):
-    model = crear_modelo(F, H, time_limit)
+    model = crear_modelo_3(F, H, time_limit)
+    x = model.getVars()
     sol = model.getBestSol()
+
+    m = len(H)  # cantidad de conjuntos
 
     if sol is not None and model.getStatus() == "optimal" or model.getStatus(
     ) == "feasible":
