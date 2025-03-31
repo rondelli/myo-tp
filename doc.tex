@@ -79,6 +79,7 @@
 		%identifierstyle=\color{blue!75},
 		stringstyle=\color{green!50!black},
 		commentstyle=\slshape\color{black!50},
+            breaklines=true, 
 		%mathescape=true;
 		%morecomment=[is]{/*}{*/}
 	}
@@ -163,7 +164,8 @@
 
 \tableofcontents
 
-% \newpage
+\newpage
+
 \section{Introducción}
 
 Este trabajo práctico tiene como objetivo aplicar conceptos de modelado
@@ -201,8 +203,7 @@ variable binaria $x_{ij}$ para identificar si cada archivo $i$ se guarda
 en el disco $j$. Luego, establecimos dos restricciones: la primera se
 asegura de que cada archivo esté en un solo disco, y la segunda, que los
 tamaños de los archivos de cada disco no superen la capacidad del disco.
-%y la tercera define que no se usen discos vacíos---sería equivalente a
-%la implicación $x_{ij} \Rightarrow y_i$.
+
 
 \subsubsection{Definición de variables}
 
@@ -326,7 +327,8 @@ a una función equivalente al código presentado con Zimpl.
 Esta función recibe los datos leídos de un archivo de configuración creado 
 con datos aleatorios. El siguiente código muestra las funciones necesarias para generar este archivo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/configuracion_1.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=7, lastline=8]{utils/inputs.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=22, lastline=58]{utils/inputs.py}
 
 %\newpage
 
@@ -338,9 +340,9 @@ genera el output correspondiente.
 
 \newpage
 
-Utilizamos las siguientes funciones para generar el output.
+Utilizamos la siguiente función para generar el output.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{1_primera_parte/generador_output_1.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=7, lastline=38]{utils/outputs.py}
 
 \newpage
 \section{Parte 2}
@@ -407,10 +409,11 @@ El modelo es el siguiente.
 
 \lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/model_part_2.py}
 
-% \newpage
+\newpage
 Los archivos de configuración se generan de manera similar al modelo previo.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/configuracion_2.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=10, lastline=11]{utils/inputs.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=22, lastline=58]{utils/inputs.py}
 
 \newpage
 
@@ -423,7 +426,7 @@ la importancia de cada archivo.
 
 Luego, el output se almacena de la siguiente manera.
 
-\lstinputlisting[inputencoding=utf8/latin1,language=Python]{2_segunda_parte/generador_output_2.py}
+\lstinputlisting[inputencoding=utf8/latin1,language=Python, firstline=43, lastline=67]{utils/outputs.py}
 
 \newpage
 \section{Parte 3}
@@ -525,49 +528,54 @@ importancia, se selecciona un subconjunto de archivos. Si la solución es
 mejorable, se actualiza $H$ y se repite el proceso, ajustando finalmente la
 solución para que sea entera.
 
-% \subsection{Modelo Lineal}
 
-% \subsubsection{Definición de variables}
-
-% \subsubsection{Modelo}
 
 \newpage
 \subsection{Pseudocódigo de alto nivel}
-
 \begin{lstlisting}
 INICIO obtener_conjuntos(archivo, threshold = infinito)
-    capacidad_disco, nombres_archivos, tamanos_archivos <- leer_configuracion(archivo)
-
+    # Leer los datos del archivo de entrada
+    capacidad_disco, nombres_archivos, tamanos_archivos <- LeerInput5(ruta_archivo)
+    tiempo_inicio <- TiempoActual()
+    
     // PASO 1: Generar los conjuntos iniciales
-    conjuntos <- generar_conjuntos(capacidad_disco * 10^6, nombres_archivos, tamanos_archivos)
-
-    duracion <- threshold * 60
-    tiempo_inicio <- tiempo_actual()
-
-    MIENTRAS VERDADERO
+    conjunto_H <- GenerarSubconjuntos(capacidad_disco * 10^6, nombres_archivos, tamanos_archivos)
+    SI conjunto_H ES NULL ENTONCES
+        RETORNAR NULL
+    FIN SI
+    
+    MIENTRAS HAYA TIEMPO HACER
         // PASO 2 y 3: Resolver el modelo y obtener soluciones primal y dual
-        modelo <- crear_modelo_3(nombres_archivos, conjuntos)
-
-        x, obj_x <- obtener_solucion_primal_3(modelo)
-        y, obj_y <- obtener_solucion_dual_3(modelo)
-
-        optimo <- es_optimo(modelo, x)
-
+        modelo_P <- CrearModelo3(nombres_archivos, conjunto_H, threshold - (TiempoActual() - tiempo_inicio))
+        x <- ObtenerSolucionPrimal3(modelo_P)
+        SI x ES NULL ENTONCES
+            TERMINAR CICLO
+        FIN SI
+        y <- ObtenerSolucionDual3(modelo_P)
+        
         // PASO 4: Distribuir archivos y generar solucion
-        distribucion <- distribuir_archivos_2(capacidad_disco, nombres_archivos, tamanos_archivos, y)
-        solucion_modelo_2 <- generar_output_modelo_2(distribucion)
+        solucion_modelo_2 <- ObtenerSolucion2(DistribuirArchivos2(capacidad_disco, nombres_archivos, tamanos_archivos, y, threshold - (TiempoActual() - tiempo_inicio)))
+        SI solucion_modelo_2 ES NULL O NO HAY TIEMPO ENTONCES
+            TERMINAR CICLO
+        FIN SI
 
         // PASO 5: Verificar y actualizar conjuntos
-        SI suma(solucion_modelo_2[1]) > 1 Y tiempo_actual() - tiempo_inicio <= duracion ENTONCES
-            AGREGAR conjunto(solucion_modelo_2[0]) a conjuntos
+        SI EsMejorSolucion(solucion_modelo_2) ENTONCES
+            AgregarNuevoSubconjunto(conjunto_H, solucion_modelo_2)
         SINO
-            IMPRIMIR suma(solucion_modelo_2[1])
-            SALIR DEL BUCLE
+            TERMINAR CICLO
         FIN SI
     FIN MIENTRAS
-
-    x_estrella_int <- obtener_solucion_entera(modelo, x)
-    RETORNAR modelo
+    
+    # PASO 6: Arreglar la solucion del paso 3 para que sea una solucion entera para nuestro problema.
+    modelo_3_binario <- CrearModeloBinario(nombres_archivos, conjunto_H)
+    x <- ObtenerSolucionPrimal3(modelo_3_binario)
+    
+    SI SeEncontroSolucion() O SeAgotoTiempo() ENTONCES
+        RETORNAR [ObtenerConjuntosSeleccionados(x), modelo_3_binario, conjunto_H, nombres_archivos, tamanos_archivos, TiempoActual() - tiempo_inicio]
+    FIN SI
+    
+    RETORNAR NULL
 FIN
 \end{lstlisting}
 
@@ -616,7 +624,7 @@ Obtenemos el dual de $P$ considerando las restricciones de $P$.
               & y_{i} \in \{0,1\}, \quad \forall i \in \{1, \ldots, n\} \\
 \end{alignat*}
 
-\newpages
+\newpage
 \section{Parte 6}
 
 \subsection{Descripción}
@@ -658,53 +666,35 @@ En esta sección, listamos los resultados obtenidos.
 \newpage
 
 \begin{landscape}
-\begin{table}[ht]
-\centering
-\scalebox{0.8}{ %
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-\hline
-\textbf{Caso} & \textbf{Cant} & \textbf{CotaDual} & \textbf{mejor1} & \textbf{var1} & \textbf{t1} & \textbf{mejor4} & \textbf{var4} & \textbf{t4} & \textbf{mejor5} & \textbf{var5} & \textbf{t5} & \textbf{mejor6} & \textbf{var6} & \textbf{t6} \\
-\hline
-f0017.in&17&9&9&306&0.0&9&306&0.0&12&55&8.375762462615967&11&13&0.0712730884552002 \\
-f0032.in&32&17&inf&variable1&480&inf&variable4&480&18&100&13.813863277435303&19&4&0.020533323287963867 \\
-f0362.in&362&219&inf&variable1&480&inf&variable4&480&inf&480&480&219&0&0.6598618030548096 \\
-f0512.in&512&288&inf&variable1&480&inf&variable4&480&inf&480&480&308&0&1.6591098308563232  \\
-f0685.in&685&406&inf&variable1&480&inf&variable4&480&inf&480&480&406&17&12.655526876449585 \\
-f2048.in&2048&1118&inf&variable1&480&inf&variable4&480&inf&480&480&inf&480&480 \\
-\hline
-\end{tabular}%
-}
-\caption{Resultados del Script}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l r r r r r r r r r r r r r r}
+        \toprule
+        \textbf{Caso} & \textbf{Cant} & \multicolumn{3}{c}{\textbf{Mejor 1}} & \multicolumn{3}{c}{\textbf{Mejor 4}} & \multicolumn{3}{c}{\textbf{Mejor 5}} & \multicolumn{3}{c}{\textbf{Mejor 6}} & \textbf{Cota Dual} \\
+        \cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14}
+        & & Valor & Var & Tiempo & Valor & Var & Tiempo & Valor & Var & Tiempo & Valor & Var* & Tiempo & \\
+        \midrule
+        $f(n_1)$ = f(17) & 17 & 9 & 306 & 0.0 & 9 & 212 & 0.0 & 9 & 22 & 3.19 & 9 & 0 & 0.01 & 9 \\
+        f(32) & 32 & - & - & 420 & 17 & 2922 & 0.0 & 18 & 30 & 5.05 & 17 & 0 & 0.01 & 17 \\
+        $f(n_4)$ = f(74) & 74 & - & - & 420 & 38 & 159654 & 150.0 & 35 & 77 & 19.14 & 38 & 0 & 0.02 & 38 \\
+        f(512) & 512 & - & - & 420 & - & - & 420 & 279 & 51 & 22.03 & 279 & 0 & 0.17 & 279 \\
+        $f(n_5)$ = f(1158) & 1158 & - & - & 420 & - & - & 420 & 595 & 0 & 159.04 & 595 & 0 & 0.89 & 595 \\
+        f(2048) & 2048 & - & - & 420 & - & - & 420 & 1021 & 14 & 420.79 & 1021 & 0 & 2.72 & 1021 \\
+        $f(n_6)$ = f(16384) & 16384 & - & - & 420 & - & - & 420 & - & - & 420 & 8162 & 0 & 385.86 & 8162 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Resultados del Script. }
+    \footnotesize{ Nota: Los resultados de la columna \texttt{Var6} indican 0 variables debido a que el modelo es resuelto por el presolve.}
+    \label{tab:resultados}
 \end{table}
 \end{landscape}
-
-\begin{comment}
-\newpage
-
-\begin{turn}{90}
-\begin{minipage}{\textheight}
-\begin{verbatim}
-Caso     | Cant | CotaDual | mejor1 | var1 |  t1   | mejor4 | var4 |  t4  |   mejor5  |  var5 |   t5  | mejor6  | var6 |  t6
----------|------|----------|--------|------|-------|--------|------|------|-----------|-------|-------|---------|------|----
-f0018.in |   18 |   10.0   |  10.0  |  342 | 0.164 |   0.0  |    0 | 0.0  |   9.333   |    34 | 0.002 |   9.33  |   62 | 0.0
-f0032.in |   32 |   18.583 |  10.0  |  342 | 0.164 |  17.0  | 1056 | 0.84 |  18.583   |    38 | 0.002 |  19.0   |    0 | 0.0
-f0512.in |  512 |  286.911 |   0.0  |    0 | 0.0   |   0.0  |    0 | 0.0  | 286.911   |  2349 | 0.0   | 306.0   |    0 | 1.0
-f0514.in |  514 |  287.844 |   0.0  |    0 | 0.0   |   0.0  |    0 | 0.0  | 287.84375 |  2595 | 1.0   | 310.0   |    0 | 0.0
-f0677.in |  677 |  399.083 |   0.0  |    0 | 480   |   0.0  |    0 | 480  | 371.4375  |  3094 | 1.0   | 399.083 |  215 | 0.0
-f2048.in | 2048 | 1131.5   |   0.0  |    0 | 0.0   |   0.0  |    0 | 0.0  | 1131.5    | 10988 | 2.0   | 1108.5  | 4645 | 5.0
-\end{verbatim}
-\end{minipage}
-\end{turn}
-\end{comment}
 
 \newpage
 \section{Conclusiones}
 
 Logramos familiarizarnos con el uso de SCIP, y con PySCIPOpt.
-Pudimos apreciar el alto nivel de abstracción de la sintaxis de Zimpl, utilizado directamente SCIP.
+Pudimos apreciar el alto nivel de abstracción de la sintaxis de Zimpl, utilizado directamente SCIP. Si bien nos llevó más tiempo del pensado, disfrutamos mucho realizar este trabajo ya que nos ayudó a familiarizarnos con las herramientas de modelado, y pudimos relacionarlas y aplicar lo visto en la materia.
 
-Este trabajo nos ayudó a familiarizarnos con las herramientas de modelado, y
-pudimos relacionarlas y aplicar lo visto en la materia.
 
 %\newpage
 \begin{thebibliography}{99}
