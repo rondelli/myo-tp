@@ -154,20 +154,30 @@ python main.py -c archivo.cfg
 Los archivos de entrada (.in) tienen el siguiente formato:
 
 ```
-# Capacidad del disco en TB
+# Capacidad de discos en TB (= 1.000.000 MB)
 <capacidad>
-# Lista de archivos y sus tamaños en MB
-<nombre_archivo_1> <tamaño_1>
-<nombre_archivo_2> <tamaño_2>
+
+# Cantidad de archivos para backup
+<n>
+
+# Archivos: archivo_id, tamaño (MB)
+<archivo_id_1> <tamaño_1>
+<archivo_id_2> <tamaño_2>
 ...
 ```
 
 Para las partes que incluyen importancia:
 
 ```
+# Capacidad de discos en TB (= 1.000.000 MB)
 <capacidad>
-<nombre_archivo_1> <tamaño_1> <importancia_1>
-<nombre_archivo_2> <tamaño_2> <importancia_2>
+
+# Cantidad de archivos para backup
+<n>
+
+# Archivos: archivo_id, tamaño (MB), importancia
+<archivo_id_1> <tamaño_1> <importancia_1>
+<archivo_id_2> <tamaño_2> <importancia_2>
 ...
 ```
 
